@@ -6,6 +6,7 @@ library(tidyr)
 library(googledrive)
 
 # Import CDC data frame object
+# !!!!You need to change this part!!!! You need to write local path of original CDC data set
 chronic_df <- read_csv("Documents/GW_Univ/SP2023/DATS6101_Intro_to_Data_Science/DATS6101_Final_Project/PLACES/PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2022_release.csv")
 # Keep only some variables #
 chronic_df <- chronic_df[(chronic_df$Year == 2020),]
