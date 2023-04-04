@@ -46,6 +46,7 @@ import_census_tract_csv <- function(filename, col_names) {
   return(df)
 }
 
+# Create data frames
 commute_time_df <- import_census_tract_csv("ACSDT5Y2020.B08303-Data.csv")
 educatinal_attainment_df <- import_census_tract_csv("ACSST5Y2020.S1501-Data.csv")
 employment_status_df <- import_census_tract_csv("ACSST5Y2020.S2301-Data.csv")
@@ -75,10 +76,11 @@ import_census_relationship_csv <- function(filename, col_names) {
   return(df)
 }
 
+# Create data frames
 census_relationship_df <- import_census_relationship_csv("2020_Census_Tract_Relationship.csv")
 
-# Step 1.3 Import Econ impanct index data set from google drive
-import_econ_impact_df <- function()
+# Step 1.3 Import Econ impact index data set from google drive
+
 
 # Step 2.1: Merge Census Tract data sets on LocationName and GEO_ID
 
