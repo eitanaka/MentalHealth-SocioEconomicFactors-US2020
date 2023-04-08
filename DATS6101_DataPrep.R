@@ -165,4 +165,22 @@ drive_ls(shared_drive_id)
 file_id <- "12_ZB6QSB2RlX8f6kQ1VB0ECaBmh34R1R"
 drive_download(as_id(file_id), overwrite = TRUE)
 sheet_name <- "econ index"
-data <- read_excel("CEII Data 20220919.xlsx",  sheet = "econ index")
+ceii_df <- read_excel("CEII Data 20220919.xlsx",  sheet = "econ index")
+
+#-----------------------------------------------------------------------------------------------------------
+library(dplyr)
+ceii_df <- ceii_df %>% select(-matches("2[12]")) # Deleting columns including 21 and 22 year data
+
+# Dropping va_base column and adding column mean of va,pcEmpAct and index to the dataset which calculate mean of all values from jan20 to dec20
+ceii_df <- ceii_df %>%
+  select(-va_base) %>% # Drop va_base column
+  mutate(va_mean = rowMeans(across(starts_with("va"))))
+
+ceii_df <- ceii_df %>%
+  mutate(pcEmpAct_mean = rowMeans(across(starts_with("pcEmpAct"))))
+
+ceii_df <- ceii_df %>%
+  mutate(index_mean = rowMeans(across(starts_with("index"))))
+
+#-------------------------------------------------------------------------------------------------------------
+
