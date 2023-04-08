@@ -93,7 +93,6 @@ myVarName <- c('MT_total', 'MT_Never Married', 'MT_Now married', 'MT_Divorces', 
                'MI_Estimate')
 acs_tract_2020_df <- get_ACS_tract_allState_2020(myVariables, myVarName)
 
-
 # Get ACS data by block level in 2020 (Total Population, Commute Time, Employment Status) (unit is # of population)
 myVariables <- c("B01003_001",
                  "B08134_001", "B08134_002","B08134_003","B08134_004","B08134_005","B08134_006","B08134_007","B08134_008","B08134_009","B08134_010",
@@ -102,7 +101,7 @@ myVarName <- c("Total Population",
                "CT_Total","CT_<10", "CT_10-14", "CT_15-19","CT_20-24","CT_25-29", "CT_30-34", "CT_35-44","CT_45-59", "CT_>60",
                "ES_Total", "ES_Total_labor_force", "ES_Civilian_labor_force", "ES_Civilian_labor_force_employed", "ES_Civilian_labor_force_unemployed", "ES_Armed_Forces", "ES_Not_in_labor_force")
 acs_block_group_2020_df <- get_ACS_block_group_allState_2020(myVariables, myVarName)
-
+ 
 acs_2020_df <- merge_ACS_2020(acs_tract_2020_df, acs_block_group_2020_df)
 #----------------------------------------------------------------------------------------------------
 
