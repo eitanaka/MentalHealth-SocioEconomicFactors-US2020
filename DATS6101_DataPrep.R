@@ -22,8 +22,10 @@ chronic_df <- chronic_df[,c("Year","StateAbbr","StateDesc","CountyName","CountyF
 chronic_df <- chronic_df[(chronic_df$MeasureId=="DEPRESSION" | chronic_df$MeasureId=="SLEEP" | chronic_df$MeasureId=="LPA" | chronic_df$MeasureId=="MHLTH" | chronic_df$MeasureId=="BINGE"),]
 # Reshape long to wide #
 new_chronic_df <- spread(chronic_df, key = MeasureId, value = Data_Value)
+
 #--------------------------------------------------------------------------------------
 # Get ACS data
+# Variables from ACS (Marital Status, Total Population, Education Attainment, Median Income, Commute Time, Employment Status)
 # Function to get ACS data which geography is tract
 get_ACS_tract_allState_2020 <- function(myVariables, myVarName) {
   
@@ -69,6 +71,11 @@ get_ACS_block_group_allState_2020 <- function(myVariables, myVarName) {
   
   return(df)
 }
+# Function to merge two ACS data set on GEOID
+merge_ACS_2020 <- function(df1, df2) {
+  merged_df <- merge(df1, df2, by=c("GEOID","NAME"))
+  return(merged_df)
+}
 
 # Access ACS API using following API key
 census_api_key("22e600faf5925e380665317f69c684f0621c4e05", install=T, overwrite=T)
@@ -86,6 +93,7 @@ myVarName <- c('MT_total', 'MT_Never Married', 'MT_Now married', 'MT_Divorces', 
                'MI_Estimate')
 acs_tract_2020_df <- get_ACS_tract_allState_2020(myVariables, myVarName)
 
+
 # Get ACS data by block level in 2020 (Total Population, Commute Time, Employment Status) (unit is # of population)
 myVariables <- c("B01003_001",
                  "B08134_001", "B08134_002","B08134_003","B08134_004","B08134_005","B08134_006","B08134_007","B08134_008","B08134_009","B08134_010",
@@ -95,6 +103,8 @@ myVarName <- c("Total Population",
                "ES_Total", "ES_Total_labor_force", "ES_Civilian_labor_force", "ES_Civilian_labor_force_employed", "ES_Civilian_labor_force_unemployed", "ES_Armed_Forces", "ES_Not_in_labor_force")
 acs_block_group_2020_df <- get_ACS_block_group_allState_2020(myVariables, myVarName)
 
+acs_2020_df <- merge_ACS_2020(acs_tract_2020_df, acs_block_group_2020_df)
+#----------------------------------------------------------------------------------------------------
 
 # Authenticate
 drive_auth()
