@@ -1,5 +1,5 @@
 # Data preparation and cleaning for the final project
-
+#-------------------------------------------------------------------------------------
 # import libraries
 library(readr)
 library(tidyr)
@@ -12,6 +12,7 @@ library(purrr)
 library(tidyr)
 library(censusapi)
 #-------------------------------------------------------------------------------------
+# Data set # 1: CDC
 # Import CDC data frame object
 # !!!!You need to change this part!!!! You need to write local path of original CDC data set
 chronic_df <- read_csv("Documents/GW_Univ/SP2023/DATS6101_Intro_to_Data_Science/DATS6101_Final_Project/PLACES/PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2022_release.csv")
@@ -22,8 +23,8 @@ chronic_df <- chronic_df[,c("Year","StateAbbr","StateDesc","CountyName","CountyF
 chronic_df <- chronic_df[(chronic_df$MeasureId=="DEPRESSION" | chronic_df$MeasureId=="SLEEP" | chronic_df$MeasureId=="LPA" | chronic_df$MeasureId=="MHLTH" | chronic_df$MeasureId=="BINGE"),]
 # Reshape long to wide #
 new_chronic_df <- spread(chronic_df, key = MeasureId, value = Data_Value)
-
 #--------------------------------------------------------------------------------------
+# Data set # 2: ACS
 # Get ACS data
 # Variables from ACS (Marital Status, Total Population, Education Attainment, Median Income, Commute Time, Employment Status)
 # Function to get ACS data which geography is tract
@@ -104,30 +105,36 @@ acs_block_group_2020_df <- get_ACS_block_group_allState_2020(myVariables, myVarN
  
 acs_2020_df <- merge_ACS_2020(acs_tract_2020_df, acs_block_group_2020_df)
 #----------------------------------------------------------------------------------------------------
-
-# Authenticate
-drive_auth()
-
-# Step 1.2: Create Function Add prefix 0 in the Census Tract Relationship (For 1 data sets)
-# Census Tract Relationship "GEOID_TRACT_20"
-
-# Import csv file on the google drive, Rewrite "GEOID_TRACT_20" columns for appropriate form, and extract only columns of interest
-import_census_relationship_csv <- function(filename, col_names) {
-  # Find the file in Google Drive
-  file <- drive_find(n_max = 1, pattern = filename)
-  # Download the file to the current working directory
-  drive_download(as_id(file$id), overwrite = TRUE)
-  # Read in the CSV file
-  df <- read.csv(filename)
-
-  # Add prefix-0 in the "GEOID_TRACT_20" column
-  df$GEOID_TRACT_20 <- paste0("0", df$GEOID_TRACT_20)
-  # Extract only the columns of interest
-  df <- df[, colnames(df) %in% col_names]
+# Data set #3: Census Relationship (geographical data)
+# Import and cleaning Census Relationship File online
+import_Census_Relationship <- function(){
+  data <- read.table("https://www2.census.gov/geo/docs/maps-data/data/rel2020/blkgrp/tab20_blkgrp20_blkgrp10_natl.txt", sep = "|", header = T)
   
-  # Return the modified data frame
-  return(df)
+  # Select the columns we interest
+  data <- data[, 2:5]
+  
+  # Convert Block-level to Tract-level to merge lows on same GEOID
+  colnames(data)[1] <- c("GEOID")  
+  
+  # Check for duplicates in the GEOID column
+  duplicate_rows <- duplicated(data$GEOID)
+  # Drop the duplicated rows
+  data <-data[!duplicate_rows,]
+  
+  # Delete the last character and add 0 at the first of a string in GEOID column
+  data$GEOID <- paste0("0", substr(data$GEOID, 1, nchar(data$GEOID) - 1))
+  
+  # Drop BLKGRP_20 column
+  data <- data[,-2]
+  
+  colnames(data)[2:3] <- c("AreaLand", "AreaWater")
+  
+  # Aggregate by GEOID and sum the AreaLand and AreaWater columns
+  data <- aggregate(cbind(AreaLand, AreaWater) ~ GEOID, data = data, sum)
+  
+  return(data)
 }
 
-# Create data frames
-census_relationship_df <- import_census_relationship_csv("2020_Census_Tract_Relationship.csv")
+census_relationship_df <-import_Census_Relationship()
+#----------------------------------------------------------------------------------------------------
+# Data set #4: County Economic Impact Index
