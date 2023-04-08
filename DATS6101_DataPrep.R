@@ -146,4 +146,23 @@ census_relationship_df <-import_Census_Relationship()
 
 new_acs_2020_df <- merge_ACS_CR_2020(acs_2020_df, census_relationship_df)
 #----------------------------------------------------------------------------------------------------
-# Data set #4: County Economic Impact Index
+# Data set #4: County Economic Impact Index 
+# We are here trying to download the dataset from the googledrive using googledrive
+library(googledrive)
+
+# Authenticate with your Google account
+drive_auth()
+
+# Define the name or URL of the shared drive
+shared_drive_url <- "https://drive.google.com/drive/u/3/folders/1ipCZSd5Ede9GxNQIyoMlIelOXKJ-UhVI"
+
+# Get the ID of the shared drive
+shared_drive_id <- as_id(shared_drive_url)
+
+# List the contents of the shared drive
+drive_ls(shared_drive_id)
+
+file_id <- "12_ZB6QSB2RlX8f6kQ1VB0ECaBmh34R1R"
+drive_download(as_id(file_id), overwrite = TRUE)
+sheet_name <- "econ index"
+data <- read_excel("CEII Data 20220919.xlsx",  sheet = "econ index")
