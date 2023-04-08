@@ -122,7 +122,9 @@ import_Census_Relationship <- function(){
   data <-data[!duplicate_rows,]
   
   # Delete the last character and add 0 at the first of a string in GEOID column
-  data$GEOID <- paste0("0", substr(data$GEOID, 1, nchar(data$GEOID) - 1))
+  data$GEOID <- substr(data$GEOID, 1, nchar(data$GEOID) - 1)
+  # Assuming the dataframe is called 'df' and the GEOID column is called 'GEOID'
+  data$GEOID <- ifelse(nchar(data$GEOID) == 10, paste0("0", data$GEOID), data$GEOID)
   
   # Drop BLKGRP_20 column
   data <- data[,-2]
@@ -134,7 +136,14 @@ import_Census_Relationship <- function(){
   
   return(data)
 }
+# Function to merge ACS and Census Relationship data sets on GEOID
+merge_ACS_CR_2020 <- function(df1, df2) {
+  merged_df <- merge(df1, df2, by=c("GEOID"))
+  return(merged_df)
+}
 
 census_relationship_df <-import_Census_Relationship()
+
+new_acs_2020_df <- merge_ACS_CR_2020(acs_2020_df, census_relationship_df)
 #----------------------------------------------------------------------------------------------------
 # Data set #4: County Economic Impact Index
