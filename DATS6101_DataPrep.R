@@ -3,13 +3,13 @@
 # import libraries
 library(readr)
 library(tidyr)
+library(dplyr)
 library(googledrive)
 # install.packages("tidycensus")
 library(tidycensus)
 library(tidyverse)
 library(tigris)
 library(purrr)
-library(tidyr)
 library(censusapi)
 #-------------------------------------------------------------------------------------
 # Data set # 1: CDC
@@ -22,7 +22,9 @@ chronic_df <- chronic_df[,c("Year","StateAbbr","StateDesc","CountyName","CountyF
 # Keep only rows with health measures of interest #
 chronic_df <- chronic_df[(chronic_df$MeasureId=="DEPRESSION" | chronic_df$MeasureId=="SLEEP" | chronic_df$MeasureId=="LPA" | chronic_df$MeasureId=="MHLTH" | chronic_df$MeasureId=="BINGE"),]
 # Reshape long to wide #
-new_chronic_df <- spread(chronic_df, key = MeasureId, value = Data_Value)
+CDC_df <- spread(chronic_df, key = MeasureId, value = Data_Value)
+# Rename LocationName and into GEOID
+colnames(CDC_df)[6] <- "GEOID"
 #--------------------------------------------------------------------------------------
 # Data set # 2: ACS
 # Get ACS data
@@ -136,19 +138,11 @@ import_Census_Relationship <- function(){
   
   return(data)
 }
-# Function to merge ACS and Census Relationship data sets on GEOID
-merge_ACS_CR_2020 <- function(df1, df2) {
-  merged_df <- merge(df1, df2, by=c("GEOID"))
-  return(merged_df)
-}
 
-census_relationship_df <-import_Census_Relationship()
-
-new_acs_2020_df <- merge_ACS_CR_2020(acs_2020_df, census_relationship_df)
+CR_df <-import_Census_Relationship()
 #----------------------------------------------------------------------------------------------------
 # Data set #4: County Economic Impact Index 
-# We are here trying to download the dataset from the googledrive using googledrive
-library(googledrive)
+# We are here trying to download the data set from the google drive
 
 # Authenticate with your Google account
 drive_auth()
@@ -164,14 +158,10 @@ drive_ls(shared_drive_id)
 
 file_id <- "12_ZB6QSB2RlX8f6kQ1VB0ECaBmh34R1R"
 drive_download(as_id(file_id), overwrite = TRUE)
-sheet_name <- "econ index"
 ceii_df <- read_excel("CEII Data 20220919.xlsx",  sheet = "econ index")
-
-#-----------------------------------------------------------------------------------------------------------
-library(dplyr)
 ceii_df <- ceii_df %>% select(-matches("2[12]")) # Deleting columns including 21 and 22 year data
 
-# Dropping va_base column and adding column mean of va,pcEmpAct and index to the dataset which calculate mean of all values from jan20 to dec20
+# Adding columns: va_mean, pcEmpAct_mean, and index_mean which are calculated ftom jan20 to dec20
 ceii_df <- ceii_df %>%
   select(-va_base) %>% # Drop va_base column
   mutate(va_mean = rowMeans(across(starts_with("va"))))
@@ -182,5 +172,31 @@ ceii_df <- ceii_df %>%
 ceii_df <- ceii_df %>%
   mutate(index_mean = rowMeans(across(starts_with("index"))))
 
+colnames(ceii_df)[1] <- "CountyFIPS"
 #-------------------------------------------------------------------------------------------------------------
+# Merge ACS, Census Relationship, and CEII into CDC dataset
+# ACS and Census Relationship is merged on GEOID(tract level)
+# On the other hand, CEII is merges on CountyFIPs, since CEII is conducted by county level
 
+# Function to merge ACS, CR, CEII into CDC on GEOID(tract level)
+merge_all_df <- function(CDC, ACS, CR, CEII) {
+  
+  df <- merge(ACS, CR, by=c("GEOID"))
+
+  df <- merge(CDC, df[, -which(names(df)=='NAME')], by=c('GEOID'))
+  
+  df <- merge(df, CEII[, -which(names(CEII) == 'state' | names(CEII) == 'county')], by=c("CountyFIPS"))
+  
+  return(df)
+}
+
+final_df <- merge_all_df(CDC_df, acs_2020_df, CR_df, ceii_df)
+
+# Count the number of unique names
+length(unique(final_df$StateAbbr))
+
+table(final_df$StateAbbr)
+table(final_df$CountyName)
+
+# Count missing values in each column
+colSums(is.na(final_df))
