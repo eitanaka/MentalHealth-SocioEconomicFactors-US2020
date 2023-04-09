@@ -1,5 +1,7 @@
-# Data preparation and cleaning for the final project
+# Data preparation and cleaning for the final project team2
+
 #-------------------------------------------------------------------------------------
+
 # import libraries
 library(readr)
 library(tidyr)
@@ -11,7 +13,9 @@ library(tidyverse)
 library(tigris)
 library(purrr)
 library(censusapi)
+
 #-------------------------------------------------------------------------------------
+
 # Data set # 1: CDC
 # Import CDC data frame object
 # !!!!You need to change this part!!!! You need to write local path of original CDC data set
@@ -25,7 +29,9 @@ chronic_df <- chronic_df[(chronic_df$MeasureId=="DEPRESSION" | chronic_df$Measur
 CDC_df <- spread(chronic_df, key = MeasureId, value = Data_Value)
 # Rename LocationName and into GEOID
 colnames(CDC_df)[6] <- "GEOID"
+
 #--------------------------------------------------------------------------------------
+
 # Data set # 2: ACS
 # Get ACS data
 # Variables from ACS (Marital Status, Total Population, Education Attainment, Median Income, Commute Time, Employment Status)
@@ -106,7 +112,10 @@ myVarName <- c("Total Population",
 acs_block_group_2020_df <- get_ACS_block_group_allState_2020(myVariables, myVarName)
  
 acs_2020_df <- merge_ACS_2020(acs_tract_2020_df, acs_block_group_2020_df)
+
+
 #----------------------------------------------------------------------------------------------------
+
 # Data set #3: Census Relationship (geographical data)
 # Import and cleaning Census Relationship File online
 import_Census_Relationship <- function(){
@@ -140,7 +149,9 @@ import_Census_Relationship <- function(){
 }
 
 CR_df <-import_Census_Relationship()
+
 #----------------------------------------------------------------------------------------------------
+
 # Data set #4: County Economic Impact Index 
 # We are here trying to download the data set from the google drive
 
@@ -173,7 +184,9 @@ ceii_df <- ceii_df %>%
   mutate(index_mean = rowMeans(across(starts_with("index"))))
 
 colnames(ceii_df)[1] <- "CountyFIPS"
+
 #-------------------------------------------------------------------------------------------------------------
+
 # Merge ACS, Census Relationship, and CEII into CDC dataset
 # ACS and Census Relationship is merged on GEOID(tract level)
 # On the other hand, CEII is merges on CountyFIPs, since CEII is conducted by county level
@@ -190,8 +203,12 @@ merge_all_df <- function(CDC, ACS, CR, CEII) {
   return(df)
 }
 
+# Final Version of data set (Still needed manipulated each column to make meaningful column)
 final_df <- merge_all_df(CDC_df, acs_2020_df, CR_df, ceii_df)
 
+#-------------------------------------------------------------------------------------------------------------
+
+# Little EDA before exporting csv file stored on GitHub and using rmd file.
 # Count the number of unique names
 length(unique(final_df$StateAbbr))
 
@@ -200,3 +217,8 @@ table(final_df$CountyName)
 
 # Count missing values in each column
 colSums(is.na(final_df))
+
+#-------------------------------------------------------------------------------------------------------------
+
+# Export final_version of code to store on GitHub repo
+# code below
