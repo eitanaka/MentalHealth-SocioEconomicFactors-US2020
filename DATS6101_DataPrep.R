@@ -9,12 +9,11 @@
 # We will be using this final dataset for their analysis.
 
 #-------------------------------------------------------------------------------------
-<<<<<<< Updated upstream
-=======
+
+
 # clean environment
 rm(list = ls())
 
->>>>>>> Stashed changes
 # import libraries
 
 library(readr)
@@ -112,8 +111,8 @@ View(v20)
 myVariables <- c("B07008_001", "B07008_002", "B07008_003", "B07008_004", "B07008_005", "B07008_006",
                  "B07009_001", "B07009_002", "B07009_003", "B07009_004", "B07009_005", "B07009_006",
                  "B07011_001")
-myVarName <- c('MT_total', 'MT_Never Married', 'MT_Now married', 'MT_Divorces', 'MT_Separated', 'MT_Widowed',
-               'EA_total', 'EA_Less than high school graduate','EA_High school graduate',"EA_college or associate's degree","EA_Bachelor's degree", 'EA_Graduate or professional degree',
+myVarName <- c('MT_Total', 'MT_Never Married', 'MT_Now married', 'MT_Divorces', 'MT_Separated', 'MT_Widowed',
+               'EA_Total', 'EA_Less than high school graduate','EA_High school graduate',"EA_college or associate's degree","EA_Bachelor's degree", 'EA_Graduate or professional degree',
                'MI_Estimate')
 acs_tract_2020_df <- get_ACS_tract_allState_2020(myVariables, myVarName)
 
@@ -223,7 +222,7 @@ final_df <- merge_all_df(CDC_df, acs_2020_df, CR_df, ceii_df)
 
 #-------------------------------------------------------------------------------------------------------------
 
-# Little EDA before exporting csv file stored on GitHub and using rmd file.
+# quick EDA before exporting csv file stored on GitHub and using rmd file.
 # Count the number of unique names
 length(unique(final_df$StateAbbr))
 
@@ -236,11 +235,25 @@ colSums(is.na(final_df))
 
 #-------------------------------------------------------------------------------------------------------------
 
+# Covert Each dependent variables to percentages(MT, EA, ES, CT)
+convert_percent_pop <- function(df, prefix) {
+  df <- df %>%
+    mutate(across(starts_with(prefix), ~ . / get(paste0(prefix, "_Total")) * 100))
+  return(df)
+}
+
+new_final_df <- convert_percent_pop(final_df, "MT")
+new_final_df <- convert_percent_pop(new_final_df, "EA")
+new_final_df <- convert_percent_pop(new_final_df, "ES")
+new_final_df <- convert_percent_pop(new_final_df, "CT")
+
 # Export final_version of code to store on GitHub repo
-<<<<<<< Updated upstream
 # code below  
-=======
-# code below
+
+# Multiple Linear Regression
+# y^ = b_0 + b_1*MT + b_2*EA + b_3*ES + b_4*CT + b_5*Binge + b_6*LPA + b_7*SLEEP + b_8*MI + b_9*popDense + b_10*EconIndex
+
+# code below  
 
 # modify final_df
 final_df <- select(final_df, -c("Year", "StateDesc", "TotalPopulation", "va_jan20", "va_feb20", "va_mar20", "va_apr20", "va_may20", "va_jun20", "va_jul20", "va_aug20", "va_sep20", "va_oct20", "va_nov20", "va_dec20", "pcEmpAct_jan20", "pcEmpAct_feb20", "pcEmpAct_mar20", "pcEmpAct_apr20", "pcEmpAct_may20", "pcEmpAct_jun20", "pcEmpAct_jul20", "pcEmpAct_aug20", "pcEmpAct_sep20", "pcEmpAct_oct20", "pcEmpAct_nov20", "pcEmpAct_dec20", "index_jan20", "index_feb20", "index_mar20", "index_may20", "index_jun20", "index_jul20", "index_aug20", "index_sep20", "index_oct20", "index_nov20", "index_dec20", "va_mean", "pcEmpAct_mean", "index_mean"))
@@ -251,4 +264,3 @@ final_df$area.land.km <- final_df$area.land.km/1000
 final_df$area.water.km <- final_df$area.water.km/1000
 final_df$pop.per.km <- final_df$total.population/final_df$area.land.km
 
->>>>>>> Stashed changes
