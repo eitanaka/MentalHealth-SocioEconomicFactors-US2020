@@ -1,8 +1,16 @@
 # Data preparation and cleaning for the final project team2
+# We worked with four datasets: CDC, ACS, Census Relationship, and County Economic Impact Index (CEII). 
+# The CDC dataset contained health measures of interest, while the ACS dataset contained socioeconomic data.
+# The Census Relationship dataset contained the geographic relationship between tracts and block groups, 
+# and the CEII dataset provided county-level economic data. 
+# These datasets were merged on GEOID and CountyFIPS to create the final dataset. 
+# The team performed some exploratory data analysis and discovered that the final dataset contains data 
+# from 51 states, 1968 counties, and 60944 tracts. 
+# We will be using this final dataset for their analysis.
 
 #-------------------------------------------------------------------------------------
-
 # import libraries
+
 library(readr)
 library(tidyr)
 library(dplyr)
@@ -15,8 +23,8 @@ library(purrr)
 library(censusapi)
 
 #-------------------------------------------------------------------------------------
-
 # Data set # 1: CDC
+
 # Import CDC data frame object
 # !!!!You need to change this part!!!! You need to write local path of original CDC data set
 chronic_df <- read_csv("Documents/GW_Univ/SP2023/DATS6101_Intro_to_Data_Science/DATS6101_Final_Project/PLACES/PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2022_release.csv")
@@ -31,8 +39,8 @@ CDC_df <- spread(chronic_df, key = MeasureId, value = Data_Value)
 colnames(CDC_df)[6] <- "GEOID"
 
 #--------------------------------------------------------------------------------------
-
 # Data set # 2: ACS
+
 # Get ACS data
 # Variables from ACS (Marital Status, Total Population, Education Attainment, Median Income, Commute Time, Employment Status)
 # Function to get ACS data which geography is tract
@@ -115,8 +123,8 @@ acs_2020_df <- merge_ACS_2020(acs_tract_2020_df, acs_block_group_2020_df)
 
 
 #----------------------------------------------------------------------------------------------------
-
 # Data set #3: Census Relationship (geographical data)
+
 # Import and cleaning Census Relationship File online
 import_Census_Relationship <- function(){
   data <- read.table("https://www2.census.gov/geo/docs/maps-data/data/rel2020/blkgrp/tab20_blkgrp20_blkgrp10_natl.txt", sep = "|", header = T)
@@ -151,8 +159,8 @@ import_Census_Relationship <- function(){
 CR_df <-import_Census_Relationship()
 
 #----------------------------------------------------------------------------------------------------
-
 # Data set #4: County Economic Impact Index 
+
 # We are here trying to download the data set from the google drive
 
 # Authenticate with your Google account
@@ -214,6 +222,7 @@ length(unique(final_df$StateAbbr))
 
 table(final_df$StateAbbr)
 table(final_df$CountyName)
+table(final_df$GEOID)
 
 # Count missing values in each column
 colSums(is.na(final_df))
@@ -221,4 +230,4 @@ colSums(is.na(final_df))
 #-------------------------------------------------------------------------------------------------------------
 
 # Export final_version of code to store on GitHub repo
-# code below
+# code below  

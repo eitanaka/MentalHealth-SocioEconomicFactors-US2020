@@ -22,7 +22,71 @@ knitr::opts_chunk$set(warning = F, results = "hide", message = F)
 options(scientific=T, digits = 3) 
 # options(scipen=9, digits = 3) 
 ```
+## Abstract
+Need edited
 
+## Introcuction
+Need edited
+
+### Data sets
+Need edited (Describe about 4 data set and how we create)
+
+### Variables of interest?
+Need edited
+
+### Initial SMART Question
+Need edited
 ```{r}
 
 ```
+
+## EDA
+Need edited
+
+### Basic EDA
+Need edited
+```{r}
+
+```
+
+### Descriptive Statistics
+Need edited
+
+### Hypothesis Testing
+Need edited
+
+### EDA Interpretation?
+Need edited
+
+## Model Building
+Need edited
+```{r}
+
+```
+
+### Check Assumption for Model Buiding?
+Need edited
+
+### Building Model
+Need edited
+
+### Model Assessment?
+Need edited
+
+## Result
+Need edited
+
+## Discussion
+Need edited
+
+### Limitations
+Need edited
+
+### Further Research
+Need edited
+
+## Conclusion
+Need edited
+
+## References
+Need edited
