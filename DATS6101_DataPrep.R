@@ -9,6 +9,12 @@
 # We will be using this final dataset for their analysis.
 
 #-------------------------------------------------------------------------------------
+<<<<<<< Updated upstream
+=======
+# clean environment
+rm(list = ls())
+
+>>>>>>> Stashed changes
 # import libraries
 
 library(readr)
@@ -21,13 +27,14 @@ library(tidyverse)
 library(tigris)
 library(purrr)
 library(censusapi)
+library(readxl)
 
 #-------------------------------------------------------------------------------------
 # Data set # 1: CDC
 
 # Import CDC data frame object
 # !!!!You need to change this part!!!! You need to write local path of original CDC data set
-chronic_df <- read_csv("Documents/GW_Univ/SP2023/DATS6101_Intro_to_Data_Science/DATS6101_Final_Project/PLACES/PLACES__Local_Data_for_Better_Health__Census_Tract_Data_2022_release.csv")
+chronic_df <- read_csv("/Users/henryhirsch/Henry/Education/George Washington University/2023 Spring/DATS 6101 Introduction to Data Science/Project 1/Data Full.csv")
 # Keep only some variables #
 chronic_df <- chronic_df[(chronic_df$Year == 2020),]
 chronic_df <- chronic_df[,c("Year","StateAbbr","StateDesc","CountyName","CountyFIPS","LocationName","Data_Value","TotalPopulation","MeasureId")]
@@ -230,4 +237,18 @@ colSums(is.na(final_df))
 #-------------------------------------------------------------------------------------------------------------
 
 # Export final_version of code to store on GitHub repo
+<<<<<<< Updated upstream
 # code below  
+=======
+# code below
+
+# modify final_df
+final_df <- select(final_df, -c("Year", "StateDesc", "TotalPopulation", "va_jan20", "va_feb20", "va_mar20", "va_apr20", "va_may20", "va_jun20", "va_jul20", "va_aug20", "va_sep20", "va_oct20", "va_nov20", "va_dec20", "pcEmpAct_jan20", "pcEmpAct_feb20", "pcEmpAct_mar20", "pcEmpAct_apr20", "pcEmpAct_may20", "pcEmpAct_jun20", "pcEmpAct_jul20", "pcEmpAct_aug20", "pcEmpAct_sep20", "pcEmpAct_oct20", "pcEmpAct_nov20", "pcEmpAct_dec20", "index_jan20", "index_feb20", "index_mar20", "index_may20", "index_jun20", "index_jul20", "index_aug20", "index_sep20", "index_oct20", "index_nov20", "index_dec20", "va_mean", "pcEmpAct_mean", "index_mean"))
+colnames(final_df)[colnames(final_df) == "Total Population"] <- "total.population"
+colnames(final_df)[colnames(final_df) == "AreaLand"] <- "area.land.km"
+colnames(final_df)[colnames(final_df) == "AreaWater"] <- "area.water.km"
+final_df$area.land.km <- final_df$area.land.km/1000
+final_df$area.water.km <- final_df$area.water.km/1000
+final_df$pop.per.km <- final_df$total.population/final_df$area.land.km
+
+>>>>>>> Stashed changes
