@@ -105,8 +105,8 @@ View(v20)
 myVariables <- c("B07008_001", "B07008_002", "B07008_003", "B07008_004", "B07008_005", "B07008_006",
                  "B07009_001", "B07009_002", "B07009_003", "B07009_004", "B07009_005", "B07009_006",
                  "B07011_001")
-myVarName <- c('MT_total', 'MT_Never Married', 'MT_Now married', 'MT_Divorces', 'MT_Separated', 'MT_Widowed',
-               'EA_total', 'EA_Less than high school graduate','EA_High school graduate',"EA_college or associate's degree","EA_Bachelor's degree", 'EA_Graduate or professional degree',
+myVarName <- c('MT_Total', 'MT_Never Married', 'MT_Now married', 'MT_Divorces', 'MT_Separated', 'MT_Widowed',
+               'EA_Total', 'EA_Less than high school graduate','EA_High school graduate',"EA_college or associate's degree","EA_Bachelor's degree", 'EA_Graduate or professional degree',
                'MI_Estimate')
 acs_tract_2020_df <- get_ACS_tract_allState_2020(myVariables, myVarName)
 
@@ -216,7 +216,7 @@ final_df <- merge_all_df(CDC_df, acs_2020_df, CR_df, ceii_df)
 
 #-------------------------------------------------------------------------------------------------------------
 
-# Little EDA before exporting csv file stored on GitHub and using rmd file.
+# quick EDA before exporting csv file stored on GitHub and using rmd file.
 # Count the number of unique names
 length(unique(final_df$StateAbbr))
 
@@ -229,5 +229,21 @@ colSums(is.na(final_df))
 
 #-------------------------------------------------------------------------------------------------------------
 
+# Covert Each dependent variables to percentages(MT, EA, ES, CT)
+convert_percent_pop <- function(df, prefix) {
+  df <- df %>%
+    mutate(across(starts_with(prefix), ~ . / get(paste0(prefix, "_Total")) * 100))
+  return(df)
+}
+
+new_final_df <- convert_percent_pop(final_df, "MT")
+new_final_df <- convert_percent_pop(new_final_df, "EA")
+new_final_df <- convert_percent_pop(new_final_df, "ES")
+new_final_df <- convert_percent_pop(new_final_df, "CT")
+
 # Export final_version of code to store on GitHub repo
 # code below  
+
+# Multiple Linear Regression
+# y^ = b_0 + b_1*MT + b_2*EA + b_3*ES + b_4*CT + b_5*Binge + b_6*LPA + b_7*SLEEP + b_8*MI + b_9*popDense + b_10*EconIndex
+
