@@ -223,14 +223,11 @@ corrplot(cor_matrix_GEO, method = "circle", type = "upper", order = "hclust", ad
 #### Variable Selection
 Need edited
 ```{r}
-cols_depression <- names(which(abs(cor_matrix[2, ]) >= 0.3))
-cols_names_depression <- c("var1", cols_depression)
+cols_names_depression <- names(which(abs(cor_matrix[2, ]) >= 0.3))
+depression_cor_df <- master_df[, c("DEPRESSION", "LPA", "EA_High_school_graduate", "EA_Bachelors_degree", "EA_Graduate_or_professional_degree", "MI_Estimate", "URBANIZED_AREA_POP_CEN_2010", "pct_URBANIZED_AREA_POP_CEN_2010")]
 
 cols_mhlth <- names(which(abs(cor_matrix[4, ]) >= 0.3))
-
-cols_mhlth <- cbind(master_df[,])
-
-mhlth_cor_df <- subset(master_df, select = cols_mhlth)
+mhlth_cor_df <- master_df[,c("MHLTH", "LPA", "SLEEP", "MT_never_married", "MT_now_married", "MT_Separated", "EA_Less_than_high_school_graduate", "EA_High_school_graduate", "EA_High_school_graduate", "EA_Bachelors_degree", "EA_Graduate_or_professional_degree", "MI_Estimate", "ES_Civilian_labor_force_employed", "ES_Civilian_labor_force_unemployed")]
 ```
 
 ### VIF Test for Multicollinearity
