@@ -200,6 +200,16 @@ ceii_df <- ceii_df %>%
 colnames(ceii_df)[1] <- "CountyFIPS"
 
 #-------------------------------------------------------------------------------------------------------------
+# Planning Data Base
+
+shared_drive_url <- "https://drive.google.com/drive/u/0/folders/1JZcAZUfCQl8w7W-MMYj6tIMoEeCAY6qx"
+shared_drive_id <- as_id(shared_drive_url)
+drive_ls(shared_drive_id)
+file_id <- "1V5tpX0Rk8ApKTbIjvnFHRMENfgMCyoec"
+drive_download(as_id(file_id), overwrite = TRUE)
+planning_df <- read_csv("pdb2020trv2_us.csv")
+
+#----------------------------------------------------------------------------------------------------
 
 # Merge ACS, Census Relationship, and CEII into CDC dataset
 # ACS and Census Relationship is merged on GEOID(tract level)
@@ -235,18 +245,6 @@ colSums(is.na(final_df))
 
 #-------------------------------------------------------------------------------------------------------------
 
-# Covert Each dependent variables to percentages(MT, EA, ES, CT)
-convert_percent_pop <- function(df, prefix) {
-  df <- df %>%
-    mutate(across(starts_with(prefix), ~ . / get(paste0(prefix, "_Total")) * 100))
-  return(df)
-}
-
-new_final_df <- convert_percent_pop(final_df, "MT")
-new_final_df <- convert_percent_pop(new_final_df, "EA")
-new_final_df <- convert_percent_pop(new_final_df, "ES")
-new_final_df <- convert_percent_pop(new_final_df, "CT")
-
 # Export final_version of code to store on GitHub repo
 # code below  
 
@@ -264,3 +262,14 @@ final_df$area.land.km <- final_df$area.land.km/1000
 final_df$area.water.km <- final_df$area.water.km/1000
 final_df$pop.per.km <- final_df$total.population/final_df$area.land.km
 
+# Covert Each dependent variables to percentages(MT, EA, ES, CT)
+convert_percent_pop <- function(df, prefix) {
+  df <- df %>%
+    mutate(across(starts_with(prefix), ~ . / get(paste0(prefix, "_Total")) * 100))
+  return(df)
+}
+
+new_final_df <- convert_percent_pop(final_df, "MT")
+new_final_df <- convert_percent_pop(new_final_df, "EA")
+new_final_df <- convert_percent_pop(new_final_df, "ES")
+new_final_df <- convert_percent_pop(new_final_df, "CT")
