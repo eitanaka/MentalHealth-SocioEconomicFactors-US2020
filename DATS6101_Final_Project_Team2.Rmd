@@ -23,6 +23,14 @@ options(scientific=T, digits = 3)
 # options(scipen=9, digits = 3) 
 ```
 
+```{r}
+# Import Libraries
+rm(list=ls())
+library(readr)
+library(ggplot2)
+library(tidyr)
+```
+
 ```{r init}
 url <- 'https://raw.githubusercontent.com/eitanaka/DATS6101_Final_Project_Team2/main/data_set/geo_socio_health_df.csv'
 master_df <- read_csv(url)
@@ -37,14 +45,11 @@ Need edited
 ### Data sets
 Need edited (Describe about 4 data set and how we create)
 
-### Variables of interest?
-Need edited
-
 ### Initial SMART Question
 Need edited
-```{r}
 
-```
+### Variable of Interest
+Need edited
 
 ## EDA
 Need edited
@@ -57,6 +62,16 @@ colSums(master_df)
 
 ### Basic EDA
 Need edited
+
+#### Handle Null Values
+```{r}
+master_df <- na.omit(master_df)
+
+colSums(is.na(master_df))
+
+```
+
+#### Handle Outlier
 ```{r}
 
 ```
