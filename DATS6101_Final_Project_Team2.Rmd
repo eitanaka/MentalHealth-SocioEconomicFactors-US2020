@@ -39,7 +39,16 @@ In project 1, we investigated how health risk behaviors are associated with heal
 Need edited (Describe about 4 data set and how we create)
 
 ### Variables of interest?
-Need edited
+CountyFIPS: a character column containing the FIPS code for each county.
+GEOID: a character column containing the unique ID for each county.
+StateAbbr: a character column containing the abbreviation for the state where each county is located.
+CountyName: a character column containing the name of each county.
+BINGE, DEPRESSION, LPA, MHLTH, SLEEP: numeric columns representing percentages of adults in each county that reported binge drinking, depression, physical inactivity, poor mental health, and insufficient sleep, respectively.
+MT_Total, MT_Never Married, MT_Now married, MT_Divorces, MT_Separated, MT_Widowed: numeric columns representing percentages of adults in each county who were categorized as having a certain marital status.
+EA_Total, EA_Less than high school graduate, EA_High school graduate, EA_college or associate's degree, EA_Bachelor's degree, EA_Graduate or professional degree: numeric columns representing percentages of adults in each county who were categorized as having a certain educational attainment.
+MI_Estimate: numeric column representing the median household income in each county.
+Total Population: numeric column representing the total population of each county.
+CT_Total, CT_<10, CT_10-14, CT_15-19, CT_20-24, CT_25-29, CT_30-34, CT_35-44, CT_45-54, CT_55-59, CT_60-64, CT_65-74, CT_75-84, CT_85plus: numeric columns representing the percentages of the population in each county that were categorized as being within a certain age range.
 
 ### Initial SMART Question
 Need edited
@@ -62,6 +71,8 @@ Need edited
 ```{r}
 str(master_df)
 ```
+
+
 ## Summary Statictics
 Need edited
 ```{r}
