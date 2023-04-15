@@ -31,6 +31,7 @@ library(ggplot2)
 library(tidyr)
 library(corrplot)
 library(ezids)
+library(car)
 ```
 
 ```{r init}
@@ -110,7 +111,6 @@ Need edited
 Need edited
 ```{r}
 # checking normality of dependent variables
-master_df <- na.omit(master_df)
 colnames(master_df)[colnames(master_df) == "MT_Never Married"] <- "MT_never_married"
 colnames(master_df)[colnames(master_df) == "MT_Now married"] <- "MT_now_married"
 colnames(master_df)[colnames(master_df) == "Total Population"] <- "total_population"
@@ -144,6 +144,8 @@ num_df <- master_df[ , !names(master_df) %in% cols_to_remove]
 # hist_list
 ```
 
+### Basic EDA
+Need edited
 
 #### Handle Null Values
 ```{r}
@@ -151,11 +153,9 @@ master_df <- na.omit(master_df)
 colSums(is.na(master_df[6:length(master_df)]))
 ```
 
-### Basic EDA
-Need edited
-
 #### Handle Outlier
 ```{r}
+
 ```
 
 ## Data Structure
@@ -180,7 +180,6 @@ Need edited
 ### Correlations
 ```{r}
 cor_matrix <- cor(master_df[,6:length(master_df)])
-View(cor_matrix)
 
 # Create 6 subset for cor_matrix or cor_heatmap
 dep_mth_df <- subset(master_df, select = "DEPRESSION")
@@ -220,10 +219,33 @@ corrplot(cor_matrix_ES, method = "circle", type = "upper", order = "hclust", add
 corrplot(cor_matrix_GEO, method = "circle", type = "upper", order = "hclust", addCoef.col = "black", tl.col = "black", tl.srt = 45, cl.pos = "n")
 ```
 
-### Variable Selection
+
+#### Variable Selection
 Need edited
 ```{r}
+cols_depression <- names(which(abs(cor_matrix[2, ]) >= 0.3))
+cols_names_depression <- c("var1", cols_depression)
 
+cols_mhlth <- names(which(abs(cor_matrix[4, ]) >= 0.3))
+
+cols_mhlth <- cbind(master_df[,])
+
+mhlth_cor_df <- subset(master_df, select = cols_mhlth)
+```
+
+### VIF Test for Multicollinearity
+```{r}
+calculate_VIF <- function(data, target_col) {
+  # Separate the independent and dependent variables
+  X <- data[, !colnames(data) %in% target_col]
+  
+  # Calculate the VIF values for each independent variable
+  vif <- data.frame(
+    Feature = colname(X),
+    VIF = apply(X, 2, function(x) vif(lm(x ~ ., data=X)))
+  )
+  return(vif)
+}
 ```
 
 ### Hypothesis Testing
