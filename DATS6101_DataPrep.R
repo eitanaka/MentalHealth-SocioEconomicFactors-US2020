@@ -32,8 +32,21 @@ library(readxl)
 # Data set # 1: CDC
 
 # Import CDC data frame object
-# !!!!You need to change this part!!!! You need to write local path of original CDC data set
-chronic_df <- read_csv("/Users/henryhirsch/Henry/Education/George Washington University/2023 Spring/DATS 6101 Introduction to Data Science/Project 1/Data Full.csv")
+# Define the name or URL from the shared drive
+shared_drive_url <- "https://drive.google.com/drive/u/3/folders/1u1vsRNyvytahtCXiBrp87WVnR7Uh-4_6"
+
+# Get the ID of the shared drive
+shared_drive_id <- as_id(shared_drive_url)
+
+# List the contents of the shared drive
+drive_ls(shared_drive_id)
+#paste the file id from the console 
+file_id <- "1fFEF92mf5b4dWEp5tUuU3CTVBQ0wrcsQ"
+drive_download(as_id(file_id), overwrite = TRUE)
+
+#Rename the name of the dataset and copy the name of the dataset from the google drive and paste it here 
+chronic_df <- read_csv("PLACES_Census_Tract_Data_2022_release.csv")
+
 # Keep only some variables #
 chronic_df <- chronic_df[(chronic_df$Year == 2020),]
 chronic_df <- chronic_df[,c("Year","StateAbbr","StateDesc","CountyName","CountyFIPS","LocationName","Data_Value","TotalPopulation","MeasureId")]
