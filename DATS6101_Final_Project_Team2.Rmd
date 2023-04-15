@@ -23,6 +23,14 @@ options(scientific=T, digits = 3)
 # options(scipen=9, digits = 3) 
 ```
 
+```{r}
+# Import Libraries
+rm(list=ls())
+library(readr)
+library(ggplot2)
+library(tidyr)
+```
+
 ```{r init}
 url <- 'https://raw.githubusercontent.com/eitanaka/DATS6101_Final_Project_Team2/main/data_set/geo_socio_health_df.csv'
 master_df <- read_csv(url)
@@ -38,7 +46,7 @@ In project 1, we investigated how health risk behaviors are associated with heal
 ### Data sets
 Need edited (Describe about 4 data set and how we create)
 
-### Variables of interest?
+### Variables of interest
 CountyFIPS: a character column containing the FIPS code for each county.
 GEOID: a character column containing the unique ID for each county.
 StateAbbr: a character column containing the abbreviation for the state where each county is located.
@@ -85,8 +93,16 @@ Need edited
 ## EDA
 Need edited
 
+#### Handle Null Values
+```{r}
+master_df <- na.omit(master_df)
+colSums(master_df)
+```
+
 ### Basic EDA
 Need edited
+
+#### Handle Outlier
 ```{r}
 
 ```
@@ -109,6 +125,12 @@ Need edited
 
 ### Hypothesis Testing
 Need edited
+
+### Correlations
+```{r}
+cor_matrix <- cor(master_df[,6:50])
+View(cor_matrix)
+```
 
 ### EDA Interpretation?
 Need edited
