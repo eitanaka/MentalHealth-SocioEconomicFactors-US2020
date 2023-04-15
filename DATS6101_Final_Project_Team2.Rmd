@@ -43,23 +43,23 @@ CountyFIPS: a character column containing the FIPS code for each county.
 GEOID: a character column containing the unique ID for each county.
 StateAbbr: a character column containing the abbreviation for the state where each county is located.
 CountyName: a character column containing the name of each county.
-BINGE: 
-DEPRESSION:
-LPA:
-MHLTH:
-SLEEP: numeric columns representing percentages of adults in each county that reported binge drinking, depression, physical inactivity, poor mental health, and insufficient sleep, respectively.
-MT_Total:
-MT_Never Married:
-MT_Now married:
-MT_Divorces:
-MT_Separated:
+BINGE: numeric columns representing percentages of adults in each county that reported binge drinking
+DEPRESSION: numeric columns representing percentages of adults in each county that reported binge depression
+LPA: numeric columns representing percentages of adults in each county that reported less physical activity
+MHLTH: numeric columns representing percentages of adults in each county that reported poor mental health
+SLEEP: numeric columns representing percentages of adults in each county that reported insufficient sleep.
+MT_Total: Total marital status
+MT_Never Married: numeric columns representing percentages of adults in each county who were categorized as never married
+MT_Now married: numeric columns representing percentages of adults in each county who were categorized as now married.
+MT_Divorces: numeric columns representing percentages of adults in each county who were categorized as having got divorces.
+MT_Separated: numeric columns representing percentages of adults in each county who were categorized as couple who separated.
 MT_Widowed: numeric columns representing percentages of adults in each county who were categorized as having a certain marital status.
-EA_Total:
-EA_Less than high school graduate:
-EA_High school graduate:
-EA_college or associate's degree:
-EA_Bachelor's degree:
-EA_Graduate or professional degree:numeric columns representing percentages of adults in each county who were categorized as having a certain educational attainment.
+EA_Total: Total education population.
+EA_Less than high school graduate:numeric columns representing percentages of adults in each county who were categorized as studied less than high school
+EA_High school graduate:numeric columns representing percentages of adults in each county who were categorized who are high school graduate.
+EA_college or associate's degree: numeric columns representing percentages of adults in each county who were categorized who did college or associate's degree
+EA_Bachelor's degree: numeric columns representing percentages of adults in each county who were categorized as completed bachelor's degree
+EA_Graduate or professional degree:numeric columns representing percentages of adults in each county who were categorized as having a certain educational graduate or professional degree.
 MI_Estimate: numeric column representing the median household income in each county.
 Total Population: numeric column representing the total population of each county.
 CT_Total: numeric column representing the percentages of the population in each county that take total commute time in percentage
