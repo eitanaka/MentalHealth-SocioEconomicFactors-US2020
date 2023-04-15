@@ -47,6 +47,7 @@ Need edited
 
 ```
 
+
 ## EDA
 Need edited
 
@@ -54,6 +55,17 @@ Need edited
 Need edited
 ```{r}
 
+```
+
+## Data Structure
+Need edited
+```{r}
+str(master_df)
+```
+## Summary Statictics
+Need edited
+```{r}
+summary(master_df)
 ```
 
 ### Descriptive Statistics
