@@ -32,7 +32,8 @@ master_df <- read_csv(url)
 Need edited
 
 ## Introcuction
-Need edited
+In project 1, we investigated how health risk behaviors are associated with health outcomes and health status. Now we are trying to examine whether there is any significant influence on mental health due to lifestyle, socio-economic factors, and covid-19 in the United States. Census tracts will be used in calculating and analyzing all the different datasets. This research will help us in identifying and expecting what factors have significantly impacted mental health and well-being in the United States in 2020.  
+
 
 ### Data sets
 Need edited (Describe about 4 data set and how we create)
