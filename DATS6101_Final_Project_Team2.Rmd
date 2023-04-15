@@ -49,6 +49,12 @@ Need edited
 ## EDA
 Need edited
 
+#### Handle Null Vales
+```{r}
+master_df <- na.omit(master_df)
+colSums(master_df)
+```
+
 ### Basic EDA
 Need edited
 ```{r}
@@ -60,6 +66,12 @@ Need edited
 
 ### Hypothesis Testing
 Need edited
+
+### Correlations
+```{r}
+cor_matrix <- cor(master_df[,6:50])
+View(cor_matrix)
+```
 
 ### EDA Interpretation?
 Need edited
