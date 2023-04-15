@@ -49,42 +49,56 @@ In project 1, we investigated how health risk behaviors are associated with heal
 Need edited (Describe about 4 data set and how we create)
 
 ### Variables of interest
-CountyFIPS: a character column containing the FIPS code for each county.
-GEOID: a character column containing the unique ID for each county.
+CountyFIPS: a numeric column containing the FIPS code for each county.
+GEOID: a numeric column containing the unique  Geographical ID for each county.
 StateAbbr: a character column containing the abbreviation for the state where each county is located.
 CountyName: a character column containing the name of each county.
-BINGE: numeric columns representing percentages of adults in each county that reported binge drinking
-DEPRESSION: numeric columns representing percentages of adults in each county that reported binge depression
-LPA: numeric columns representing percentages of adults in each county that reported less physical activity
-MHLTH: numeric columns representing percentages of adults in each county that reported poor mental health
-SLEEP: numeric columns representing percentages of adults in each county that reported insufficient sleep.
-MT_Total: Total marital status
-MT_Never Married: numeric columns representing percentages of adults in each county who were categorized as never married
-MT_Now married: numeric columns representing percentages of adults in each county who were categorized as now married.
-MT_Divorces: numeric columns representing percentages of adults in each county who were categorized as having got divorces.
-MT_Separated: numeric columns representing percentages of adults in each county who were categorized as couple who separated.
-MT_Widowed: numeric columns representing percentages of adults in each county who were categorized as having a certain marital status.
-EA_Total: Total education population.
-EA_Less than high school graduate:numeric columns representing percentages of adults in each county who were categorized as studied less than high school
-EA_High school graduate:numeric columns representing percentages of adults in each county who were categorized who are high school graduate.
-EA_college or associate's degree: numeric columns representing percentages of adults in each county who were categorized who did college or associate's degree
-EA_Bachelor's degree: numeric columns representing percentages of adults in each county who were categorized as completed bachelor's degree
-EA_Graduate or professional degree:numeric columns representing percentages of adults in each county who were categorized as having a certain educational graduate or professional degree.
-MI_Estimate: numeric column representing the median household income in each county.
-Total Population: numeric column representing the total population of each county.
-CT_Total: numeric column representing the percentages of the population in each county that take total commute time in percentage
-CT_<10: numeric column representing the percentages of the population in each county that take commute time less than 10min
-CT_10-14: numeric column representing the percentages of the population in each county that take commute time between 10 -14min
-CT_20-24: numeric column representing the percentages of the population in each county that take commute time between 20 -24min
-CT_25-29: numeric column representing the percentages of the population in each county that take commute time between 25 -29min
-CT_30-34: numeric column representing the percentages of the population in each county that take commute time between 30 -34min
-CT_35-44: numeric column representing the percentages of the population in each county that take commute time between 35 -44min
-CT_45-54: numeric column representing the percentages of the population in each county that take commute time between 45 -54min
-CT_55-59: numeric column representing the percentages of the population in each county that take commute time between 55 -59min
-CT_60-64: numeric column representing the percentages of the population in each county that take commute time between 60 -64min
-CT_65-74: numeric column representing the percentages of the population in each county that take commute time between 65 -74min
-CT_75-84: numeric column representing the percentages of the population in each county that take commute time between 75 -84min
-CT_85plus: numeric column representing the percentages of the population in each county that take commute time more than 85 plus minutes
+BINGE: a numeric columns representing percentages of population in each county that reported binge drinking
+DEPRESSION:a numeric columns representing percentages of population in each county that reported depression
+LPA:a numeric columns representing percentages of population in each county that reported doing less physical activity
+MHLTH:a numeric columns representing percentages of population in each county that reported poor mental health
+SLEEP:a numeric columns representing percentages of population in each county that reported insufficient sleep.
+MT_Total: Total marital status percentage.
+MT_Never Married:a numeric columns representing percentages of adults in each county who were categorized as never married
+MT_Now married:a numeric columns representing percentages of adults in each county who were categorized as now married.
+MT_Divorces:a numeric columns representing percentages of adults in each county who were categorized as got divorces.
+MT_Separated:a numeric columns representing percentages of adults in each county who were categorized as couple who separated.
+MT_Widowed:a numeric columns representing percentages of adults in each county who were categorized as widowed.
+EA_Total: Total educational population percentage.
+EA_Less than high school graduate:a numeric columns representing percentages of adults in each county who were categorized as studied less than high school
+EA_High school graduate: a numeric columns representing percentages of adults in each county who were categorized who are high school graduate.
+EA_college or associate's degree:a numeric columns representing percentages of adults in each county who were categorized who did college or associate's degree
+EA_Bachelor's degree: a numeric columns representing percentages of adults in each county who were categorized as completed bachelor's degree
+EA_Graduate or professional degree:a numeric columns representing percentages of adults in each county who were categorized as having a certain educational graduate or professional degree.
+MI_Estimate:a numeric column representing the estimated median household income in each county.
+Total Population:a numeric column representing the total population of each county.
+CT_Total:a numeric column representing the percentages of the population in each county that take total commute time in percentage.
+CT_<10:a numeric column representing the percentages of the population in each county that take commute time less than 10min
+CT_10-14:a numeric column representing the percentages of the population in each county that take commute time between 10 -14min
+CT_20-24:a numeric column representing the percentages of the population in each county that take commute time between 20 -24min
+CT_25-29:a numeric column representing the percentages of the population in each county that take commute time between 25 -29min
+CT_30-34:a numeric column representing the percentages of the population in each county that take commute time between 30 -34min
+CT_35-44:a numeric column representing the percentages of the population in each county that take commute time between 35 -44min
+CT_45-54:a numeric column representing the percentages of the population in each county that take commute time between 45 -54min
+CT_55-59:a numeric column representing the percentages of the population in each county that take commute time between 55 -59min
+CT_>60:a numeric column representing the percentages of the population in each county that take commute time more than 60 minutes
+
+ES_Total: This variable represents the percentage of the total population that is employed or actively seeking employment.
+ES_Total_labor_force: This variable represents the percentage of the total population that is either employed or actively seeking employment out of the total labor force.
+ES_Civilian_labor_force: This variable represents the percentage of the total population that is either employed or actively seeking employment within the civilian labor force.
+ES_Civilian_labor_force_employed: This variable represents the percentage of the total civilian labor force that is currently employed.
+ES_Civilian_labor_force_unemployed: This variable represents the percentage of the total civilian labor force that is currently unemployed and actively seeking employment.
+ES_Armed_Forces: This variable represents the percentage of the total population that is serving in the armed forces.
+ES_Not_in_labor_force: This variable represents the percentage of the total population that is not part of the labor force, either due to being retired, not seeking employment, or being unable to work.
+LAND_AREA: This variable represents the total land area in square kilometers.
+URBANIZED_AREA_POP_CEN_2010: This variable represents the population in urbanized areas as of the 2010 Census.
+URBAN_CLUSTER_POP_CEN_2010: This variable represents the population in urban clusters as of the 2010 Census.
+RURAL_POP_CEN_2010: This variable represents the rural population as of the 2010 Census.
+pct_URBANIZED_AREA_POP_CEN_2010: This variable represents the percentage of the total population living in urbanized areas as of the 2010 Census.
+pct_URBAN_CLUSTER_POP_CEN_2010: This variable represents the percentage of the total population living in urban clusters as of the 2010 Census.
+pct_RURAL_POP_CEN_2010: This variable represents the percentage of the total population living in rural areas as of the 2010 Census.
+index_apr20: This variable represents an index value for the area in question as of April 2020.
+pop.den: This variable represents the population density of the area in question.
 
 ### Initial SMART Question
 Need edited
@@ -94,6 +108,42 @@ Need edited
 
 ## EDA
 Need edited
+```{r}
+# checking normality of dependent variables
+master_df <- na.omit(master_df)
+colnames(master_df)[colnames(master_df) == "MT_Never Married"] <- "MT_never_married"
+colnames(master_df)[colnames(master_df) == "MT_Now married"] <- "MT_now_married"
+colnames(master_df)[colnames(master_df) == "Total Population"] <- "total_population"
+colnames(master_df)[colnames(master_df) == "EA_Less than high school graduate"] <- "EA_Less_than_high_school_graduate"
+colnames(master_df)[colnames(master_df) == "EA_High school graduate"] <- "EA_High_school_graduate"
+colnames(master_df)[colnames(master_df) == "EA_college or associate's degree"] <- "EA_college_or_associates_degree"
+colnames(master_df)[colnames(master_df) == "EA_Bachelor's degree"] <- "EA_Bachelors_degree"
+colnames(master_df)[colnames(master_df) == "EA_Graduate or professional degree"] <- "EA_Graduate_or_professional_degree"
+
+# histograms
+dep_hist <- hist(master_df$DEPRESSION, main = "Distribution of Tract-level Depression Rates")
+mhlth_hist <- hist(master_df$MHLTH, main = "Distribution of Tract-level Poor Mental Health Rates")
+dep_hist
+mhlth_hist
+
+# qqplots
+dep_qq <- qqnorm(master_df$DEPRESSION, main = "Distribution of Tract-level Depression Rates")
+mhlth_qq <- qqnorm(master_df$MHLTH, main = "Distribution of Tract-level Poor Mental Health Rates")
+dep_qq
+mhlth_qq
+
+# create data frame of only numeric values
+cols_to_remove <- c("...1", "CountyFIPS", "GEOID", "StateAbbr", "CountyName", "MT_Total", "EA_Total", "total_population", "CT_Total", "ES_Total", "LAND_AREA")
+num_df <- master_df[ , !names(master_df) %in% cols_to_remove]
+
+# hist_list <- lapply(names(num_df), function(col) {
+#   ggplot(num_df, aes_string(x = col)) +
+#     geom_histogram() +
+#     ggtitle(col)
+# })
+# hist_list
+```
+
 
 #### Handle Null Values
 ```{r}
@@ -122,6 +172,9 @@ summary(master_df)
 ```
 
 ### Descriptive Statistics
+Need edited 
+
+### Hypothesis Testing
 Need edited
 
 ### Correlations
