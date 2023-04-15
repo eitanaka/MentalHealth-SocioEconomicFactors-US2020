@@ -15,7 +15,6 @@
 rm(list = ls())
 
 # import libraries
-
 library(readr)
 library(tidyr)
 library(dplyr)
@@ -209,6 +208,10 @@ file_id <- "1V5tpX0Rk8ApKTbIjvnFHRMENfgMCyoec"
 drive_download(as_id(file_id), overwrite = TRUE)
 planning_df <- read_csv("pdb2020trv2_us.csv")
 
+planning_df <- select(planning_df, GIDTR, LAND_AREA, URBANIZED_AREA_POP_CEN_2010, URBAN_CLUSTER_POP_CEN_2010, RURAL_POP_CEN_2010, Tot_Population_CEN_2010, pct_URBANIZED_AREA_POP_CEN_2010, pct_URBAN_CLUSTER_POP_CEN_2010, pct_RURAL_POP_CEN_2010)
+
+colnames(planning_df)[colnames(planning_df) == "GIDTR"] <- "GEOID"
+
 #----------------------------------------------------------------------------------------------------
 
 # Merge ACS, Census Relationship, and CEII into CDC dataset
@@ -216,9 +219,9 @@ planning_df <- read_csv("pdb2020trv2_us.csv")
 # On the other hand, CEII is merges on CountyFIPs, since CEII is conducted by county level
 
 # Function to merge ACS, CR, CEII into CDC on GEOID(tract level)
-merge_all_df <- function(CDC, ACS, CR, CEII) {
+merge_all_df <- function(CDC, ACS, planning_df, CEII) {
   
-  df <- merge(ACS, CR, by=c("GEOID"))
+  df <- merge(ACS, planning_df, by=c("GEOID"))
 
   df <- merge(CDC, df[, -which(names(df)=='NAME')], by=c('GEOID'))
   
@@ -227,8 +230,13 @@ merge_all_df <- function(CDC, ACS, CR, CEII) {
   return(df)
 }
 
+dim(acs_2020_df)
+dim(CDC_df)
+dim(planning_df)
+dim(ceii_df)
+
 # Final Version of data set (Still needed manipulated each column to make meaningful column)
-final_df <- merge_all_df(CDC_df, acs_2020_df, CR_df, ceii_df)
+final_df <- merge_all_df(CDC_df, acs_2020_df, planning_df, ceii_df)
 
 #-------------------------------------------------------------------------------------------------------------
 
@@ -255,12 +263,13 @@ colSums(is.na(final_df))
 
 # modify final_df
 final_df <- select(final_df, -c("Year", "StateDesc", "TotalPopulation", "va_jan20", "va_feb20", "va_mar20", "va_apr20", "va_may20", "va_jun20", "va_jul20", "va_aug20", "va_sep20", "va_oct20", "va_nov20", "va_dec20", "pcEmpAct_jan20", "pcEmpAct_feb20", "pcEmpAct_mar20", "pcEmpAct_apr20", "pcEmpAct_may20", "pcEmpAct_jun20", "pcEmpAct_jul20", "pcEmpAct_aug20", "pcEmpAct_sep20", "pcEmpAct_oct20", "pcEmpAct_nov20", "pcEmpAct_dec20", "index_jan20", "index_feb20", "index_mar20", "index_may20", "index_jun20", "index_jul20", "index_aug20", "index_sep20", "index_oct20", "index_nov20", "index_dec20", "va_mean", "pcEmpAct_mean", "index_mean"))
-colnames(final_df)[colnames(final_df) == "Total Population"] <- "total.population"
-colnames(final_df)[colnames(final_df) == "AreaLand"] <- "area.land.km"
-colnames(final_df)[colnames(final_df) == "AreaWater"] <- "area.water.km"
-final_df$area.land.km <- final_df$area.land.km/1000
-final_df$area.water.km <- final_df$area.water.km/1000
-final_df$pop.per.km <- final_df$total.population/final_df$area.land.km
+# colnames(final_df)[colnames(final_df) == "Total Population"] <- "total.population"
+# colnames(final_df)[colnames(final_df) == "AreaLand"] <- "area.land.km"
+# colnames(final_df)[colnames(final_df) == "AreaWater"] <- "area.water.km"
+# final_df$area.land.km <- final_df$area.land.km/1000000
+# final_df$area.water.km <- final_df$area.water.km/1000000
+# final_df$pop.per.km <- final_df$total.population/final_df$area.land.km
+
 
 # Covert Each dependent variables to percentages(MT, EA, ES, CT)
 convert_percent_pop <- function(df, prefix) {
@@ -273,3 +282,14 @@ new_final_df <- convert_percent_pop(final_df, "MT")
 new_final_df <- convert_percent_pop(new_final_df, "EA")
 new_final_df <- convert_percent_pop(new_final_df, "ES")
 new_final_df <- convert_percent_pop(new_final_df, "CT")
+
+# remove columns and calculate population density in new_final_df
+new_final_df <- subset(new_final_df, select = -Tot_Population_CEN_2010)
+new_final_df$pop.den <- new_final_df$`Total Population`/new_final_df$LAND_AREA
+
+# export new_final_df as csv file
+write.csv(new_final_df, "geo_socio_health_df.csv")
+
+# use regression tree for continuous dependent variable
+# use rpart method = ANOVA
+
