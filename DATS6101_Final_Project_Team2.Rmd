@@ -1,5 +1,5 @@
 ---
-title: "Title"
+title: "Lifecycle and mental health"
 author: "Ishani Makwana, Henry Hirsch and Ei Tanaka"
 date: "`r Sys.Date()`"
 output:
@@ -22,6 +22,12 @@ knitr::opts_chunk$set(warning = F, results = "hide", message = F)
 options(scientific=T, digits = 3) 
 # options(scipen=9, digits = 3) 
 ```
+
+```{r init}
+url <- 'https://raw.githubusercontent.com/eitanaka/DATS6101_Final_Project_Team2/main/data_set/geo_socio_health_df.csv'
+master_df <- read_csv(url)
+```
+
 ## Abstract
 Need edited
 
