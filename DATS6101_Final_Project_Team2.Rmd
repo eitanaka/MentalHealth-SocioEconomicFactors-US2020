@@ -29,11 +29,12 @@ rm(list=ls())
 library(readr)
 library(ggplot2)
 library(tidyr)
+library(corrplot)
 ```
 
 ```{r init}
 url <- 'https://raw.githubusercontent.com/eitanaka/DATS6101_Final_Project_Team2/main/data_set/geo_socio_health_df.csv'
-master_df <- read_csv(url)
+master_df<- read_csv(url)
 ```
 
 ## Abstract
@@ -96,7 +97,7 @@ Need edited
 #### Handle Null Values
 ```{r}
 master_df <- na.omit(master_df)
-colSums(master_df)
+colSums(is.na(master_df[6:length(master_df)]))
 ```
 
 ### Basic EDA
@@ -128,8 +129,45 @@ Need edited
 
 ### Correlations
 ```{r}
-cor_matrix <- cor(master_df[,6:50])
+cor_matrix <- cor(master_df[,6:length(master_df)])
 View(cor_matrix)
+
+# Create 6 subset for cor_matrix or cor_heatmap
+dep_mth_df <- subset(master_df, select = "DEPRESSION")
+dep_mth_df <- cbind(dep_mth_df, master_df[,9])
+
+# Data frame containing depression, mhlth, health risk behaviors
+dep_mth_hrb <- dep_mth_df
+dep_mth_hrb["BINGE"] <- master_df[,6]
+dep_mth_hrb["LPA"] <- master_df[,8]
+dep_mth_hrb["SLEEP"] <- master_df[,10]
+
+# Data frame containing depression, mhlth, MT
+dep_mth_mt <- cbind(dep_mth_df, master_df[12:16])
+# Data frame containing depression, mhlth, EA, MI, Pop
+dep_mth_ea_mi_pop <- cbind(dep_mth_df, master_df[18:24])
+# Data Frame containing depression, mhlth, MI, Pop, CT
+dep_mth_ct <- cbind(dep_mth_df, master_df[26:34])
+# Data Frame containing depression, mhlth, ES 
+dep_mth_es <-cbind(dep_mth_df, master_df[36:41])
+# Data Frame containing depression, mhlth, others
+dep_mth_geo <- cbind(dep_mth_df, master_df[42:length(master_df)])
+
+# A set of cormatrix
+cor_matrix_HRB <- cor(dep_mth_hrb)
+cor_matrix_MT_EA <- cor(dep_mth_mt)
+cor_matrix_EA_MI_POP <- cor(dep_mth_ea_mi_pop)
+cor_matrix_CT <- cor(dep_mth_ct)
+cor_matrix_ES <- cor(dep_mth_ES)
+cor_matrix_GEO <- cor(dep_mth_geo)
+
+# Plot
+corrplot(cor_matrix_HRB, method = "circle", type = "upper", order = "hclust", addCoef.col = "black", tl.col = "black", tl.srt = 45, cl.pos = "n")
+corrplot(cor_matrix_MT_EA, method = "circle", type = "upper", order = "hclust", addCoef.col = "black", tl.col = "black", tl.srt = 45, cl.pos = "n")
+corrplot(cor_matrix_EA_MI_POP, method = "circle", type = "upper", order = "hclust", addCoef.col = "black", tl.col = "black", tl.srt = 45, cl.pos = "n")
+corrplot(cor_matrix_CT, method = "circle", type = "upper", order = "hclust", addCoef.col = "black", tl.col = "black", tl.srt = 45, cl.pos = "n")
+corrplot(cor_matrix_ES, method = "circle", type = "upper", order = "hclust", addCoef.col = "black", tl.col = "black", tl.srt = 45, cl.pos = "n")
+corrplot(cor_matrix_GEO, method = "circle", type = "upper", order = "hclust", addCoef.col = "black", tl.col = "black", tl.srt = 45, cl.pos = "n")
 ```
 
 ### EDA Interpretation?
