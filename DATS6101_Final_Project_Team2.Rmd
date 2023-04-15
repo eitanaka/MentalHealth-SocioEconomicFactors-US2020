@@ -107,11 +107,49 @@ Need edited
 
 ## EDA
 Need edited
+```{r}
+# checking normality of dependent variables
+master_df <- na.omit(master_df)
+colnames(master_df)[colnames(master_df) == "MT_Never Married"] <- "MT_never_married"
+colnames(master_df)[colnames(master_df) == "MT_Now married"] <- "MT_now_married"
+colnames(master_df)[colnames(master_df) == "Total Population"] <- "total_population"
+colnames(master_df)[colnames(master_df) == "EA_Less than high school graduate"] <- "EA_Less_than_high_school_graduate"
+colnames(master_df)[colnames(master_df) == "EA_High school graduate"] <- "EA_High_school_graduate"
+colnames(master_df)[colnames(master_df) == "EA_college or associate's degree"] <- "EA_college_or_associates_degree"
+colnames(master_df)[colnames(master_df) == "EA_Bachelor's degree"] <- "EA_Bachelors_degree"
+colnames(master_df)[colnames(master_df) == "EA_Graduate or professional degree"] <- "EA_Graduate_or_professional_degree"
+
+# histograms
+dep_hist <- hist(master_df$DEPRESSION, main = "Distribution of Tract-level Depression Rates")
+mhlth_hist <- hist(master_df$MHLTH, main = "Distribution of Tract-level Poor Mental Health Rates")
+dep_hist
+mhlth_hist
+
+# qqplots
+dep_qq <- qqnorm(master_df$DEPRESSION, main = "Distribution of Tract-level Depression Rates")
+mhlth_qq <- qqnorm(master_df$MHLTH, main = "Distribution of Tract-level Poor Mental Health Rates")
+dep_qq
+mhlth_qq
+
+# create data frame of only numeric values
+cols_to_remove <- c("...1", "CountyFIPS", "GEOID", "StateAbbr", "CountyName", "MT_Total", "EA_Total", "total_population", "CT_Total", "ES_Total", "LAND_AREA")
+num_df <- master_df[ , !names(master_df) %in% cols_to_remove]
+
+# hist_list <- lapply(names(num_df), function(col) {
+#   ggplot(num_df, aes_string(x = col)) +
+#     geom_histogram() +
+#     ggtitle(col)
+# })
+# hist_list
+
+```
+
 
 #### Handle Null Values
 ```{r}
 master_df <- na.omit(master_df)
 colSums(is.na(master_df[6:length(master_df)]))
+
 ```
 
 ### Basic EDA
@@ -141,19 +179,19 @@ Need edited
 ```{r}
 library(ggplot2) # load gplots package for heatmap function
 
-# Set color palette
-my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 299)
-
-# Create heatmap
-master_df <- na.omit(master_df)
-cor_matrix <- cor(master_df[,6:50])
-heatmap(cor_matrix, symm = TRUE)
-heatmap(cor_matrix, 
-        col=my_palette, # use custom color palette
-        scale="none", # do not scale the data
-        symm=TRUE, # use symmetric color scale
-        margins=c(10, 10), # add margins to the heatmap
-        main="Correlation Heatmap") # add a title to the heatmap
+# # Set color palette
+# my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 299)
+# 
+# # Create heatmap
+# master_df <- na.omit(master_df)
+# cor_matrix <- cor(master_df[,6:50])
+# heatmap(cor_matrix, symm = TRUE)
+# heatmap(cor_matrix, 
+#         col=my_palette, # use custom color palette
+#         scale="none", # do not scale the data
+#         symm=TRUE, # use symmetric color scale
+#         margins=c(10, 10), # add margins to the heatmap
+#         main="Correlation Heatmap") # add a title to the heatmap
 
 ```
 ### Hypothesis Testing
@@ -190,7 +228,7 @@ cor_matrix_HRB <- cor(dep_mth_hrb)
 cor_matrix_MT_EA <- cor(dep_mth_mt)
 cor_matrix_EA_MI_POP <- cor(dep_mth_ea_mi_pop)
 cor_matrix_CT <- cor(dep_mth_ct)
-cor_matrix_ES <- cor(dep_mth_ES)
+cor_matrix_ES <- cor(dep_mth_es)
 cor_matrix_GEO <- cor(dep_mth_geo)
 
 # Plot
