@@ -78,9 +78,10 @@ CT_85plus: numeric column representing the percentages of the population in each
 
 ### Initial SMART Question
 Need edited
-```{r}
+1) Why does the United States have a large number of people with depression and mental health issues? Is the lifestyle, socio-economic factors, and covid-19 in the States leading people towards poor mental health?
 
-```
+2) How can we expect predictors to contribute to increased depression and poor mental health?
+
 
 
 ## EDA
