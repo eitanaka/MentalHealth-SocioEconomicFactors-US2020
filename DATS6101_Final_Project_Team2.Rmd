@@ -30,6 +30,7 @@ library(readr)
 library(ggplot2)
 library(tidyr)
 library(corrplot)
+library(ezids)
 ```
 
 ```{r init}
@@ -105,7 +106,6 @@ Need edited
 
 #### Handle Outlier
 ```{r}
-
 ```
 
 ## Data Structure
@@ -122,9 +122,6 @@ summary(master_df)
 ```
 
 ### Descriptive Statistics
-Need edited
-
-### Hypothesis Testing
 Need edited
 
 ### Correlations
@@ -158,7 +155,7 @@ cor_matrix_HRB <- cor(dep_mth_hrb)
 cor_matrix_MT_EA <- cor(dep_mth_mt)
 cor_matrix_EA_MI_POP <- cor(dep_mth_ea_mi_pop)
 cor_matrix_CT <- cor(dep_mth_ct)
-cor_matrix_ES <- cor(dep_mth_ES)
+cor_matrix_ES <- cor(dep_mth_es)
 cor_matrix_GEO <- cor(dep_mth_geo)
 
 # Plot
@@ -168,6 +165,17 @@ corrplot(cor_matrix_EA_MI_POP, method = "circle", type = "upper", order = "hclus
 corrplot(cor_matrix_CT, method = "circle", type = "upper", order = "hclust", addCoef.col = "black", tl.col = "black", tl.srt = 45, cl.pos = "n")
 corrplot(cor_matrix_ES, method = "circle", type = "upper", order = "hclust", addCoef.col = "black", tl.col = "black", tl.srt = 45, cl.pos = "n")
 corrplot(cor_matrix_GEO, method = "circle", type = "upper", order = "hclust", addCoef.col = "black", tl.col = "black", tl.srt = 45, cl.pos = "n")
+```
+
+### Variable Selection
+Need edited
+```{r}
+
+```
+
+### Hypothesis Testing
+Need edited
+```{r}
 ```
 
 ### EDA Interpretation?
