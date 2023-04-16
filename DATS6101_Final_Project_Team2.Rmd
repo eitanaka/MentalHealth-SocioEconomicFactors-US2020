@@ -50,56 +50,56 @@ In project 1, we investigated how health risk behaviors are associated with heal
 Need edited (Describe about 4 data set and how we create)
 
 ### Variables of interest
-CountyFIPS: a numeric column containing the FIPS code for each county.
-GEOID: a numeric column containing the unique  Geographical ID for each county.
-StateAbbr: a character column containing the abbreviation for the state where each county is located.
-CountyName: a character column containing the name of each county.
-BINGE: a numeric columns representing percentages of population in each county that reported binge drinking
-DEPRESSION:a numeric columns representing percentages of population in each county that reported depression
-LPA:a numeric columns representing percentages of population in each county that reported doing less physical activity
-MHLTH:a numeric columns representing percentages of population in each county that reported poor mental health
-SLEEP:a numeric columns representing percentages of population in each county that reported insufficient sleep.
-MT_Total: Total marital status percentage.
-MT_Never Married:a numeric columns representing percentages of adults in each county who were categorized as never married
-MT_Now married:a numeric columns representing percentages of adults in each county who were categorized as now married.
-MT_Divorces:a numeric columns representing percentages of adults in each county who were categorized as got divorces.
-MT_Separated:a numeric columns representing percentages of adults in each county who were categorized as couple who separated.
-MT_Widowed:a numeric columns representing percentages of adults in each county who were categorized as widowed.
-EA_Total: Total educational population percentage.
-EA_Less than high school graduate:a numeric columns representing percentages of adults in each county who were categorized as studied less than high school
-EA_High school graduate: a numeric columns representing percentages of adults in each county who were categorized who are high school graduate.
-EA_college or associate's degree:a numeric columns representing percentages of adults in each county who were categorized who did college or associate's degree
-EA_Bachelor's degree: a numeric columns representing percentages of adults in each county who were categorized as completed bachelor's degree
-EA_Graduate or professional degree:a numeric columns representing percentages of adults in each county who were categorized as having a certain educational graduate or professional degree.
-MI_Estimate:a numeric column representing the estimated median household income in each county.
-Total Population:a numeric column representing the total population of each county.
-CT_Total:a numeric column representing the percentages of the population in each county that take total commute time in percentage.
-CT_<10:a numeric column representing the percentages of the population in each county that take commute time less than 10min
-CT_10-14:a numeric column representing the percentages of the population in each county that take commute time between 10 -14min
-CT_20-24:a numeric column representing the percentages of the population in each county that take commute time between 20 -24min
-CT_25-29:a numeric column representing the percentages of the population in each county that take commute time between 25 -29min
-CT_30-34:a numeric column representing the percentages of the population in each county that take commute time between 30 -34min
-CT_35-44:a numeric column representing the percentages of the population in each county that take commute time between 35 -44min
-CT_45-54:a numeric column representing the percentages of the population in each county that take commute time between 45 -54min
-CT_55-59:a numeric column representing the percentages of the population in each county that take commute time between 55 -59min
-CT_>60:a numeric column representing the percentages of the population in each county that take commute time more than 60 minutes
+<!-- CountyFIPS: a numeric column containing the FIPS code for each county. -->
+<!-- GEOID: a numeric column containing the unique  Geographical ID for each county. -->
+<!-- StateAbbr: a character column containing the abbreviation for the state where each county is located. -->
+<!-- CountyName: a character column containing the name of each county. -->
+<!-- BINGE: a numeric columns representing percentages of population in each county that reported binge drinking -->
+<!-- DEPRESSION:a numeric columns representing percentages of population in each county that reported depression -->
+<!-- LPA:a numeric columns representing percentages of population in each county that reported doing less physical activity -->
+<!-- MHLTH:a numeric columns representing percentages of population in each county that reported poor mental health -->
+<!-- SLEEP:a numeric columns representing percentages of population in each county that reported insufficient sleep. -->
+<!-- MT_Total: Total marital status percentage. -->
+<!-- MT_Never Married:a numeric columns representing percentages of adults in each county who were categorized as never married -->
+<!-- MT_Now married:a numeric columns representing percentages of adults in each county who were categorized as now married. -->
+<!-- MT_Divorces:a numeric columns representing percentages of adults in each county who were categorized as got divorces. -->
+<!-- MT_Separated:a numeric columns representing percentages of adults in each county who were categorized as couple who separated. -->
+<!-- MT_Widowed:a numeric columns representing percentages of adults in each county who were categorized as widowed. -->
+<!-- EA_Total: Total educational population percentage. -->
+<!-- EA_Less than high school graduate:a numeric columns representing percentages of adults in each county who were categorized as studied less than high school -->
+<!-- EA_High school graduate: a numeric columns representing percentages of adults in each county who were categorized who are high school graduate. -->
+<!-- EA_college or associate's degree:a numeric columns representing percentages of adults in each county who were categorized who did college or associate's degree -->
+<!-- EA_Bachelor's degree: a numeric columns representing percentages of adults in each county who were categorized as completed bachelor's degree -->
+<!-- EA_Graduate or professional degree:a numeric columns representing percentages of adults in each county who were categorized as having a certain educational graduate or professional degree. -->
+<!-- MI_Estimate:a numeric column representing the estimated median household income in each county. -->
+<!-- Total Population:a numeric column representing the total population of each county. -->
+<!-- CT_Total:a numeric column representing the percentages of the population in each county that take total commute time in percentage. -->
+<!-- CT_<10:a numeric column representing the percentages of the population in each county that take commute time less than 10min -->
+<!-- CT_10-14:a numeric column representing the percentages of the population in each county that take commute time between 10 -14min -->
+<!-- CT_20-24:a numeric column representing the percentages of the population in each county that take commute time between 20 -24min -->
+<!-- CT_25-29:a numeric column representing the percentages of the population in each county that take commute time between 25 -29min -->
+<!-- CT_30-34:a numeric column representing the percentages of the population in each county that take commute time between 30 -34min -->
+<!-- CT_35-44:a numeric column representing the percentages of the population in each county that take commute time between 35 -44min -->
+<!-- CT_45-54:a numeric column representing the percentages of the population in each county that take commute time between 45 -54min -->
+<!-- CT_55-59:a numeric column representing the percentages of the population in each county that take commute time between 55 -59min -->
+<!-- CT_>60:a numeric column representing the percentages of the population in each county that take commute time more than 60 minutes -->
 
-ES_Total: This variable represents the percentage of the total population that is employed or actively seeking employment.
-ES_Total_labor_force: This variable represents the percentage of the total population that is either employed or actively seeking employment out of the total labor force.
-ES_Civilian_labor_force: This variable represents the percentage of the total population that is either employed or actively seeking employment within the civilian labor force.
-ES_Civilian_labor_force_employed: This variable represents the percentage of the total civilian labor force that is currently employed.
-ES_Civilian_labor_force_unemployed: This variable represents the percentage of the total civilian labor force that is currently unemployed and actively seeking employment.
-ES_Armed_Forces: This variable represents the percentage of the total population that is serving in the armed forces.
-ES_Not_in_labor_force: This variable represents the percentage of the total population that is not part of the labor force, either due to being retired, not seeking employment, or being unable to work.
-LAND_AREA: This variable represents the total land area in square kilometers.
-URBANIZED_AREA_POP_CEN_2010: This variable represents the population in urbanized areas as of the 2010 Census.
-URBAN_CLUSTER_POP_CEN_2010: This variable represents the population in urban clusters as of the 2010 Census.
-RURAL_POP_CEN_2010: This variable represents the rural population as of the 2010 Census.
-pct_URBANIZED_AREA_POP_CEN_2010: This variable represents the percentage of the total population living in urbanized areas as of the 2010 Census.
-pct_URBAN_CLUSTER_POP_CEN_2010: This variable represents the percentage of the total population living in urban clusters as of the 2010 Census.
-pct_RURAL_POP_CEN_2010: This variable represents the percentage of the total population living in rural areas as of the 2010 Census.
-index_apr20: This variable represents an index value for the area in question as of April 2020.
-pop.den: This variable represents the population density of the area in question.
+<!-- ES_Total: This variable represents the percentage of the total population that is employed or actively seeking employment. -->
+<!-- ES_Total_labor_force: This variable represents the percentage of the total population that is either employed or actively seeking employment out of the total labor force. -->
+<!-- ES_Civilian_labor_force: This variable represents the percentage of the total population that is either employed or actively seeking employment within the civilian labor force. -->
+<!-- ES_Civilian_labor_force_employed: This variable represents the percentage of the total civilian labor force that is currently employed. -->
+<!-- ES_Civilian_labor_force_unemployed: This variable represents the percentage of the total civilian labor force that is currently unemployed and actively seeking employment. -->
+<!-- ES_Armed_Forces: This variable represents the percentage of the total population that is serving in the armed forces. -->
+<!-- ES_Not_in_labor_force: This variable represents the percentage of the total population that is not part of the labor force, either due to being retired, not seeking employment, or being unable to work. -->
+<!-- LAND_AREA: This variable represents the total land area in square kilometers. -->
+<!-- URBANIZED_AREA_POP_CEN_2010: This variable represents the population in urbanized areas as of the 2010 Census. -->
+<!-- URBAN_CLUSTER_POP_CEN_2010: This variable represents the population in urban clusters as of the 2010 Census. -->
+<!-- RURAL_POP_CEN_2010: This variable represents the rural population as of the 2010 Census. -->
+<!-- pct_URBANIZED_AREA_POP_CEN_2010: This variable represents the percentage of the total population living in urbanized areas as of the 2010 Census. -->
+<!-- pct_URBAN_CLUSTER_POP_CEN_2010: This variable represents the percentage of the total population living in urban clusters as of the 2010 Census. -->
+<!-- pct_RURAL_POP_CEN_2010: This variable represents the percentage of the total population living in rural areas as of the 2010 Census. -->
+<!-- index_apr20: This variable represents an index value for the area in question as of April 2020. -->
+<!-- pop.den: This variable represents the population density of the area in question. -->
 
 ### Initial SMART Question
 Need edited
@@ -233,10 +233,7 @@ mhlth_cor_df <- master_df[,c("MHLTH", "LPA", "SLEEP", "MT_never_married", "MT_no
 ### VIF Test for Multicollinearity
 ```{r}
 calculate_VIF <- function(data, target_col) {
-  # Separate the independent and dependent variables
   X <- data[, !colnames(data) %in% target_col]
-  
-  # Calculate the VIF values for each independent variable
   vif <- data.frame(
     Feature = colnames(X),
     VIF = apply(X, 2, function(x) vif(lm(x ~ ., data=X)))
@@ -248,10 +245,35 @@ depression_VIF <- calculate_VIF(depression_cor_df, "DEPRESSION")
 mhlth_VIF <- calculate_VIF(mhlth_cor_df, "MHLTH")
 
 depression_VIF
-mhlth_VIF.
+mhlth_VIF
 ```
 
-### Test Assumptions
+## Model Building
+Need edited
+
+### Multiple Linear regression vs. Regression Tree (we must delete this part in the summary paper)
+Multiple linear regression and regression tree are two different types of models used for predicting the value of a dependent variable based on one or more independent variables. The main differences between the two models are:
+
+- Model complexity: Multiple linear regression models assume a linear relationship between the dependent and independent variables, and involve estimating a set of coefficients that describe the relationship. In contrast, regression trees involve recursively partitioning the data into subsets based on the independent variables, and fitting a separate model to each subset. This makes regression trees more flexible than linear regression models, but also more complex and harder to interpret.
+
+- Variable selection: Multiple linear regression models typically involve selecting a subset of independent variables that are most predictive of the dependent variable. This is often done using methods such as stepwise regression or regularization. In contrast, regression trees can use all available independent variables in the model, and automatically select the most important variables based on the tree structure.
+
+- Interpretability: Multiple linear regression models provide interpretable coefficients that describe the relationship between the dependent and independent variables. In contrast, regression trees can be harder to interpret, as they involve recursively partitioning the data into subsets based on the independent variables. However, decision trees can be visualized and interpreted to gain insights into the relationships between the independent variables and the dependent variable.
+
+- Performance: The performance of multiple linear regression models depends on the linearity and homoscedasticity assumptions, and may suffer from overfitting or underfitting if the model is too simple or too complex. In contrast, regression trees are more flexible and can capture nonlinear relationships between the dependent and independent variables. However, they may also suffer from overfitting if the tree is too deep or complex.
+
+Overall, multiple linear regression and regression tree are both useful models for predicting the value of a dependent variable based on one or more independent variables. The choice between the two models depends on the specific problem and the data available.
+
+### Multiple Linear Regression
+```{r}
+# multiple linear regression model for depression
+depression_model <- lm(DEPRESSION ~ LPA + EA_High_school_graduate + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + URBANIZED_AREA_POP_CEN_2010 + pct_URBANIZED_AREA_POP_CEN_2010, data = depression_cor_df)
+
+# multiple linear regression model for poor mental health
+mhlth_model <- lm(MHLTH ~ LPA + SLEEP + MT_never_married + MT_now_married + MT_Separated + EA_Less_than_high_school_graduate + EA_High_school_graduate + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed, data = mhlth_cor_df)
+```
+
+#### Test Assumptions for Multiple linear regression
 - Normality of target variable (checked!: histogram & qqplot good!)
 - Linearity (checked!: corrplot good!)
 - Independence (checked! But not good...)
@@ -259,17 +281,24 @@ mhlth_VIF.
 - Homoscedasticity (checked! Breusch-Pagan test. But not good...)
 - No influential outliers (checked! cock's distance. But not good...)
 
-#### Building a model
+#### Multiple linear regression model Evaluation
+(From Textbook)
+5. Model Evaluation 
+- R-squared: R-squared is a measure of the proportion of variation in the dependent variable that is explained by the independent variables in the model. Higher R-squared values indicate a better fit of the model to the data. However, R-squared alone may not provide a complete picture of the model's performance.
+- Significance of coefficient
+- Residual analysis: Residual analysis involves examining the residuals (the differences between the observed and predicted values of the dependent variable) to assess the fit of the model. A good model should have residuals that are normally distributed with a mean of 0 and constant variance (homoscedasticity). Residual plots can help identify outliers and non-linear relationships in the data.
+- F-test: The F-test is a statistical test that compares the fit of the full model (with all independent variables) to a reduced model (with fewer independent variables). A significant F-test indicates that the full model provides a better fit to the data than the reduced model.
+- if comparing models: anova
+- if comparing models of different # of variables: use other criteria such as Adj R2, BIC, AIC, Marlow's Cp.
+- Cross-validation: Cross-validation involves splitting the data into training and testing sets to evaluate the performance of the model on new data. Cross-validation can help assess the generalizability of the model to new data and identify potential issues with overfitting.
+6 .Model selection: feature selection, interaction terms, etc. 
+Steps 5 and 6 might repeat to many times in search of a good model. Other times might need to restart from 2 to try out different model structures. 
 ```{r}
-# multiple linear regression model for depression
-depression_model <- lm(DEPRESSION ~ LPA + EA_High_school_graduate + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + URBANIZED_AREA_POP_CEN_2010 + pct_URBANIZED_AREA_POP_CEN_2010, data = depression_cor_df)
-
-# multiple linear regression model for poor mental health
-mhlth_model <- lm(MHLTH ~ LPA + SLEEP + MT_never_married + MT_now_married + MT_Separated + EA_Less_than_high_school_graduate + EA_High_school_graduate + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed, data = mhlth_cor_df)
-
+summary(depression_model)
+summary(mhlth_model)
 ```
 
-#### No Auto-colinearity (independence)
+##### No Auto-colinearity (independence)
 The Durbin-Watson test is a statistical test that evaluates whether the residuals (errors) in a regression model are independent of each other.
 This will output the Durbin-Watson test statistic, the degrees of freedom, and the p-value. The null hypothesis of the Durbin-Watson test is that there is no autocorrelation (independence) in the residuals. A p-value less than 0.05 suggests evidence of autocorrelation, while a p-value greater than 0.05 suggests no evidence of autocorrelation.
 ```{r}
@@ -281,24 +310,22 @@ mhlth_dwtest <- dwtest(mhlth_model)
 depression_dwtest
 mhlth_dwtest
 ```
-The Durbin-Watson test is a statistical test that evaluates whether the residuals (errors) in a regression model are independent of each other. The test statistic for the Durbin-Watson test ranges from 0 to 4, with a value of 2 indicating no autocorrelation (independence) of the residuals. A value less than 2 indicates positive autocorrelation, while a value greater than 2 indicates negative autocorrelation.
 
-Based on the results of the Durbin-Watson test for the two models, both the depression_model and mhlth_model show evidence of positive autocorrelation since their DW test statistics are less than 2. The p-values for both models are less than 0.05, indicating that the evidence against the null hypothesis of no autocorrelation is very strong. The alternative hypothesis for both models is that the true autocorrelation is greater than 0.
-
-In other words, the residuals in both models are not independent and are positively correlated with each other. This can be a problem since it violates one of the assumptions of linear regression, which assumes that the residuals are independent and identically distributed. Positive autocorrelation can lead to unreliable and inefficient parameter estimates and standard errors, which can affect the accuracy and validity of the regression analysis. Therefore, steps should be taken to address the issue of autocorrelation, such as adding lagged variables to the model or using autoregressive models.
-
-#### Homoscedasticity
+##### Homoscedasticity
 Breusch-Pagan test: The Breusch-Pagan test is a statistical test for homoscedasticity that tests whether the variance of the residuals is constant across all levels of the independent variables. This will output the test statistic and the p-value for the Breusch-Pagan test. The null hypothesis of the test is that the variance of the residuals is constant (homoscedasticity). A p-value less than 0.05 suggests evidence of heteroscedasticity.
 ```{r}
+# Breusch-Pagan test
 bptest(depression_model)
 bptest(mhlth_model)
 ```
 
-#### No influential outliers
+##### No influential outliers
 Cook's distance: Cook's distance is a statistical measure of the influence of each observation on the regression coefficients. An observation with a Cook's distance greater than 1 is often considered to be influential.
 
 Leverage values: Leverage values are another measure of the influence of each observation on the regression coefficients. An observation with a leverage value greater than 2p/n, where p is the number of independent variables and n is the sample size, is often considered to be influential.
 ```{r}
+# Cook's distance and Leverage
+
 # depression
 depression_influential <- influence.measures(depression_model)
 depression_infmat <- depression_influential$infmat
@@ -312,20 +339,33 @@ sum(mhlth_infmat[, 'cook.d'] > 1)
 sum(mhlth_infmat[, 'hat'] > 2 * 7 / length(depression_infmat[, 'hat']))
 ```
 
-### EDA Interpretation?
-Need edited
 
-## Model Building
-Need edited
+### Regression Tree Model
+- Splitting the data: The dataset is split into training and testing sets to evaluate the model's performance.
+- Building the tree: The regression tree is built using a recursive partitioning algorithm, which splits the data into subsets based on the independent variables that best predict the dependent variable.
+- Pruning the tree: The tree is pruned to reduce overfitting and improve generalization to new data.
 ```{r}
+# regression tree model for depression
+
+# regression tree model for poor mental health
 
 ```
 
-### Building Model
-Need edited
+#### Regression Tree Model Assumptions
+- Regression tree assumptions:
+- Independence of observations: Each observation must be independent of all other observations.
+- Linearity: There must be a linear relationship between the dependent variable and the independent variables.
+- Homoscedasticity: The variance of the residuals should be constant across all levels of the dependent variable.
+- Normality: The residuals should be normally distributed.
 
-### Model Assessment?
-Need edited
+#### Regression Tree Evaluation
+- Evaluating the model: The model is evaluated using various metrics such as mean squared error (MSE), root mean squared error (RMSE), and R-squared.
+- Validating the model: The model is validated using the testing set to assess its ability to generalize to new data.
+- Tuning the model: The model is tuned by adjusting the hyperparameters to improve its performance.
+- Interpreting the model: The regression tree is interpreted to gain insights into the relationships between the independent variables and the dependent variable.
+```{r}
+```
+
 
 ## Result
 Need edited
