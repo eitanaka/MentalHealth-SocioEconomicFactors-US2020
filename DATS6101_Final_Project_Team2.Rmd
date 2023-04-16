@@ -251,9 +251,65 @@ depression_VIF
 mhlth_VIF.
 ```
 
-### Hypothesis Testing
-Need edited
+### Test Assumptions
+- Normality of target variable (checked!: histogram & qqplot good!)
+- Linearity (checked!: corrplot good!)
+- Independence (checked! But not good...)
+- No multicollinearity (checked! VIF test good!)
+- Homoscedasticity (checked! Breusch-Pagan test. But not good...)
+- No influential outliers (checked! cock's distance. But not good...)
+
+#### Building a model
 ```{r}
+# multiple linear regression model for depression
+depression_model <- lm(DEPRESSION ~ LPA + EA_High_school_graduate + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + URBANIZED_AREA_POP_CEN_2010 + pct_URBANIZED_AREA_POP_CEN_2010, data = depression_cor_df)
+
+# multiple linear regression model for poor mental health
+mhlth_model <- lm(MHLTH ~ LPA + SLEEP + MT_never_married + MT_now_married + MT_Separated + EA_Less_than_high_school_graduate + EA_High_school_graduate + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed, data = mhlth_cor_df)
+
+```
+
+#### No Auto-colinearity (independence)
+The Durbin-Watson test is a statistical test that evaluates whether the residuals (errors) in a regression model are independent of each other.
+This will output the Durbin-Watson test statistic, the degrees of freedom, and the p-value. The null hypothesis of the Durbin-Watson test is that there is no autocorrelation (independence) in the residuals. A p-value less than 0.05 suggests evidence of autocorrelation, while a p-value greater than 0.05 suggests no evidence of autocorrelation.
+```{r}
+# The Durbin-Watson test
+library(lmtest)
+depression_dwtest <- dwtest(depression_model)
+mhlth_dwtest <- dwtest(mhlth_model)
+
+depression_dwtest
+mhlth_dwtest
+```
+The Durbin-Watson test is a statistical test that evaluates whether the residuals (errors) in a regression model are independent of each other. The test statistic for the Durbin-Watson test ranges from 0 to 4, with a value of 2 indicating no autocorrelation (independence) of the residuals. A value less than 2 indicates positive autocorrelation, while a value greater than 2 indicates negative autocorrelation.
+
+Based on the results of the Durbin-Watson test for the two models, both the depression_model and mhlth_model show evidence of positive autocorrelation since their DW test statistics are less than 2. The p-values for both models are less than 0.05, indicating that the evidence against the null hypothesis of no autocorrelation is very strong. The alternative hypothesis for both models is that the true autocorrelation is greater than 0.
+
+In other words, the residuals in both models are not independent and are positively correlated with each other. This can be a problem since it violates one of the assumptions of linear regression, which assumes that the residuals are independent and identically distributed. Positive autocorrelation can lead to unreliable and inefficient parameter estimates and standard errors, which can affect the accuracy and validity of the regression analysis. Therefore, steps should be taken to address the issue of autocorrelation, such as adding lagged variables to the model or using autoregressive models.
+
+#### Homoscedasticity
+Breusch-Pagan test: The Breusch-Pagan test is a statistical test for homoscedasticity that tests whether the variance of the residuals is constant across all levels of the independent variables. This will output the test statistic and the p-value for the Breusch-Pagan test. The null hypothesis of the test is that the variance of the residuals is constant (homoscedasticity). A p-value less than 0.05 suggests evidence of heteroscedasticity.
+```{r}
+bptest(depression_model)
+bptest(mhlth_model)
+```
+
+#### No influential outliers
+Cook's distance: Cook's distance is a statistical measure of the influence of each observation on the regression coefficients. An observation with a Cook's distance greater than 1 is often considered to be influential.
+
+Leverage values: Leverage values are another measure of the influence of each observation on the regression coefficients. An observation with a leverage value greater than 2p/n, where p is the number of independent variables and n is the sample size, is often considered to be influential.
+```{r}
+# depression
+depression_influential <- influence.measures(depression_model)
+depression_infmat <- depression_influential$infmat
+sum(depression_infmat[, 'cook.d'] > 1)
+sum(depression_infmat[, 'hat'] > 2 * 7 / length(depression_infmat[, 'hat']))
+
+# mhlth
+mhlth_influential <- influence.measures(mhlth_model)
+mhlth_infmat <- mhlth_influential$infmat
+sum(mhlth_infmat[, 'cook.d'] > 1)
+sum(mhlth_infmat[, 'hat'] > 2 * 7 / length(depression_infmat[, 'hat']))
 ```
 
 ### EDA Interpretation?
@@ -264,9 +320,6 @@ Need edited
 ```{r}
 
 ```
-
-### Check Assumption for Model Buiding?
-Need edited
 
 ### Building Model
 Need edited
