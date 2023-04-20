@@ -49,16 +49,18 @@ In project 1, we investigated how health risk behaviors are associated with heal
 ### Data sets
 Need edited (Describe about 4 data set and how we create)
 We have ade used of 10 different datasets and the one which we are going to use from the previous project. 
-<!-- CDC_Place : -->
-<!-- Census Tract Relationship 2020: -->
-<!-- Commute Time 2020 -->
-<!-- Econ Impact Index 2020 -->
-<!-- Educational Attainment 2020 -->
-<!-- Employment Status 2020 -->
-<!-- Marital Status 2020 -->
-<!-- Median Income 2020 -->
-<!-- Planning Database with 2010 Census and 2014 – 2018 American Community SurveyData -->
-<!-- Population 2020 -->
+<!-- CDC_Place : We imported the dataset from the shared drive and have cleaned up dataset and made used of some variables including "Year","StateAbbr","StateDesc","CountyName","CountyFIPS","LocationName","Data_Value","TotalPopulation","MeasureId" -->
+
+<!-- Census Tract Relationship 2020: We imported the dataset from the shared drive and have cleaned up dataset and made used of some variables -->
+               
+<!-- Commute Time 2020: We imported the dataset from the shared drive and have cleaned up dataset and made used of some variables-->
+<!-- Econ Impact Index 2020: We imported the dataset from the shared drive and have cleaned up dataset and made used of some variables-->
+<!-- Educational Attainment 2020:We imported the dataset from the shared drive and have cleaned up dataset and made used of some variables-->
+<!-- Employment Status 2020: We imported the dataset from the shared drive and have cleaned up dataset and made used of some variables -->
+<!-- Marital Status 2020: We imported the dataset from the shared drive and have cleaned up dataset and made used of some variables-->
+<!-- Median Income 2020: We imported the dataset from the shared drive and have cleaned up dataset and made used of some variables-->
+<!-- Planning Database with 2010 Census and 2014 – 2018 American Community SurveyData: We imported the dataset from the shared drive and have cleaned up dataset and made used of some variables -->
+<!-- Population 2020: We imported the dataset from the shared drive and have cleaned up dataset and made used of some variables -->
 
 ### Variables of interest
 # Here are all the variables used in the project.
