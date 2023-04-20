@@ -149,6 +149,7 @@ mhlth_hist
 ```
 Looking at the histograms, it appears that both variables are approximately normally distributed, although the distribution of master_df$MHLTH is slightly skewed to the right. This information is important when selecting statistical methods to analyze these variables, as many methods assume normality. Additionally, the histograms provide a visual representation of the distribution of the variables, which can help in identifying potential outliers or unusual patterns.
 
+```{r}
 # qqplots
 dep_qq <- qqnorm(master_df$DEPRESSION, main = "Distribution of Tract-level Depression Rates")
 mhlth_qq <- qqnorm(master_df$MHLTH, main = "Distribution of Tract-level Poor Mental Health Rates")
