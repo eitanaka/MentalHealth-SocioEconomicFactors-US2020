@@ -126,7 +126,8 @@ Need edited
 ## EDA
 Need edited
 ```{r}
-# checking normality of dependent variables
+# Checking normality of dependent variables.
+# To rename some columns in a data frame to make them more readable and easier to work with.This is done by using the "colnames" function to first select the column names that match the original names, and then assigning new names.
 colnames(master_df)[colnames(master_df) == "MT_Never Married"] <- "MT_never_married"
 colnames(master_df)[colnames(master_df) == "MT_Now married"] <- "MT_now_married"
 colnames(master_df)[colnames(master_df) == "Total Population"] <- "total_population"
@@ -136,11 +137,14 @@ colnames(master_df)[colnames(master_df) == "EA_college or associate's degree"] <
 colnames(master_df)[colnames(master_df) == "EA_Bachelor's degree"] <- "EA_Bachelors_degree"
 colnames(master_df)[colnames(master_df) == "EA_Graduate or professional degree"] <- "EA_Graduate_or_professional_degree"
 
-# histograms
+# Histograms
+# Two histograms: one for the distribution of tract-level depression rates and one for the distribution of tract-level poor mental health rates.
 dep_hist <- hist(master_df$DEPRESSION, main = "Distribution of Tract-level Depression Rates")
 mhlth_hist <- hist(master_df$MHLTH, main = "Distribution of Tract-level Poor Mental Health Rates")
 dep_hist
 mhlth_hist
+```
+Looking at the histograms, it appears that both variables are approximately normally distributed, although the distribution of master_df$MHLTH is slightly skewed to the right. This information is important when selecting statistical methods to analyze these variables, as many methods assume normality. Additionally, the histograms provide a visual representation of the distribution of the variables, which can help in identifying potential outliers or unusual patterns.
 
 # qqplots
 dep_qq <- qqnorm(master_df$DEPRESSION, main = "Distribution of Tract-level Depression Rates")
