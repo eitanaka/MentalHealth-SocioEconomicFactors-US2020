@@ -42,7 +42,9 @@ master_df<- read_csv(url)
 ## Abstract
 Need edited
 
-## Introcuction
+An abstract is an overview of a research project that seeks to explore the relationship between mental health and various socio-economic and lifestyle factors, as well as the impact of COVID-19 in the United States.The aim is to answer the question of whether there is a significant influence on mental health due to these factors in the US, and data will be analyzed at the census tract level using 11 different datasets. The abstract highlights the main objectives, methods, results, and conclusions of the research, while the introduction sets the stage by discussing the relevance of the research question and the data sets used.This question is relevant to the project's aim and can guide the data analysis and interpretation.
+
+## Introduction
 In project 1, we investigated how health risk behaviors are associated with health outcomes and health status.We have 11 different datasets that we have made used of. We have tried importing all the datasets from the google drive where all datasets has been uploaded.Now, we are trying to examine whether there is any significant influence on mental health due to lifestyle, socio-economic factors, and covid-19 in the United States. Census tracts will be used in calculating and analyzing all the different datasets. This research which is going to be very interesting to look at identifying what factors have significantly impacted mental health and well-being in the United States in 2020. 
 
 
