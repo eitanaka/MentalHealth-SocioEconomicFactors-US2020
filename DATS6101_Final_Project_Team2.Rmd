@@ -32,6 +32,9 @@ library(tidyr)
 library(corrplot)
 library(ezids)
 library(car)
+library(rpart)
+library(rpart.plot)
+library(rattle)
 ```
 
 ```{r init}
@@ -365,10 +368,32 @@ sum(mhlth_infmat[, 'hat'] > 2 * 7 / length(depression_infmat[, 'hat']))
 - Building the tree: The regression tree is built using a recursive partitioning algorithm, which splits the data into subsets based on the independent variables that best predict the dependent variable.
 - Pruning the tree: The tree is pruned to reduce overfitting and improve generalization to new data.
 ```{r}
-# regression tree model for depression
+#regression tree model for depression
+control_params1 <- rpart.control(minsplit = 20, cp = 0.0005, maxdepth = 10)
+
+depression.tree <- rpart(DEPRESSION ~ LPA + EA_High_school_graduate + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + URBANIZED_AREA_POP_CEN_2010 + pct_URBANIZED_AREA_POP_CEN_2010, data = depression_cor_df, method="class", control = control_params1)
+
+plot(depression.tree, uniform=TRUE, main="Depression Tree")
+text(depression.tree, use.n=TRUE, all=TRUE, cex=.8)
+
+p <- prp(depression.tree)
+p$nodepar$lab.cex <- 0.8
+p$nodepar$cex <- 0.8
+p$nodepar$lab.col <- "black"
+
 
 # regression tree model for poor mental health
+control_params2 <- rpart.control(minsplit = 20, cp = 0.0005, maxdepth = 10)
 
+mhlth.tree <- rpart(MHLTH ~ LPA + SLEEP + MT_never_married + MT_now_married + MT_Separated + EA_Less_than_high_school_graduate + EA_High_school_graduate + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed, data = mhlth_cor_df, method = "class", control = control_params2)
+
+plot(mhlth.tree, uniform=TRUE, main="Poor Mental Health Tree")
+text(mhlth.tree, use.n=TRUE, all=TRUE, cex=.8)
+
+p <- prp(mhlth.tree)
+p$nodepar$lab.cex <- 0.8
+p$nodepar$cex <- 0.8
+p$nodepar$lab.col <- "black"
 ```
 
 #### Regression Tree Model Assumptions
