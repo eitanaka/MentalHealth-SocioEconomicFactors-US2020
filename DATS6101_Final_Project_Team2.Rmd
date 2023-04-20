@@ -43,13 +43,25 @@ master_df<- read_csv(url)
 Need edited
 
 ## Introcuction
-In project 1, we investigated how health risk behaviors are associated with health outcomes and health status. Now we are trying to examine whether there is any significant influence on mental health due to lifestyle, socio-economic factors, and covid-19 in the United States. Census tracts will be used in calculating and analyzing all the different datasets. This research will help us in identifying and expecting what factors have significantly impacted mental health and well-being in the United States in 2020.  
+In project 1, we investigated how health risk behaviors are associated with health outcomes and health status.We have 11 different datasets that we have made used of. We have tried importing all the datasets from the google drive where all datasets has been uploaded.Now, we are trying to examine whether there is any significant influence on mental health due to lifestyle, socio-economic factors, and covid-19 in the United States. Census tracts will be used in calculating and analyzing all the different datasets. This research which is going to be very interesting to look at identifying what factors have significantly impacted mental health and well-being in the United States in 2020. 
 
 
 ### Data sets
 Need edited (Describe about 4 data set and how we create)
+We have ade used of 10 different datasets and the one which we are going to use from the previous project. 
+<!-- CDC_Place : -->
+<!-- Census Tract Relationship 2020: -->
+<!-- Commute Time 2020 -->
+<!-- Econ Impact Index 2020 -->
+<!-- Educational Attainment 2020 -->
+<!-- Employment Status 2020 -->
+<!-- Marital Status 2020 -->
+<!-- Median Income 2020 -->
+<!-- Planning Database with 2010 Census and 2014 – 2018 American Community SurveyData -->
+<!-- Population 2020 -->
 
 ### Variables of interest
+# Here are all the variables used in the project.
 <!-- CountyFIPS: a numeric column containing the FIPS code for each county. -->
 <!-- GEOID: a numeric column containing the unique  Geographical ID for each county. -->
 <!-- StateAbbr: a character column containing the abbreviation for the state where each county is located. -->
