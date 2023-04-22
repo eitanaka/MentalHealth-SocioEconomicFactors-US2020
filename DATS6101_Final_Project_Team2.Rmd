@@ -231,9 +231,11 @@ for (i in 1:ncol(numeric_df)) {
   boxplot(numeric_df[,i], main=names(numeric_df)[i])
 }
 ```
+The code creates a function called plot_boxplot that plots a boxplot with mean and standard deviation lines using ggplot. It then filters the numeric variables from the master_df dataframe and creates a new dataframe called numeric_df.Finally, it creates boxplots for all numeric variables in numeric_df using a for loop. This code allows us to quickly visualize the distribution of the numeric variables and to identify any outliers or unusual patterns.
 
 ## Data Structure
 Need edited
+It can be useful to get a quick overall structure of the data frame before performing further analyses.
 ```{r}
 str(master_df)
 ```
@@ -241,6 +243,7 @@ str(master_df)
 
 ## Summary Statictics
 Need edited
+It can be useful to get a overview  of summary statistics of the data frame before performing further analyses.
 ```{r}
 summary(master_df)
 ```
