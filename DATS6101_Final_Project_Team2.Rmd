@@ -177,6 +177,10 @@ num_df <- master_df[ , !names(master_df) %in% cols_to_remove]
 
 ### Basic EDA
 Need edited
+```{r}
+
+
+```
 
 #### Handle Null Values
 ```{r}
@@ -221,11 +225,11 @@ plot_boxplot <- function(x) {
 numeric_vars <- sapply(master_df, is.numeric)
 numeric_df <- master_df[, numeric_vars]
 
-# Create a list of plots for all numeric variables
-plots <- lapply(numeric_df, plot_boxplot)
-
-# Arrange the plots in a grid
-grid.arrange(grobs = plots, ncol = 1)
+# Create boxplots for all numeric variables
+par(mfrow=c(2,4)) # to display plots in a grid of 4x4
+for (i in 1:ncol(numeric_df)) {
+  boxplot(numeric_df[,i], main=names(numeric_df)[i])
+}
 ```
 
 ## Data Structure
