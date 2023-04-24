@@ -180,12 +180,32 @@ file_id <- "1V5tpX0Rk8ApKTbIjvnFHRMENfgMCyoec"
 drive_download(as_id(file_id), overwrite = TRUE)
 planning_df <- read_csv("pdb2020trv2_us.csv")
 
-planning_df <- select(planning_df, GIDTR, LAND_AREA, URBANIZED_AREA_POP_CEN_2010, Prs_Blw_Pov_Lev_ACS_14_18, Pop_Disabled_ACS_14_18)
+
+planning_df <- select(planning_df, GIDTR, LAND_AREA, URBANIZED_AREA_POP_CEN_2010, Tot_Population_CEN_2010, pct_Prs_Blw_Pov_Lev_ACS_14_18, pct_No_Health_Ins_ACS_14_18, pct_Pop_Disabled_ACS_14_18, pct_Pop_NoCompDevic_ACS_14_18, pct_Pop_w_BroadComp_ACS_14_18, pct_ENG_VW_ACS_14_18, pct_Female_No_HB_ACS_14_18, pct_Sngl_Prns_HHD_ACS_14_18, pct_PUB_ASST_INC_ACS_14_18, pct_NO_PH_SRVC_ACS_14_18, pct_No_Plumb_ACS_14_18, avg_Agg_House_Value_ACS_14_18, pct_MrdCple_w_child_ACS_14_18, pct_HHD_NoCompDevic_ACS_14_18, pct_HHD_w_OnlySPhne_ACS_14_18, pct_HHD_No_Internet_ACS_14_18, pct_HHD_w_Broadband_ACS_14_18)
 
 colnames(planning_df)[colnames(planning_df) == "GIDTR"] <- "GEOID"
-colnames(planning_df)[colnames(planning_df) == "URBANIZED_AREA_POP_CEN_2010"] <- "Urbanized_Area_Pop"
-colnames(planning_df)[colnames(planning_df) == "Prs_Blw_Pov_Lev_ACS_14_18"] <- "Below_Pov_Lev_Pop"
-colnames(planning_df)[colnames(planning_df) == "Pop_Disabled_ACS_14_18"] <- "Disabled_Pop"
+colnames(planning_df)[colnames(planning_df) == "LAND_AREA"] <- "land"
+colnames(planning_df)[colnames(planning_df) == "URBANIZED_AREA_POP_CEN_2010"] <- "urban"
+colnames(planning_df)[colnames(planning_df) == "Tot_Population_CEN_2010"] <- "pop.tot"
+colnames(planning_df)[colnames(planning_df) == "pct_Prs_Blw_Pov_Lev_ACS_14_18"] <- "poverty"
+colnames(planning_df)[colnames(planning_df) == "pct_No_Health_Ins_ACS_14_18"] <- "no.ins"
+colnames(planning_df)[colnames(planning_df) == "pct_Pop_Disabled_ACS_14_18"] <- "disab"
+colnames(planning_df)[colnames(planning_df) == "pct_Pop_NoCompDevic_ACS_14_18"] <- "no.comp"
+colnames(planning_df)[colnames(planning_df) == "pct_Pop_w_BroadComp_ACS_14_18"] <- "broad&comp"
+colnames(planning_df)[colnames(planning_df) == "pct_ENG_VW_ACS_14_18"] <- "no.eng"
+colnames(planning_df)[colnames(planning_df) == "pct_Female_No_HB_ACS_14_18"] <- "sing.mom"
+colnames(planning_df)[colnames(planning_df) == "pct_Sngl_Prns_HHD_ACS_14_18"] <- "live.alone"
+colnames(planning_df)[colnames(planning_df) == "pct_PUB_ASST_INC_ACS_14_18"] <- "pub.assist"
+colnames(planning_df)[colnames(planning_df) == "pct_NO_PH_SRVC_ACS_14_18"] <- "no.phone"
+colnames(planning_df)[colnames(planning_df) == "pct_No_Plumb_ACS_14_18"] <- "no.plumb"
+colnames(planning_df)[colnames(planning_df) == "avg_Agg_House_Value_ACS_14_18"] <- "avg.house.val"
+colnames(planning_df)[colnames(planning_df) == "pct_MrdCple_w_child_ACS_14_18"] <- "married.kid"
+colnames(planning_df)[colnames(planning_df) == "pct_HHD_NoCompDevic_ACS_14_18"] <- "hhd.no.comp"
+colnames(planning_df)[colnames(planning_df) == "pct_HHD_w_OnlySPhne_ACS_14_18"] <- "hhd.only.phone"
+colnames(planning_df)[colnames(planning_df) == "pct_HHD_No_Internet_ACS_14_18"] <- "hhd.no.int"
+colnames(planning_df)[colnames(planning_df) == "pct_HHD_w_Broadband_ACS_14_18"] <- "hhd.broad"
+
+
 
 #----------------------------------------------------------------------------------------------------
 
