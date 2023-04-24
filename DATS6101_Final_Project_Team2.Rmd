@@ -52,7 +52,7 @@ In project 1, we investigated how health risk behaviors are associated with heal
 
 ### Data sets
 Need edited (Describe about 4 data set and how we create)
-We have ade used of 10 different datasets and the one which we are going to use from the previous project. 
+We have used of 10 different datasets and the one which we are going to use from the previous Data Science project1. 
 <!-- CDC_Place : We imported the dataset from the shared drive and have cleaned up dataset and made used of some variables including "Year","StateAbbr","StateDesc","CountyName","CountyFIPS","LocationName","Data_Value","TotalPopulation","MeasureId" -->
 
 <!-- Census Tract Relationship 2020: We imported the dataset from the shared drive and have cleaned up dataset and made used of some variables -->
@@ -127,6 +127,7 @@ Need edited
 
 ## EDA
 Need edited
+Let us work on some data manipulation and visualization tasks by renaming some columns in the dataframe and the second part of your code creates two histograms. The first histogram (dep_hist) shows the distribution of tract-level depression rates, and the second histogram (mhlth_hist) shows the distribution of tract-level poor mental health rates.
 ```{r}
 # Checking normality of dependent variables.
 # To rename some columns in a data frame to make them more readable and easier to work with.This is done by using the "colnames" function to first select the column names that match the original names, and then assigning new names.
@@ -142,20 +143,26 @@ colnames(master_df)[colnames(master_df) == "EA_Graduate or professional degree"]
 # Histograms
 # Two histograms: one for the distribution of tract-level depression rates and one for the distribution of tract-level poor mental health rates.
 dep_hist <- hist(master_df$DEPRESSION, main = "Distribution of Tract-level Depression Rates")
-mhlth_hist <- hist(master_df$MHLTH, main = "Distribution of Tract-level Poor Mental Health Rates")
 dep_hist
+mhlth_hist <- hist(master_df$MHLTH, main = "Distribution of Tract-level Poor Mental Health Rates")
 mhlth_hist
 ```
-Looking at the histograms, it appears that both variables are approximately normally distributed, although the distribution of master_df$MHLTH is slightly skewed to the right. This information is important when selecting statistical methods to analyze these variables, as many methods assume normality. Additionally, the histograms provide a visual representation of the distribution of the variables, which can help in identifying potential outliers or unusual patterns.
+Looking at the histograms, it appears that both variables are approximately normally distributed, although the distribution of tract-level depression rates is skewed to the right, with a larger number of observations in the higher bins. The distribution of tract-level poor mental health rates also appears skewed to the right, but with a more gradual decrease in the number of observations in the higher bins compared to the depression rates histogram.This information is important when selecting statistical methods to analyze these variables, as many methods assume normality. Additionally, the histograms provide a visual representation of the distribution of the variables, which can help in identifying potential outliers or unusual patterns.
 
 ```{r}
-# qqplots
+# QQ plots for the distribution of tract-level depression rates and tract-level poor mental health rates.
+
 dep_qq <- qqnorm(master_df$DEPRESSION, main = "Distribution of Tract-level Depression Rates")
-mhlth_qq <- qqnorm(master_df$MHLTH, main = "Distribution of Tract-level Poor Mental Health Rates")
 dep_qq
+mhlth_qq <- qqnorm(master_df$MHLTH, main = "Distribution of Tract-level Poor Mental Health Rates")
 mhlth_qq
+```
+A QQ plot compares the quantiles of a dataset to the quantiles of a theoretical distribution (in this case, the normal distribution). If the points on the QQ plot are close to a straight line, it indicates that the data are normally distributed.
+In this case, the QQ plot for the depression rates appears to deviate from a straight line towards the tails, indicating that the distribution is not perfectly normal. The QQ plot for the poor mental health rates appears to deviate from a straight line even more than the depression rates, indicating that the distribution is even less normal.
 
 # create data frame of only numeric values
+ We will create a new data frame called num_df that only contains the numeric columns of the original master_df, that can be analyzed using various statistical tools.
+```{r}
 cols_to_remove <- c("...1", "CountyFIPS", "GEOID", "StateAbbr", "CountyName", "MT_Total", "EA_Total", "total_population", "CT_Total", "ES_Total", "LAND_AREA")
 num_df <- master_df[ , !names(master_df) %in% cols_to_remove]
 
@@ -169,12 +176,17 @@ num_df <- master_df[ , !names(master_df) %in% cols_to_remove]
 
 ### Basic EDA
 Need edited
+```{r}
+
+
+```
 
 #### Handle Null Values
 ```{r}
 master_df <- na.omit(master_df)
 colSums(is.na(master_df[6:length(master_df)]))
 ```
+The output will be a numeric vector with the number of missing values in each column. If all values are 0, then there are no missing values in the selected columns.
 
 #### Handle Outlier
 ```{r}
@@ -231,11 +243,46 @@ for (col in names(cols_of_interest)) {
       ylab(col)
     print(plot)
   }
+  
+# Create a function to plot boxplot with distribution lines
+# Function to create boxplot with mean and standard deviation
+# Load the necessary libraries
+library(ggplot2)
+library(gridExtra)
+
+# Create a function to plot boxplot with distribution lines
+plot_boxplot <- function(x) {
+  # Calculate mean and standard deviation
+  mean_x <- mean(x, na.rm = TRUE)
+  sd_x <- sd(x, na.rm = TRUE)
+  
+  # Create the plot
+  ggplot(data = data.frame(x), aes(x = x)) +
+    geom_boxplot() +
+    geom_vline(xintercept = mean_x, color = "blue", size = 1) +
+    geom_vline(xintercept = mean_x - sd_x, color = "red", linetype = "dashed", size = 1) +
+    geom_vline(xintercept = mean_x + sd_x, color = "red", linetype = "dashed", size = 1) +
+    labs(x = names(x), y = "Value") +
+    theme_bw() +
+    theme(plot.title = element_text(size = 12, hjust = 0.5),
+          axis.title.x = element_text(size = 10),
+          axis.title.y = element_text(size = 10),
+          axis.text = element_text(size = 8),
+          axis.line = element_line(colour = "black"),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          legend.position = "none")
 }
+
+# Filter the numeric variables
+numeric_vars <- sapply(master_df, is.numeric)
+numeric_df <- master_df[, numeric_vars]
 ```
+The code creates a function called plot_boxplot that plots a boxplot with mean and standard deviation lines using ggplot. It then filters the numeric variables from the master_df dataframe and creates a new dataframe called numeric_df.Finally, it creates boxplots for all numeric variables in numeric_df using a for loop. This code allows us to quickly visualize the distribution of the numeric variables and to identify any outliers or unusual patterns.
 
 ## Data Structure
 Need edited
+It can be useful to get a quick overall structure of the data frame before performing further analyses.
 ```{r}
 str(outlier_df)
 ```
@@ -243,12 +290,50 @@ str(outlier_df)
 
 ## Summary Statictics
 Need edited
+It can be useful to get a overview  of summary statistics of the data frame before performing further analyses.
 ```{r}
 summary(outlier_df)
 ```
 
 ### Descriptive Statistics
 Need edited 
+```{r}
+# Create a function to plot histograms with distribution lines
+plot_histogram <- function(x) {
+  # Calculate mean and standard deviation
+  mean_x <- mean(x, na.rm = TRUE)
+  sd_x <- sd(x, na.rm = TRUE)
+  
+  # Create the plot
+  ggplot(data = data.frame(x), aes(x = x)) +
+    geom_histogram(aes(y = ..density..), binwidth = 1, colour = "black", fill = "white") +
+    geom_density(alpha = .2, fill = "#FF6666") +
+    geom_vline(xintercept = mean_x, color = "blue", size = 1) +
+    geom_vline(xintercept = mean_x - sd_x, color = "red", linetype = "dashed", size = 1) +
+    geom_vline(xintercept = mean_x + sd_x, color = "red", linetype = "dashed", size = 1) +
+    labs(x = names(x), y = "Density") +
+    theme_bw() +
+    theme(plot.title = element_text(size = 12, hjust = 0.5),
+          axis.title.x = element_text(size = 10),
+          axis.title.y = element_text(size = 10),
+          axis.text = element_text(size = 8),
+          axis.line = element_line(colour = "black"),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          legend.position = "none")
+}
+
+# Filter the numeric variables
+numeric_vars <- sapply(master_df, is.numeric)
+numeric_df <- master_df[, numeric_vars]
+
+# Create a list of plots for all numeric variables
+plots <- lapply(numeric_df, plot_histogram)
+
+plots
+```
+
+
 
 ### Hypothesis Testing
 Need edited
@@ -421,31 +506,52 @@ sum(mhlth_infmat[, 'hat'] > 2 * 7 / length(depression_infmat[, 'hat']))
 - Pruning the tree: The tree is pruned to reduce overfitting and improve generalization to new data.
 ```{r}
 #regression tree model for depression
-control_params1 <- rpart.control(minsplit = 20, cp = 0.0005, maxdepth = 10)
+# control_params1 <- rpart.control(minsplit = 20, cp = 0.0005, maxdepth = 10)
+# 
+# depression.tree <- rpart(DEPRESSION ~ LPA + EA_High_school_graduate + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + URBANIZED_AREA_POP_CEN_2010 + pct_URBANIZED_AREA_POP_CEN_2010, data = depression_cor_df, method="class", control = control_params1)
+# 
+# plot(depression.tree, uniform=TRUE, main="Depression Rate Tree")
+# text(depression.tree, use.n=TRUE, all=TRUE, cex=.8)
+# 
+# p <- prp(depression.tree)
+# p$nodepar$lab.cex <- 0.8
+# p$nodepar$cex <- 0.8
+# p$nodepar$lab.col <- "black"
+# 
+# 
+# # regression tree model for poor mental health
+# control_params2 <- rpart.control(minsplit = 20, cp = 0.0005, maxdepth = 10)
+# 
+# mhlth.tree <- rpart(MHLTH ~ LPA + SLEEP + MT_never_married + MT_now_married + MT_Separated + EA_Less_than_high_school_graduate + EA_High_school_graduate + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed, data = mhlth_cor_df, method = "class", control = control_params2)
+# 
+# plot(mhlth.tree, uniform=TRUE, main="Poor Mental Health Rate Tree")
+# text(mhlth.tree, use.n=TRUE, all=TRUE, cex=.8)
+# 
+# p <- prp(mhlth.tree)
+# p$nodepar$lab.cex <- 0.8
+# p$nodepar$cex <- 0.8
+# p$nodepar$lab.col <- "black"
+  
 
-depression.tree <- rpart(DEPRESSION ~ LPA + EA_High_school_graduate + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + URBANIZED_AREA_POP_CEN_2010 + pct_URBANIZED_AREA_POP_CEN_2010, data = depression_cor_df, method="class", control = control_params1)
+# fancy tree plots
+# fancy depression tree
+depression.tree.2 <- rpart(DEPRESSION ~ LPA + EA_High_school_graduate + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + URBANIZED_AREA_POP_CEN_2010 + pct_URBANIZED_AREA_POP_CEN_2010, data = depression_cor_df)
 
-plot(depression.tree, uniform=TRUE, main="Depression Tree")
-text(depression.tree, use.n=TRUE, all=TRUE, cex=.8)
+fancyRpartPlot(depression.tree.2, main = "Depression Rate Tree")
 
-p <- prp(depression.tree)
-p$nodepar$lab.cex <- 0.8
-p$nodepar$cex <- 0.8
-p$nodepar$lab.col <- "black"
+# fancy mental health tree
+mhlth.tree.2 <- rpart(MHLTH ~ LPA + SLEEP + MT_never_married + MT_now_married + MT_Separated + EA_Less_than_high_school_graduate + EA_High_school_graduate + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed, data = mhlth_cor_df, control = rpart.control(maxdepth = ))
 
+fancyRpartPlot(mhlth.tree.2, main = "Poor Mental Health Rate Tree")
 
-# regression tree model for poor mental health
-control_params2 <- rpart.control(minsplit = 20, cp = 0.0005, maxdepth = 10)
-
-mhlth.tree <- rpart(MHLTH ~ LPA + SLEEP + MT_never_married + MT_now_married + MT_Separated + EA_Less_than_high_school_graduate + EA_High_school_graduate + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed, data = mhlth_cor_df, method = "class", control = control_params2)
-
-plot(mhlth.tree, uniform=TRUE, main="Poor Mental Health Tree")
-text(mhlth.tree, use.n=TRUE, all=TRUE, cex=.8)
-
-p <- prp(mhlth.tree)
-p$nodepar$lab.cex <- 0.8
-p$nodepar$cex <- 0.8
-p$nodepar$lab.col <- "black"
+# pruning trees
+# pruned depression tree
+# pruned.depression.tree.2 <- prune(depression.tree.2, cp = 0.01)
+# fancyRpartPlot(pruned.depression.tree.2)
+# 
+# # pruned mental health tree
+# pruned.mhlth.tree.2 <- prune(mhlth.tree.2, cp = 0.01)
+# fancyRpartPlot(pruned.mhlth.tree.2)
 ```
 
 #### Regression Tree Model Assumptions
