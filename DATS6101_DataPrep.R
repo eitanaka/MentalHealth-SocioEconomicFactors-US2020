@@ -10,7 +10,6 @@
 
 #-------------------------------------------------------------------------------------
 
-
 # clean environment
 rm(list = ls())
 
@@ -50,7 +49,7 @@ chronic_df <- read_csv("PLACES_Census_Tract_Data_2022_release.csv")
 chronic_df <- chronic_df[(chronic_df$Year == 2020),]
 chronic_df <- chronic_df[,c("Year","StateAbbr","StateDesc","CountyName","CountyFIPS","LocationName","Data_Value","TotalPopulation","MeasureId")]
 # Keep only rows with health measures of interest #
-chronic_df <- chronic_df[(chronic_df$MeasureId=="DEPRESSION" | chronic_df$MeasureId=="SLEEP" | chronic_df$MeasureId=="LPA" | chronic_df$MeasureId=="MHLTH" | chronic_df$MeasureId=="BINGE"),]
+chronic_df <- chronic_df[(chronic_df$MeasureId=="DEPRESSION" | chronic_df$MeasureId=="SLEEP" | chronic_df$MeasureId=="LPA" | chronic_df$MeasureId=="MHLTH" | chronic_df$MeasureId=="BINGE" | chronic_df$MeasureId=="BINGE"),]
 # Reshape long to wide #
 CDC_df <- spread(chronic_df, key = MeasureId, value = Data_Value)
 # Rename LocationName and into GEOID
@@ -139,48 +138,8 @@ acs_block_group_2020_df <- get_ACS_block_group_allState_2020(myVariables, myVarN
  
 acs_2020_df <- merge_ACS_2020(acs_tract_2020_df, acs_block_group_2020_df)
 
-
 #----------------------------------------------------------------------------------------------------
-# Data set #3: Census Relationship (geographical data)
-
-# Import and cleaning Census Relationship File online
-import_Census_Relationship <- function(){
-  data <- read.table("https://www2.census.gov/geo/docs/maps-data/data/rel2020/blkgrp/tab20_blkgrp20_blkgrp10_natl.txt", sep = "|", header = T)
-  
-  # Select the columns we interest
-  data <- data[, 2:5]
-  
-  # Convert Block-level to Tract-level to merge lows on same GEOID
-  colnames(data)[1] <- c("GEOID")  
-  
-  # Check for duplicates in the GEOID column
-  duplicate_rows <- duplicated(data$GEOID)
-  # Drop the duplicated rows
-  data <-data[!duplicate_rows,]
-  
-  # Delete the last character and add 0 at the first of a string in GEOID column
-  data$GEOID <- substr(data$GEOID, 1, nchar(data$GEOID) - 1)
-  # Assuming the dataframe is called 'df' and the GEOID column is called 'GEOID'
-  data$GEOID <- ifelse(nchar(data$GEOID) == 10, paste0("0", data$GEOID), data$GEOID)
-  
-  # Drop BLKGRP_20 column
-  data <- data[,-2]
-  
-  colnames(data)[2:3] <- c("AreaLand", "AreaWater")
-  
-  # Aggregate by GEOID and sum the AreaLand and AreaWater columns
-  data <- aggregate(cbind(AreaLand, AreaWater) ~ GEOID, data = data, sum)
-  
-  return(data)
-}
-
-CR_df <-import_Census_Relationship()
-
-#----------------------------------------------------------------------------------------------------
-# Data set #4: County Economic Impact Index 
-
-# We are here trying to download the data set from the google drive
-
+# Data set #3: County Economic Impact Index 
 # Authenticate with your Google account
 drive_auth()
 
@@ -212,7 +171,7 @@ ceii_df <- ceii_df %>%
 colnames(ceii_df)[1] <- "CountyFIPS"
 
 #-------------------------------------------------------------------------------------------------------------
-# Planning Data Base
+# Data Set #4: Planning Data Base
 
 shared_drive_url <- "https://drive.google.com/drive/u/0/folders/1JZcAZUfCQl8w7W-MMYj6tIMoEeCAY6qx"
 shared_drive_id <- as_id(shared_drive_url)
@@ -221,9 +180,12 @@ file_id <- "1V5tpX0Rk8ApKTbIjvnFHRMENfgMCyoec"
 drive_download(as_id(file_id), overwrite = TRUE)
 planning_df <- read_csv("pdb2020trv2_us.csv")
 
-planning_df <- select(planning_df, GIDTR, LAND_AREA, URBANIZED_AREA_POP_CEN_2010, URBAN_CLUSTER_POP_CEN_2010, RURAL_POP_CEN_2010, Tot_Population_CEN_2010, pct_URBANIZED_AREA_POP_CEN_2010, pct_URBAN_CLUSTER_POP_CEN_2010, pct_RURAL_POP_CEN_2010)
+planning_df <- select(planning_df, GIDTR, LAND_AREA, URBANIZED_AREA_POP_CEN_2010, Prs_Blw_Pov_Lev_ACS_14_18, Pop_Disabled_ACS_14_18)
 
 colnames(planning_df)[colnames(planning_df) == "GIDTR"] <- "GEOID"
+colnames(planning_df)[colnames(planning_df) == "URBANIZED_AREA_POP_CEN_2010"] <- "Urbanized_Area_Pop"
+colnames(planning_df)[colnames(planning_df) == "Prs_Blw_Pov_Lev_ACS_14_18"] <- "Below_Pov_Lev_Pop"
+colnames(planning_df)[colnames(planning_df) == "Pop_Disabled_ACS_14_18"] <- "Disabled_Pop"
 
 #----------------------------------------------------------------------------------------------------
 
@@ -253,7 +215,7 @@ final_df <- merge_all_df(CDC_df, acs_2020_df, planning_df, ceii_df)
 
 #-------------------------------------------------------------------------------------------------------------
 
-# quick EDA before exporting csv file stored on GitHub and using rmd file.
+# Quick EDA before exporting csv file stored on GitHub and using rmd file.
 # Count the number of unique names
 length(unique(final_df$StateAbbr))
 
@@ -269,20 +231,8 @@ colSums(is.na(final_df))
 # Export final_version of code to store on GitHub repo
 # code below  
 
-# Multiple Linear Regression
-# y^ = b_0 + b_1*MT + b_2*EA + b_3*ES + b_4*CT + b_5*Binge + b_6*LPA + b_7*SLEEP + b_8*MI + b_9*popDense + b_10*EconIndex
-
-# code below  
-
 # modify final_df
 final_df <- select(final_df, -c("Year", "StateDesc", "TotalPopulation", "va_jan20", "va_feb20", "va_mar20", "va_apr20", "va_may20", "va_jun20", "va_jul20", "va_aug20", "va_sep20", "va_oct20", "va_nov20", "va_dec20", "pcEmpAct_jan20", "pcEmpAct_feb20", "pcEmpAct_mar20", "pcEmpAct_apr20", "pcEmpAct_may20", "pcEmpAct_jun20", "pcEmpAct_jul20", "pcEmpAct_aug20", "pcEmpAct_sep20", "pcEmpAct_oct20", "pcEmpAct_nov20", "pcEmpAct_dec20", "index_jan20", "index_feb20", "index_mar20", "index_may20", "index_jun20", "index_jul20", "index_aug20", "index_sep20", "index_oct20", "index_nov20", "index_dec20", "va_mean", "pcEmpAct_mean", "index_mean"))
-# colnames(final_df)[colnames(final_df) == "Total Population"] <- "total.population"
-# colnames(final_df)[colnames(final_df) == "AreaLand"] <- "area.land.km"
-# colnames(final_df)[colnames(final_df) == "AreaWater"] <- "area.water.km"
-# final_df$area.land.km <- final_df$area.land.km/1000000
-# final_df$area.water.km <- final_df$area.water.km/1000000
-# final_df$pop.per.km <- final_df$total.population/final_df$area.land.km
-
 
 # Covert Each dependent variables to percentages(MT, EA, ES, CT)
 convert_percent_pop <- function(df, prefix) {
