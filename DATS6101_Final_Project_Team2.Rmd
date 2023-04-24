@@ -50,7 +50,6 @@ An abstract is an overview of a research project that seeks to explore the relat
 ## Introduction
 In project 1, we investigated how health risk behaviors are associated with health outcomes and health status.We have 11 different datasets that we have made used of. We have tried importing all the datasets from the google drive where all datasets has been uploaded.Now, we are trying to examine whether there is any significant influence on mental health due to lifestyle, socio-economic factors, and covid-19 in the United States. Census tracts will be used in calculating and analyzing all the different datasets. This research which is going to be very interesting to look at identifying what factors have significantly impacted mental health and well-being in the United States in 2020. 
 
-
 ### Data sets
 Need edited (Describe about 4 data set and how we create)
 We have used of 10 different datasets and the one which we are going to use from the previous Data Science project1. 
@@ -191,6 +190,60 @@ The output will be a numeric vector with the number of missing values in each co
 
 #### Handle Outlier
 ```{r}
+colSums(master_df[6:length(master_df)] == 0.0)
+
+# columns of interest
+cols_of_interest <- master_df[6:length(master_df)]
+
+# loop through all columns
+for (col_name in colnames(cols_of_interest)) {
+  # remove outliers
+  outlier_df <- outlierKD2(outlier_df, outlier_df[[col_name]], rm=TRUE)
+  outlier_df <- na.omit(outlier_df)
+  outlier_df <- outlier_df[,1:(ncol(outlier_df)-2)]
+}
+outlier_df <- outlier_df[,1:(ncol(outlier_df)-1)]
+```
+
+### Boxplots for checking outliers
+```{r}
+# Create a boxplot for each column
+par(mfrow=c(5, 10))
+for (i in 6:ncol(outlier_df)) {
+  boxplot(outlier_df[[i]], main=names(outlier_df)[i])
+}
+```
+
+### Scatter plot for checking outliers (Depression)
+```{r}
+# Scatter plots with fit line for Depression and other dependent variables
+for (col in names(cols_of_interest)) {
+  if (col != "DEPRESSION") {
+    plot_data <- data.frame(x = outlier_df$DEPRESSION, y = outlier_df[[col]])
+    plot <- ggplot(plot_data, aes(x = x, y = y)) + 
+      geom_point() +
+      geom_smooth(method = "lm", se = FALSE) +
+      xlab("Depression") +
+      ylab(col)
+    print(plot)
+  }
+}
+```
+
+### Scatter plot for checking outliers (MHLTH)
+```{r}
+# Scatter plots with fit line for mhlth and other dependent variables
+for (col in names(cols_of_interest)) {
+  if (col != "MHLTH") {
+    plot_data <- data.frame(x = outlier_df$MHLTH, y = outlier_df[[col]])
+    plot <- ggplot(plot_data, aes(x = x, y = y)) + 
+      geom_point() +
+      geom_smooth(method = "lm", se = FALSE) +
+      xlab("mhlth") +
+      ylab(col)
+    print(plot)
+  }
+  
 # Create a function to plot boxplot with distribution lines
 # Function to create boxplot with mean and standard deviation
 # Load the necessary libraries
@@ -224,12 +277,6 @@ plot_boxplot <- function(x) {
 # Filter the numeric variables
 numeric_vars <- sapply(master_df, is.numeric)
 numeric_df <- master_df[, numeric_vars]
-
-# Create boxplots for all numeric variables
-par(mfrow=c(2,4)) # to display plots in a grid of 4x4
-for (i in 1:ncol(numeric_df)) {
-  boxplot(numeric_df[,i], main=names(numeric_df)[i])
-}
 ```
 The code creates a function called plot_boxplot that plots a boxplot with mean and standard deviation lines using ggplot. It then filters the numeric variables from the master_df dataframe and creates a new dataframe called numeric_df.Finally, it creates boxplots for all numeric variables in numeric_df using a for loop. This code allows us to quickly visualize the distribution of the numeric variables and to identify any outliers or unusual patterns.
 
@@ -237,7 +284,7 @@ The code creates a function called plot_boxplot that plots a boxplot with mean a
 Need edited
 It can be useful to get a quick overall structure of the data frame before performing further analyses.
 ```{r}
-str(master_df)
+str(outlier_df)
 ```
 
 
@@ -245,7 +292,7 @@ str(master_df)
 Need edited
 It can be useful to get a overview  of summary statistics of the data frame before performing further analyses.
 ```{r}
-summary(master_df)
+summary(outlier_df)
 ```
 
 ### Descriptive Statistics
@@ -293,28 +340,28 @@ Need edited
 
 ### Correlations
 ```{r}
-cor_matrix <- cor(master_df[,6:length(master_df)])
+cor_matrix <- cor(outlier_df[,6:ncol(outlier_df)])
 
 # Create 6 subset for cor_matrix or cor_heatmap
-dep_mth_df <- subset(master_df, select = "DEPRESSION")
-dep_mth_df <- cbind(dep_mth_df, master_df[,9])
+dep_mth_df <- subset(outlier_df, select = "DEPRESSION")
+dep_mth_df <- cbind(dep_mth_df, outlier_df[,9])
 
 # Data frame containing depression, mhlth, health risk behaviors
 dep_mth_hrb <- dep_mth_df
-dep_mth_hrb["BINGE"] <- master_df[,6]
-dep_mth_hrb["LPA"] <- master_df[,8]
-dep_mth_hrb["SLEEP"] <- master_df[,10]
+dep_mth_hrb["BINGE"] <- outlier_df[,6]
+dep_mth_hrb["LPA"] <- outlier_df[,8]
+dep_mth_hrb["SLEEP"] <- outlier_df[,10]
 
 # Data frame containing depression, mhlth, MT
-dep_mth_mt <- cbind(dep_mth_df, master_df[12:16])
+dep_mth_mt <- cbind(dep_mth_df, outlier_df[12:16])
 # Data frame containing depression, mhlth, EA, MI, Pop
-dep_mth_ea_mi_pop <- cbind(dep_mth_df, master_df[18:24])
+dep_mth_ea_mi_pop <- cbind(dep_mth_df, outlier_df[18:24])
 # Data Frame containing depression, mhlth, MI, Pop, CT
-dep_mth_ct <- cbind(dep_mth_df, master_df[26:34])
+dep_mth_ct <- cbind(dep_mth_df, outlier_df[26:34])
 # Data Frame containing depression, mhlth, ES 
-dep_mth_es <-cbind(dep_mth_df, master_df[36:41])
+dep_mth_es <-cbind(dep_mth_df, outlier_df[36:41])
 # Data Frame containing depression, mhlth, others
-dep_mth_geo <- cbind(dep_mth_df, master_df[42:length(master_df)])
+dep_mth_geo <- cbind(dep_mth_df, outlier_df[42:length(master_df)])
 
 # A set of cormatrix
 cor_matrix_HRB <- cor(dep_mth_hrb)
@@ -453,7 +500,6 @@ sum(mhlth_infmat[, 'cook.d'] > 1)
 sum(mhlth_infmat[, 'hat'] > 2 * 7 / length(depression_infmat[, 'hat']))
 ```
 
-
 ### Regression Tree Model
 - Splitting the data: The dataset is split into training and testing sets to evaluate the model's performance.
 - Building the tree: The regression tree is built using a recursive partitioning algorithm, which splits the data into subsets based on the independent variables that best predict the dependent variable.
@@ -521,8 +567,8 @@ fancyRpartPlot(mhlth.tree.2, main = "Poor Mental Health Rate Tree")
 - Tuning the model: The model is tuned by adjusting the hyperparameters to improve its performance.
 - Interpreting the model: The regression tree is interpreted to gain insights into the relationships between the independent variables and the dependent variable.
 ```{r}
-```
 
+```
 
 ## Result
 Need edited
@@ -549,4 +595,3 @@ https://data.census.gov/
 https://www.anl.gov/dis/county-economic-impact-index
 https://www.census.gov/programs-surveys/community-resilience-estimates/data/datasets.html
 https://github.com/NREL/hsds-examples
-
