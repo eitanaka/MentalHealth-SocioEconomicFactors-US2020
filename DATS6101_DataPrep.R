@@ -50,7 +50,7 @@ chronic_df <- read_csv("PLACES_Census_Tract_Data_2022_release.csv")
 chronic_df <- chronic_df[(chronic_df$Year == 2020),]
 chronic_df <- chronic_df[,c("Year","StateAbbr","StateDesc","CountyName","CountyFIPS","LocationName","Data_Value","TotalPopulation","MeasureId")]
 # Keep only rows with health measures of interest #
-chronic_df <- chronic_df[(chronic_df$MeasureId=="DEPRESSION" | chronic_df$MeasureId=="SLEEP" | chronic_df$MeasureId=="LPA" | chronic_df$MeasureId=="MHLTH" | chronic_df$MeasureId=="BINGE"),]
+chronic_df <- chronic_df[(chronic_df$MeasureId=="DEPRESSION" | chronic_df$MeasureId=="SLEEP" | chronic_df$MeasureId=="LPA" | chronic_df$MeasureId=="MHLTH" | chronic_df$MeasureId=="BINGE" | chronic_df$MeasureId=="OBESITY"| chronic_df$MeasureId=="STROKE" | chronic_df$MeasureId=="DIABETES" | chronic_df$MeasureId=="CHECKUP" | chronic_df$MeasureId=="PHLTH" | chronic_df$MeasureId=="ACCESS2"),]
 # Reshape long to wide #
 CDC_df <- spread(chronic_df, key = MeasureId, value = Data_Value)
 # Rename LocationName and into GEOID
