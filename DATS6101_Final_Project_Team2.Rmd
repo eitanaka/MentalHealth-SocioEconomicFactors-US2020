@@ -53,71 +53,6 @@ In project 1, we investigated how health risk behaviors are associated with heal
 ### Data sets
 Need edited (Describe about 4 data set and how we create)
 We have used of 10 different datasets and the one which we are going to use from the previous Data Science project1. 
-<!-- CDC_Place : We imported the dataset from the shared drive and have cleaned up dataset and made used of some variables including "Year","StateAbbr","StateDesc","CountyName","CountyFIPS","LocationName","Data_Value","TotalPopulation","MeasureId" -->
-
-<!-- Census Tract Relationship 2020: We imported the dataset from the shared drive and have cleaned up dataset and made used of some variables -->
-               
-<!-- Commute Time 2020: We imported the dataset from the shared drive and have cleaned up dataset and made used of some variables-->
-<!-- Econ Impact Index 2020: We imported the dataset from the shared drive and have cleaned up dataset and made used of some variables-->
-<!-- Educational Attainment 2020:We imported the dataset from the shared drive and have cleaned up dataset and made used of some variables-->
-<!-- Employment Status 2020: We imported the dataset from the shared drive and have cleaned up dataset and made used of some variables -->
-<!-- Marital Status 2020: We imported the dataset from the shared drive and have cleaned up dataset and made used of some variables-->
-<!-- Median Income 2020: We imported the dataset from the shared drive and have cleaned up dataset and made used of some variables-->
-<!-- Planning Database with 2010 Census and 2014 – 2018 American Community SurveyData: We imported the dataset from the shared drive and have cleaned up dataset and made used of some variables -->
-<!-- Population 2020: We imported the dataset from the shared drive and have cleaned up dataset and made used of some variables -->
-
-### Variables of interest
-# Here are all the variables used in the project.
-<!-- CountyFIPS: a numeric column containing the FIPS code for each county. -->
-<!-- GEOID: a numeric column containing the unique  Geographical ID for each county. -->
-<!-- StateAbbr: a character column containing the abbreviation for the state where each county is located. -->
-<!-- CountyName: a character column containing the name of each county. -->
-<!-- BINGE: a numeric columns representing percentages of population in each county that reported binge drinking -->
-<!-- DEPRESSION:a numeric columns representing percentages of population in each county that reported depression -->
-<!-- LPA:a numeric columns representing percentages of population in each county that reported doing less physical activity -->
-<!-- MHLTH:a numeric columns representing percentages of population in each county that reported poor mental health -->
-<!-- SLEEP:a numeric columns representing percentages of population in each county that reported insufficient sleep. -->
-<!-- MT_Total: Total marital status percentage. -->
-<!-- MT_Never Married:a numeric columns representing percentages of adults in each county who were categorized as never married -->
-<!-- MT_Now married:a numeric columns representing percentages of adults in each county who were categorized as now married. -->
-<!-- MT_Divorces:a numeric columns representing percentages of adults in each county who were categorized as got divorces. -->
-<!-- MT_Separated:a numeric columns representing percentages of adults in each county who were categorized as couple who separated. -->
-<!-- MT_Widowed:a numeric columns representing percentages of adults in each county who were categorized as widowed. -->
-<!-- EA_Total: Total educational population percentage. -->
-<!-- EA_Less than high school graduate:a numeric columns representing percentages of adults in each county who were categorized as studied less than high school -->
-<!-- EA_High school graduate: a numeric columns representing percentages of adults in each county who were categorized who are high school graduate. -->
-<!-- EA_college or associate's degree:a numeric columns representing percentages of adults in each county who were categorized who did college or associate's degree -->
-<!-- EA_Bachelor's degree: a numeric columns representing percentages of adults in each county who were categorized as completed bachelor's degree -->
-<!-- EA_Graduate or professional degree:a numeric columns representing percentages of adults in each county who were categorized as having a certain educational graduate or professional degree. -->
-<!-- MI_Estimate:a numeric column representing the estimated median household income in each county. -->
-<!-- Total Population:a numeric column representing the total population of each county. -->
-<!-- CT_Total:a numeric column representing the percentages of the population in each county that take total commute time in percentage. -->
-<!-- CT_<10:a numeric column representing the percentages of the population in each county that take commute time less than 10min -->
-<!-- CT_10-14:a numeric column representing the percentages of the population in each county that take commute time between 10 -14min -->
-<!-- CT_20-24:a numeric column representing the percentages of the population in each county that take commute time between 20 -24min -->
-<!-- CT_25-29:a numeric column representing the percentages of the population in each county that take commute time between 25 -29min -->
-<!-- CT_30-34:a numeric column representing the percentages of the population in each county that take commute time between 30 -34min -->
-<!-- CT_35-44:a numeric column representing the percentages of the population in each county that take commute time between 35 -44min -->
-<!-- CT_45-54:a numeric column representing the percentages of the population in each county that take commute time between 45 -54min -->
-<!-- CT_55-59:a numeric column representing the percentages of the population in each county that take commute time between 55 -59min -->
-<!-- CT_>60:a numeric column representing the percentages of the population in each county that take commute time more than 60 minutes -->
-
-<!-- ES_Total: This variable represents the percentage of the total population that is employed or actively seeking employment. -->
-<!-- ES_Total_labor_force: This variable represents the percentage of the total population that is either employed or actively seeking employment out of the total labor force. -->
-<!-- ES_Civilian_labor_force: This variable represents the percentage of the total population that is either employed or actively seeking employment within the civilian labor force. -->
-<!-- ES_Civilian_labor_force_employed: This variable represents the percentage of the total civilian labor force that is currently employed. -->
-<!-- ES_Civilian_labor_force_unemployed: This variable represents the percentage of the total civilian labor force that is currently unemployed and actively seeking employment. -->
-<!-- ES_Armed_Forces: This variable represents the percentage of the total population that is serving in the armed forces. -->
-<!-- ES_Not_in_labor_force: This variable represents the percentage of the total population that is not part of the labor force, either due to being retired, not seeking employment, or being unable to work. -->
-<!-- LAND_AREA: This variable represents the total land area in square kilometers. -->
-<!-- URBANIZED_AREA_POP_CEN_2010: This variable represents the population in urbanized areas as of the 2010 Census. -->
-<!-- URBAN_CLUSTER_POP_CEN_2010: This variable represents the population in urban clusters as of the 2010 Census. -->
-<!-- RURAL_POP_CEN_2010: This variable represents the rural population as of the 2010 Census. -->
-<!-- pct_URBANIZED_AREA_POP_CEN_2010: This variable represents the percentage of the total population living in urbanized areas as of the 2010 Census. -->
-<!-- pct_URBAN_CLUSTER_POP_CEN_2010: This variable represents the percentage of the total population living in urban clusters as of the 2010 Census. -->
-<!-- pct_RURAL_POP_CEN_2010: This variable represents the percentage of the total population living in rural areas as of the 2010 Census. -->
-<!-- index_apr20: This variable represents an index value for the area in question as of April 2020. -->
-<!-- pop.den: This variable represents the population density of the area in question. -->
 
 ### Initial SMART Question
 Need edited
@@ -139,46 +74,6 @@ colnames(master_df)[colnames(master_df) == "EA_High school graduate"] <- "EA_Hig
 colnames(master_df)[colnames(master_df) == "EA_college or associate's degree"] <- "EA_college_or_associates_degree"
 colnames(master_df)[colnames(master_df) == "EA_Bachelor's degree"] <- "EA_Bachelors_degree"
 colnames(master_df)[colnames(master_df) == "EA_Graduate or professional degree"] <- "EA_Graduate_or_professional_degree"
-
-# Histograms
-# Two histograms: one for the distribution of tract-level depression rates and one for the distribution of tract-level poor mental health rates.
-dep_hist <- hist(master_df$DEPRESSION, main = "Distribution of Tract-level Depression Rates")
-dep_hist
-mhlth_hist <- hist(master_df$MHLTH, main = "Distribution of Tract-level Poor Mental Health Rates")
-mhlth_hist
-```
-Looking at the histograms, it appears that both variables are approximately normally distributed, although the distribution of tract-level depression rates is skewed to the right, with a larger number of observations in the higher bins. The distribution of tract-level poor mental health rates also appears skewed to the right, but with a more gradual decrease in the number of observations in the higher bins compared to the depression rates histogram.This information is important when selecting statistical methods to analyze these variables, as many methods assume normality. Additionally, the histograms provide a visual representation of the distribution of the variables, which can help in identifying potential outliers or unusual patterns.
-
-```{r}
-# QQ plots for the distribution of tract-level depression rates and tract-level poor mental health rates.
-
-dep_qq <- qqnorm(master_df$DEPRESSION, main = "Distribution of Tract-level Depression Rates")
-dep_qq
-mhlth_qq <- qqnorm(master_df$MHLTH, main = "Distribution of Tract-level Poor Mental Health Rates")
-mhlth_qq
-```
-A QQ plot compares the quantiles of a dataset to the quantiles of a theoretical distribution (in this case, the normal distribution). If the points on the QQ plot are close to a straight line, it indicates that the data are normally distributed.
-In this case, the QQ plot for the depression rates appears to deviate from a straight line towards the tails, indicating that the distribution is not perfectly normal. The QQ plot for the poor mental health rates appears to deviate from a straight line even more than the depression rates, indicating that the distribution is even less normal.
-
-# create data frame of only numeric values
- We will create a new data frame called num_df that only contains the numeric columns of the original master_df, that can be analyzed using various statistical tools.
-```{r}
-cols_to_remove <- c("...1", "CountyFIPS", "GEOID", "StateAbbr", "CountyName", "MT_Total", "EA_Total", "total_population", "CT_Total", "ES_Total", "LAND_AREA")
-num_df <- master_df[ , !names(master_df) %in% cols_to_remove]
-
-# hist_list <- lapply(names(num_df), function(col) {
-#   ggplot(num_df, aes_string(x = col)) +
-#     geom_histogram() +
-#     ggtitle(col)
-# })
-# hist_list
-```
-
-### Basic EDA
-Need edited
-```{r}
-
-
 ```
 
 #### Handle Null Values
@@ -202,15 +97,15 @@ for (col_name in colnames(cols_of_interest)) {
   outlier_df <- na.omit(outlier_df)
   outlier_df <- outlier_df[,1:(ncol(outlier_df)-2)]
 }
-outlier_df <- outlier_df[,1:(ncol(outlier_df)-1)]
+new_master_df <- outlier_df[,1:(ncol(outlier_df)-1)]
 ```
 
 ### Boxplots for checking outliers
 ```{r}
 # Create a boxplot for each column
 par(mfrow=c(5, 10))
-for (i in 6:ncol(outlier_df)) {
-  boxplot(outlier_df[[i]], main=names(outlier_df)[i])
+for (i in 6:ncol(new_master_df)) {
+  boxplot(new_master_df[[i]], main=names(new_master_df)[i])
 }
 ```
 
@@ -219,7 +114,7 @@ for (i in 6:ncol(outlier_df)) {
 # Scatter plots with fit line for Depression and other dependent variables
 for (col in names(cols_of_interest)) {
   if (col != "DEPRESSION") {
-    plot_data <- data.frame(x = outlier_df$DEPRESSION, y = outlier_df[[col]])
+    plot_data <- data.frame(x = new_master_df$DEPRESSION, y = new_master_df[[col]])
     plot <- ggplot(plot_data, aes(x = x, y = y)) + 
       geom_point() +
       geom_smooth(method = "lm", se = FALSE) +
@@ -235,7 +130,7 @@ for (col in names(cols_of_interest)) {
 # Scatter plots with fit line for mhlth and other dependent variables
 for (col in names(cols_of_interest)) {
   if (col != "MHLTH") {
-    plot_data <- data.frame(x = outlier_df$MHLTH, y = outlier_df[[col]])
+    plot_data <- data.frame(x = new_master_df$MHLTH, y = new_master_df[[col]])
     plot <- ggplot(plot_data, aes(x = x, y = y)) + 
       geom_point() +
       geom_smooth(method = "lm", se = FALSE) +
@@ -243,59 +138,30 @@ for (col in names(cols_of_interest)) {
       ylab(col)
     print(plot)
   }
-  
-# Create a function to plot boxplot with distribution lines
-# Function to create boxplot with mean and standard deviation
-# Load the necessary libraries
-library(ggplot2)
-library(gridExtra)
-
-# Create a function to plot boxplot with distribution lines
-plot_boxplot <- function(x) {
-  # Calculate mean and standard deviation
-  mean_x <- mean(x, na.rm = TRUE)
-  sd_x <- sd(x, na.rm = TRUE)
-  
-  # Create the plot
-  ggplot(data = data.frame(x), aes(x = x)) +
-    geom_boxplot() +
-    geom_vline(xintercept = mean_x, color = "blue", size = 1) +
-    geom_vline(xintercept = mean_x - sd_x, color = "red", linetype = "dashed", size = 1) +
-    geom_vline(xintercept = mean_x + sd_x, color = "red", linetype = "dashed", size = 1) +
-    labs(x = names(x), y = "Value") +
-    theme_bw() +
-    theme(plot.title = element_text(size = 12, hjust = 0.5),
-          axis.title.x = element_text(size = 10),
-          axis.title.y = element_text(size = 10),
-          axis.text = element_text(size = 8),
-          axis.line = element_line(colour = "black"),
-          panel.grid.major = element_blank(),
-          panel.grid.minor = element_blank(),
-          legend.position = "none")
 }
-
-# Filter the numeric variables
-numeric_vars <- sapply(master_df, is.numeric)
-numeric_df <- master_df[, numeric_vars]
 ```
-The code creates a function called plot_boxplot that plots a boxplot with mean and standard deviation lines using ggplot. It then filters the numeric variables from the master_df dataframe and creates a new dataframe called numeric_df.Finally, it creates boxplots for all numeric variables in numeric_df using a for loop. This code allows us to quickly visualize the distribution of the numeric variables and to identify any outliers or unusual patterns.
 
-## Data Structure
+```{r}
+# Create data frames we need afterward
+cols_to_remove <- c("...1", "CountyFIPS", "GEOID", "StateAbbr", "CountyName", "MT_Total", "EA_Total", "total_population", "CT_Total", "ES_Total", "LAND_AREA")
+num_df <- master_df[ , !names(master_df) %in% cols_to_remove]
+```
+
+### Data Structure
 Need edited
 It can be useful to get a quick overall structure of the data frame before performing further analyses.
 ```{r}
-str(outlier_df)
-```
-
-
-## Summary Statictics
-Need edited
-It can be useful to get a overview  of summary statistics of the data frame before performing further analyses.
-```{r}
-summary(outlier_df)
+str(new_master_df)
 ```
 
 ### Descriptive Statistics
+Need edited
+It can be useful to get a overview  of summary statistics of the data frame before performing further analyses.
+```{r}
+summary(new_master_df)
+```
+
+### Box Plot Analysis
 Need edited 
 ```{r}
 # Create a function to plot histograms with distribution lines
@@ -324,74 +190,65 @@ plot_histogram <- function(x) {
 }
 
 # Filter the numeric variables
-numeric_vars <- sapply(master_df, is.numeric)
-numeric_df <- master_df[, numeric_vars]
+numeric_vars <- sapply(new_master_df, is.numeric)
+numeric_df <- new_master_df[, numeric_vars]
 
 # Create a list of plots for all numeric variables
 plots <- lapply(numeric_df, plot_histogram)
-
 plots
 ```
 
+### Histogram for dependent variable
+To Check normality of dependent variable
+```{r}
+# Histograms
+# Two histograms: one for the distribution of tract-level depression rates and one for the distribution of tract-level poor mental health rates.
+dep_hist <- hist(new_master_df$DEPRESSION, main = "Distribution of Tract-level Depression Rates")
+dep_hist
+mhlth_hist <- hist(new_master_df$MHLTH, main = "Distribution of Tract-level Poor Mental Health Rates")
+mhlth_hist
+```
+Looking at the histograms, it appears that both variables are approximately normally distributed, although the distribution of tract-level depression rates is skewed to the right, with a larger number of observations in the higher bins. The distribution of tract-level poor mental health rates also appears skewed to the right, but with a more gradual decrease in the number of observations in the higher bins compared to the depression rates histogram.This information is important when selecting statistical methods to analyze these variables, as many methods assume normality. Additionally, the histograms provide a visual representation of the distribution of the variables, which can help in identifying potential outliers or unusual patterns.
 
+### QQ-Plot for dependent variable
+To check normality of dependent variable
+```{r}
+# QQ plots for the distribution of tract-level depression rates and tract-level poor mental health rates.
 
-### Hypothesis Testing
-Need edited
+dep_qq <- qqnorm(new_master_df$DEPRESSION, main = "Distribution of Tract-level Depression Rates")
+dep_qq
+mhlth_qq <- qqnorm(new_master_df$MHLTH, main = "Distribution of Tract-level Poor Mental Health Rates")
+mhlth_qq
+```
+A QQ plot compares the quantiles of a dataset to the quantiles of a theoretical distribution (in this case, the normal distribution). If the points on the QQ plot are close to a straight line, it indicates that the data are normally distributed.
+In this case, the QQ plot for the depression rates appears to deviate from a straight line towards the tails, indicating that the distribution is not perfectly normal. The QQ plot for the poor mental health rates appears to deviate from a straight line even more than the depression rates, indicating that the distribution is even less normal.
+
+We will create a new data frame called num_df that only contains the numeric columns of the original master_df, that can be analyzed using various statistical tools.
 
 ### Correlations
 ```{r}
-cor_matrix <- cor(outlier_df[,6:ncol(outlier_df)])
+# Create a correlation matrix
+cor_matrix <- cor(numeric_df)
 
-# Create 6 subset for cor_matrix or cor_heatmap
-dep_mth_df <- subset(outlier_df, select = "DEPRESSION")
-dep_mth_df <- cbind(dep_mth_df, outlier_df[,9])
+# Create two lists which have the names of variables highly correlated (more then 0.3 or less than -0.3)
+high_dep_cor_list <- names(which(cor_matrix["DEPRESSION",] > 0.3 | cor_matrix["DEPRESSION",] < -0.3))
+high_mhlth_cor_list <- names(which(cor_matrix["mhlth",] > 0.3 | cor_matrix["mhlth",] < -0.3))
+  
+# Create two correlation matrixes from new_master_df in the above lists
+high_dep_cor_mat <- cor(new_master_df[high_dep_cor_list])
+high_mhlth_cor_mat <- cor(new_master_df[high_mhlth_cor_list])
 
-# Data frame containing depression, mhlth, health risk behaviors
-dep_mth_hrb <- dep_mth_df
-dep_mth_hrb["BINGE"] <- outlier_df[,6]
-dep_mth_hrb["LPA"] <- outlier_df[,8]
-dep_mth_hrb["SLEEP"] <- outlier_df[,10]
+# Plot above correlation matrix
+corrplot(high_dep_cor_mat, type = "lower", outline.color = "white", 
+           colors = c("#6D9EC1", "white", "#E46726"), legend.title = "Correlation", 
+           ggtheme = theme_gray, title = "Highly Correlated Variables with DEPRESSION")
 
-# Data frame containing depression, mhlth, MT
-dep_mth_mt <- cbind(dep_mth_df, outlier_df[12:16])
-# Data frame containing depression, mhlth, EA, MI, Pop
-dep_mth_ea_mi_pop <- cbind(dep_mth_df, outlier_df[18:24])
-# Data Frame containing depression, mhlth, MI, Pop, CT
-dep_mth_ct <- cbind(dep_mth_df, outlier_df[26:34])
-# Data Frame containing depression, mhlth, ES 
-dep_mth_es <-cbind(dep_mth_df, outlier_df[36:41])
-# Data Frame containing depression, mhlth, others
-dep_mth_geo <- cbind(dep_mth_df, outlier_df[42:length(master_df)])
-
-# A set of cormatrix
-cor_matrix_HRB <- cor(dep_mth_hrb)
-cor_matrix_MT_EA <- cor(dep_mth_mt)
-cor_matrix_EA_MI_POP <- cor(dep_mth_ea_mi_pop)
-cor_matrix_CT <- cor(dep_mth_ct)
-cor_matrix_ES <- cor(dep_mth_es)
-cor_matrix_GEO <- cor(dep_mth_geo)
-
-# Plot
-corrplot(cor_matrix_HRB, method = "circle", type = "upper", order = "hclust", addCoef.col = "black", tl.col = "black", tl.srt = 45, cl.pos = "n")
-corrplot(cor_matrix_MT_EA, method = "circle", type = "upper", order = "hclust", addCoef.col = "black", tl.col = "black", tl.srt = 45, cl.pos = "n")
-corrplot(cor_matrix_EA_MI_POP, method = "circle", type = "upper", order = "hclust", addCoef.col = "black", tl.col = "black", tl.srt = 45, cl.pos = "n")
-corrplot(cor_matrix_CT, method = "circle", type = "upper", order = "hclust", addCoef.col = "black", tl.col = "black", tl.srt = 45, cl.pos = "n")
-corrplot(cor_matrix_ES, method = "circle", type = "upper", order = "hclust", addCoef.col = "black", tl.col = "black", tl.srt = 45, cl.pos = "n")
-corrplot(cor_matrix_GEO, method = "circle", type = "upper", order = "hclust", addCoef.col = "black", tl.col = "black", tl.srt = 45, cl.pos = "n")
+corrplot(high_mhlth_cor_mat, type = "lower", outline.color = "white", 
+           colors = c("#6D9EC1", "white", "#E46726"), legend.title = "Correlation", 
+           ggtheme = theme_gray, title = "Highly Correlated Variables with mhlth")
 ```
 
-
-#### Variable Selection
-Need edited
-```{r}
-cols_names_depression <- names(which(abs(cor_matrix[2, ]) >= 0.3))
-depression_cor_df <- master_df[, c("DEPRESSION", "LPA", "EA_High_school_graduate", "EA_Bachelors_degree", "EA_Graduate_or_professional_degree", "MI_Estimate", "URBANIZED_AREA_POP_CEN_2010", "pct_URBANIZED_AREA_POP_CEN_2010")]
-
-cols_mhlth <- names(which(abs(cor_matrix[4, ]) >= 0.3))
-mhlth_cor_df <- master_df[,c("MHLTH", "LPA", "SLEEP", "MT_never_married", "MT_now_married", "MT_Separated", "EA_Less_than_high_school_graduate", "EA_High_school_graduate", "EA_Bachelors_degree", "EA_Graduate_or_professional_degree", "MI_Estimate", "ES_Civilian_labor_force_employed", "ES_Civilian_labor_force_unemployed")]
-```
-
-### VIF Test for Multicollinearity
+#### VIF Test for Multicollinearity
 ```{r}
 calculate_VIF <- function(data, target_col) {
   X <- data[, !colnames(data) %in% target_col]
@@ -407,6 +264,14 @@ mhlth_VIF <- calculate_VIF(mhlth_cor_df, "MHLTH")
 
 depression_VIF
 mhlth_VIF
+```
+
+### Feature Selection
+Need edited
+```{r}
+dep_features_list <-
+
+mhlth_features_list <-
 ```
 
 ## Model Building
@@ -426,6 +291,8 @@ Multiple linear regression and regression tree are two different types of models
 Overall, multiple linear regression and regression tree are both useful models for predicting the value of a dependent variable based on one or more independent variables. The choice between the two models depends on the specific problem and the data available.
 
 ### Multiple Linear Regression
+
+#### Model 1: With Highly correlated variables
 ```{r}
 # multiple linear regression model for depression
 depression_model <- lm(DEPRESSION ~ LPA + EA_High_school_graduate + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + URBANIZED_AREA_POP_CEN_2010 + pct_URBANIZED_AREA_POP_CEN_2010, data = depression_cor_df)
@@ -434,13 +301,25 @@ depression_model <- lm(DEPRESSION ~ LPA + EA_High_school_graduate + EA_Bachelors
 mhlth_model <- lm(MHLTH ~ LPA + SLEEP + MT_never_married + MT_now_married + MT_Separated + EA_Less_than_high_school_graduate + EA_High_school_graduate + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed, data = mhlth_cor_df)
 ```
 
-#### Test Assumptions for Multiple linear regression
-- Normality of target variable (checked!: histogram & qqplot good!)
-- Linearity (checked!: corrplot good!)
-- Independence (checked! But not good...)
-- No multicollinearity (checked! VIF test good!)
-- Homoscedasticity (checked! Breusch-Pagan test. But not good...)
-- No influential outliers (checked! cock's distance. But not good...)
+#### Model 2: With Highly correlated health related variables
+```{r}
+```
+
+#### Model 3: With Highly correlated socioeconomic related variables
+```{r}
+```
+
+#### Model Comparison (ANOVA)
+```{r}
+```
+
+#### Assessment for best model
+- Independence 
+- Homoscedasticity
+- No influential outliers
+```{r}
+
+```
 
 #### Multiple linear regression model Evaluation
 (From Textbook)
