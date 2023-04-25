@@ -40,6 +40,7 @@ library(rattle)
 ```{r init}
 url <- 'https://raw.githubusercontent.com/eitanaka/DATS6101_Final_Project_Team2/main/data_set/geo_socio_health_df.csv'
 master_df<- read_csv(url)
+master_df <- master_df[,-1]
 ```
 
 ## Abstract
@@ -64,7 +65,6 @@ Need edited
 Need edited
 Let us work on some data manipulation and visualization tasks by renaming some columns in the dataframe and the second part of your code creates two histograms. The first histogram (dep_hist) shows the distribution of tract-level depression rates, and the second histogram (mhlth_hist) shows the distribution of tract-level poor mental health rates.
 ```{r}
-# Checking normality of dependent variables.
 # To rename some columns in a data frame to make them more readable and easier to work with.This is done by using the "colnames" function to first select the column names that match the original names, and then assigning new names.
 colnames(master_df)[colnames(master_df) == "MT_Never Married"] <- "MT_never_married"
 colnames(master_df)[colnames(master_df) == "MT_Now married"] <- "MT_now_married"
@@ -76,28 +76,38 @@ colnames(master_df)[colnames(master_df) == "EA_Bachelor's degree"] <- "EA_Bachel
 colnames(master_df)[colnames(master_df) == "EA_Graduate or professional degree"] <- "EA_Graduate_or_professional_degree"
 ```
 
+```{r}
+# Create a new data only including numerical variable
+numeric_vars <- sapply(master_df, is.numeric)
+num_df <- master_df[, numeric_vars]
+```
+
+#### Basic Information
+```{r}
+head(num_df)
+str(num_df)
+```
+
 #### Handle Null Values
 ```{r}
-master_df <- na.omit(master_df)
-colSums(is.na(master_df[6:length(master_df)]))
+colSums(is.na(num_df))
+num_df <- na.omit(num_df)
+colSums(is.na(num_df))
 ```
 The output will be a numeric vector with the number of missing values in each column. If all values are 0, then there are no missing values in the selected columns.
 
 #### Handle Outlier
 ```{r}
-colSums(master_df[6:length(master_df)] == 0.0)
-
-# columns of interest
-cols_of_interest <- master_df[6:length(master_df)]
+colSums(num_df == 0.0)
 
 # loop through all columns
-for (col_name in colnames(cols_of_interest)) {
+for (col_name in colnames(num_df)) {
   # remove outliers
-  new_master_df <- outlierKD2(master_df, master_df[[col_name]], rm=TRUE)
-  new_master_df <- na.omit(new_master_df)
-  new_master_df <- new_master_df[,1:(ncol(new_master_df)-2)]
+  new_num_df <- outlierKD2(num_df, num_df[[col_name]], rm=TRUE)
+  new_num_df <- na.omit(new_master_df)
+  new_num_df <- new_master_df[,1:(ncol(new_master_df)-2)]
 }
-new_master_df <- new_master_df[,1:(ncol(new_master_df)-1)]
+new_num_df <- new_num_df[,1:(ncol(new_num_df)-1)]
 ```
 
 ### Boxplots for checking outliers
@@ -192,7 +202,7 @@ plot_histogram <- function(x) {
 
 # Filter the numeric variables
 numeric_vars <- sapply(new_master_df, is.numeric)
-numeric_df <- new_master_df[, numeric_vars]
+num_df <- new_master_df[, numeric_vars]
 
 # Create a list of plots for all numeric variables
 plots <- lapply(numeric_df, plot_histogram)
