@@ -97,13 +97,14 @@ for (col_name in colnames(cols_of_interest)) {
   new_master_df <- na.omit(new_master_df)
   new_master_df <- new_master_df[,1:(ncol(new_master_df)-2)]
 }
-new_master_df <- outlier_df[,1:(ncol(outlier_df)-1)]
+new_master_df <- new_master_df[,1:(ncol(new_master_df)-1)]
 ```
 
 ### Boxplots for checking outliers
 ```{r}
 # Create a boxplot for each column
-par(mfrow=c(5, 10))
+par(mfrow=c(6, 9))
+par(mar=c(1, 1, 1, 1))
 for (i in 6:ncol(new_master_df)) {
   boxplot(new_master_df[[i]], main=names(new_master_df)[i])
 }
