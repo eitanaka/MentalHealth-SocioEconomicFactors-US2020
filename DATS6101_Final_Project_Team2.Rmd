@@ -219,7 +219,6 @@ high_mhlth_cor_list <- high_mhlth_cor_list[high_mhlth_cor_list != "DEPRESSION"]
 length(high_dep_cor_list)  
 length(high_mhlth_cor_list)
 ```
-
 ### Correlation Heatmap
 ```{r}
 # Create two correlation matrixes from new_num_df in the above lists
@@ -276,6 +275,13 @@ mhlth_features_list
 
 ## Model Building
 Need edited
+
+### Training and Test Sets
+```{r}
+library(caret)
+
+set.seed()
+```
 
 ### Multiple Linear Regression
 
@@ -356,6 +362,15 @@ summary(depression_stepwise_model)
 summary(mhlth_stepwise_model)
 ```
 
+#### Best Model vs. Stepwise Model
+```{r}
+dep_anova_model_2 <- anova(depression_model_1, depression_stepwise_model)
+mhlth_anova_model_2 <- anova(mhlth_model_1, mhlth_stepwise_model)
+
+xkabledply(dep_anova_model_2)
+xkabledply(mhlth_anova_model_2)
+```
+
 #### Assessment for best model
 - Independence 
 - Homoscedasticity
@@ -379,19 +394,18 @@ This will output the Durbin-Watson test statistic, the degrees of freedom, and t
 ```{r}
 # The Durbin-Watson test
 library(lmtest)
-depression_dwtest <- dwtest(depression_model_1)
-mhlth_dwtest <- dwtest(mhlth_model_1)
+depression_dwtest <- dwtest(depression_stepwise_model)
+mhlth_dwtest <- dwtest(mhlth_stepwise_model)
 
 depression_dwtest
 mhlth_dwtest
 ```
-
 ##### Homoscedasticity
 Breusch-Pagan test: The Breusch-Pagan test is a statistical test for homoscedasticity that tests whether the variance of the residuals is constant across all levels of the independent variables. This will output the test statistic and the p-value for the Breusch-Pagan test. The null hypothesis of the test is that the variance of the residuals is constant (homoscedasticity). A p-value less than 0.05 suggests evidence of heteroscedasticity.
 ```{r}
 # Breusch-Pagan test
-bptest(depression_model_1)
-bptest(mhlth_model_1)
+bptest(depression_stepwise_model)
+bptest(mhlth_stepwise_model)
 ```
 
 ##### No influential outliers
@@ -402,16 +416,16 @@ Leverage values: Leverage values are another measure of the influence of each ob
 # Cook's distance and Leverage
 
 # depression
-depression_influential <- influence.measures(depression_model_1)
+depression_influential <- influence.measures(depression_stepwise_model)
 depression_infmat <- depression_influential$infmat
 sum(depression_infmat[, 'cook.d'] > 1)
 sum(depression_infmat[, 'hat'] > 2 * 7 / length(depression_infmat[, 'hat']))
 
 # mhlth
-mhlth_influential <- influence.measures(mhlth_model_1)
+mhlth_influential <- influence.measures(mhlth_stepwise_model)
 mhlth_infmat <- mhlth_influential$infmat
 sum(mhlth_infmat[, 'cook.d'] > 1)
-sum(mhlth_infmat[, 'hat'] > 2 * 7 / length(depression_infmat[, 'hat']))
+sum(mhlth_infmat[, 'hat'] > 2 * 7 / length(mhlth_infmat[, 'hat']))
 ```
 
 ### Regression Tree Model
@@ -449,15 +463,20 @@ sum(mhlth_infmat[, 'hat'] > 2 * 7 / length(depression_infmat[, 'hat']))
 
 # fancy tree plots
 # fancy depression tree
-depression.tree.2 <- rpart(DEPRESSION ~ LPA + ea.hs.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + URBANIZED_AREA_POP_CEN_2010 + pct_URBANIZED_AREA_POP_CEN_2010, data = new_num_df)
+
+depression.tree.2 <- rpart(DEPRESSION ~  ACCESS2 + BINGE + CHECKUP + DIABETES + LPA + OBESITY + PHLTH + SLEEP + STROKE + MT_never_married + MT_now_married + MT_Divorces + MT_Separated + MT_Widowed + EA_Less_than_high_school_graduate + EA_High_school_graduate + EA_college_or_associates_degree + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + total_population + `CT_<10` + `CT_10-14` + `CT_15-19` + `CT_20-24` + `CT_25-29` + `CT_30-34` + `CT_35-44` + `CT_45-59` + `CT_>60` + ES_Total_labor_force + ES_Civilian_labor_force + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed + ES_Armed_Forces + ES_Not_in_labor_force + land + urban + poverty + no.ins + disab + no.comp + `broad&comp` + no.eng + sing.mom + live.alone + pub.assist + no.phone + no.plumb + married.kid + hhd.no.comp + hhd.only.phone + hhd.no.int + hhd.broad + index_apr20, data = new_num_df, control = rpart.control(maxdepth = ))
 
 fancyRpartPlot(depression.tree.2, main = "Depression Rate Tree")
 
+summary(depression.tree.2)
+
 # fancy mental health tree
-mhlth.tree.2 <- rpart(MHLTH ~ LPA + SLEEP + mt.nev.mar + mt.now.mar + MT_Separated + ea.less.hs.deg + ea.hs.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed, data = mhlth_cor_df, control = rpart.control(maxdepth = ))
+mhlth.tree.2 <- rpart(MHLTH ~ ACCESS2 + BINGE + CHECKUP + DIABETES + LPA + OBESITY + PHLTH + SLEEP + STROKE + MT_never_married + MT_now_married + MT_Divorces + MT_Separated + MT_Widowed + EA_Less_than_high_school_graduate + EA_High_school_graduate + EA_college_or_associates_degree + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + total_population + `CT_<10` + `CT_10-14` + `CT_15-19` + `CT_20-24` + `CT_25-29` + `CT_30-34` + `CT_35-44` + `CT_45-59` + `CT_>60` + ES_Total_labor_force + ES_Civilian_labor_force + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed + ES_Armed_Forces + ES_Not_in_labor_force + land + urban + poverty + no.ins + disab + no.comp + `broad&comp` + no.eng + sing.mom + live.alone + pub.assist + no.phone + no.plumb + married.kid + hhd.no.comp + hhd.only.phone + hhd.no.int + hhd.broad + index_apr20, data = new_num_df, control = rpart.control(maxdepth = ))
+
 
 fancyRpartPlot(mhlth.tree.2, main = "Poor Mental Health Rate Tree")
 
+summary(mhlth.tree.2)
 # pruning trees
 # pruned depression tree
 # pruned.depression.tree.2 <- prune(depression.tree.2, cp = 0.01)
