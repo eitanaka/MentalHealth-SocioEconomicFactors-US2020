@@ -66,14 +66,14 @@ Need edited
 Let us work on some data manipulation and visualization tasks by renaming some columns in the dataframe and the second part of your code creates two histograms. The first histogram (dep_hist) shows the distribution of tract-level depression rates, and the second histogram (mhlth_hist) shows the distribution of tract-level poor mental health rates.
 ```{r}
 # To rename some columns in a data frame to make them more readable and easier to work with.This is done by using the "colnames" function to first select the column names that match the original names, and then assigning new names.
-colnames(master_df)[colnames(master_df) == "MT_Never Married"] <- "MT_never_married"
-colnames(master_df)[colnames(master_df) == "MT_Now married"] <- "MT_now_married"
-colnames(master_df)[colnames(master_df) == "Total Population"] <- "total_population"
-colnames(master_df)[colnames(master_df) == "EA_Less than high school graduate"] <- "EA_Less_than_high_school_graduate"
-colnames(master_df)[colnames(master_df) == "EA_High school graduate"] <- "EA_High_school_graduate"
-colnames(master_df)[colnames(master_df) == "EA_college or associate's degree"] <- "EA_college_or_associates_degree"
-colnames(master_df)[colnames(master_df) == "EA_Bachelor's degree"] <- "EA_Bachelors_degree"
-colnames(master_df)[colnames(master_df) == "EA_Graduate or professional degree"] <- "EA_Graduate_or_professional_degree"
+colnames(master_df)[colnames(master_df) == "MT_Never Married"] <- "mt.nev.mar"
+colnames(master_df)[colnames(master_df) == "MT_Now married"] <- "mt.now.mar"
+colnames(master_df)[colnames(master_df) == "Total Population"] <- "tot.pop"
+colnames(master_df)[colnames(master_df) == "EA_Less than high school graduate"] <- "ea.less.hs.deg"
+colnames(master_df)[colnames(master_df) == "EA_High school graduate"] <- "ea.hs.deg"
+colnames(master_df)[colnames(master_df) == "EA_college or associate's degree"] <- "ea.col.ass.deg"
+colnames(master_df)[colnames(master_df) == "EA_Bachelor's degree"] <- "ea.ba.deg"
+colnames(master_df)[colnames(master_df) == "EA_Graduate or professional degree"] <- "ea.grad.prof.deg"
 ```
 
 ```{r}
@@ -236,6 +236,13 @@ corrplot(high_dep_cor_mat, type = "lower", outline.color = "white",
 corrplot(high_mhlth_cor_mat, type = "lower", outline.color = "white", 
            colors = c("#6D9EC1", "white", "#E46726"), legend.title = "Correlation", 
            ggtheme = theme_gray, title = "Highly Correlated Variables with mhlth")
+
+my_col <- colorRampPalette(c("red", "white", "blue"))(30)
+
+corrplot(high_dep_cor_mat, method = "number", type = "lower", order = "hclust", diag = FALSE, tl.col = "black", tl.cex = 0.8, cl.cex = 0.8, addCoef.col = "black", col = my_col, main = "", mar = c(0,0,0,0))
+
+corrplot(high_mhlth_cor_mat, method = "number", type = "lower", order = "hclust", diag = FALSE, tl.col = "black", tl.cex = 0.8, cl.cex = 0.8, addCoef.col = "black", col = my_col, main = "", mar = c(0,0,0,0))
+
 ```
 #### VIF Test for Multicollinearity
 ```{r}
@@ -281,10 +288,10 @@ set.seed()
 #### Model 1: With Highly correlated variables (Health Factors + Socioeconomic Factors)
 ```{r}
 # multiple linear regression model for depression
-depression_model_1 <- lm(DEPRESSION ~ OBESITY + PHLTH + EA_High_school_graduate + EA_Graduate_or_professional_degree + MI_Estimate + `CT_>60` + hhd.broad, data = new_num_df)
+depression_model_1 <- lm(DEPRESSION ~ OBESITY + PHLTH + ea.hs.deg + ea.grad.prof.deg + MI_Estimate + `CT_>60` + hhd.broad, data = new_num_df)
 
 # multiple linear regression model for poor mental health
-mhlth_model_1 <- lm(MHLTH ~ LPA + OBESITY + PHLTH + SLEEP + EA_High_school_graduate + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + poverty, data = new_num_df)
+mhlth_model_1 <- lm(MHLTH ~ LPA + OBESITY + PHLTH + SLEEP + ea.hs.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + poverty, data = new_num_df)
 
 summary(depression_model_1)
 summary(mhlth_model_1)
@@ -311,10 +318,10 @@ plot(mhlth_model_2)
 #### Model 3: With Highly correlated socioeconomic related variables
 ```{r}
 # multiple linear regression model for depression
-depression_model_3 <- lm(DEPRESSION ~ EA_High_school_graduate + EA_Graduate_or_professional_degree + MI_Estimate + `CT_>60` + hhd.broad, data = new_num_df)
+depression_model_3 <- lm(DEPRESSION ~ ea.hs.deg + ea.grad.prof.deg + MI_Estimate + `CT_>60` + hhd.broad, data = new_num_df)
 
 # multiple linear regression model for poor mental health
-mhlth_model_3 <- lm(MHLTH ~ EA_High_school_graduate + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + poverty, data = new_num_df)
+mhlth_model_3 <- lm(MHLTH ~ ea.hs.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + poverty, data = new_num_df)
 
 summary(depression_model_3)
 summary(mhlth_model_3)
@@ -429,7 +436,7 @@ sum(mhlth_infmat[, 'hat'] > 2 * 7 / length(mhlth_infmat[, 'hat']))
 #regression tree model for depression
 # control_params1 <- rpart.control(minsplit = 20, cp = 0.0005, maxdepth = 10)
 # 
-# depression.tree <- rpart(DEPRESSION ~ LPA + EA_High_school_graduate + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + URBANIZED_AREA_POP_CEN_2010 + pct_URBANIZED_AREA_POP_CEN_2010, data = depression_cor_df, method="class", control = control_params1)
+# depression.tree <- rpart(DEPRESSION ~ LPA + ea.hs.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + URBANIZED_AREA_POP_CEN_2010 + pct_URBANIZED_AREA_POP_CEN_2010, data = depression_cor_df, method="class", control = control_params1)
 # 
 # plot(depression.tree, uniform=TRUE, main="Depression Rate Tree")
 # text(depression.tree, use.n=TRUE, all=TRUE, cex=.8)
@@ -443,7 +450,7 @@ sum(mhlth_infmat[, 'hat'] > 2 * 7 / length(mhlth_infmat[, 'hat']))
 # # regression tree model for poor mental health
 # control_params2 <- rpart.control(minsplit = 20, cp = 0.0005, maxdepth = 10)
 # 
-# mhlth.tree <- rpart(MHLTH ~ LPA + SLEEP + MT_never_married + MT_now_married + MT_Separated + EA_Less_than_high_school_graduate + EA_High_school_graduate + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed, data = mhlth_cor_df, method = "class", control = control_params2)
+# mhlth.tree <- rpart(MHLTH ~ LPA + SLEEP + mt.nev.mar + mt.now.mar + MT_Separated + ea.less.hs.deg + ea.hs.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed, data = mhlth_cor_df, method = "class", control = control_params2)
 # 
 # plot(mhlth.tree, uniform=TRUE, main="Poor Mental Health Rate Tree")
 # text(mhlth.tree, use.n=TRUE, all=TRUE, cex=.8)
@@ -456,6 +463,7 @@ sum(mhlth_infmat[, 'hat'] > 2 * 7 / length(mhlth_infmat[, 'hat']))
 
 # fancy tree plots
 # fancy depression tree
+
 depression.tree.2 <- rpart(DEPRESSION ~  ACCESS2 + BINGE + CHECKUP + DIABETES + LPA + OBESITY + PHLTH + SLEEP + STROKE + MT_never_married + MT_now_married + MT_Divorces + MT_Separated + MT_Widowed + EA_Less_than_high_school_graduate + EA_High_school_graduate + EA_college_or_associates_degree + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + total_population + `CT_<10` + `CT_10-14` + `CT_15-19` + `CT_20-24` + `CT_25-29` + `CT_30-34` + `CT_35-44` + `CT_45-59` + `CT_>60` + ES_Total_labor_force + ES_Civilian_labor_force + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed + ES_Armed_Forces + ES_Not_in_labor_force + land + urban + poverty + no.ins + disab + no.comp + `broad&comp` + no.eng + sing.mom + live.alone + pub.assist + no.phone + no.plumb + married.kid + hhd.no.comp + hhd.only.phone + hhd.no.int + hhd.broad + index_apr20, data = new_num_df, control = rpart.control(maxdepth = ))
 
 fancyRpartPlot(depression.tree.2, main = "Depression Rate Tree")
@@ -464,6 +472,7 @@ summary(depression.tree.2)
 
 # fancy mental health tree
 mhlth.tree.2 <- rpart(MHLTH ~ ACCESS2 + BINGE + CHECKUP + DIABETES + LPA + OBESITY + PHLTH + SLEEP + STROKE + MT_never_married + MT_now_married + MT_Divorces + MT_Separated + MT_Widowed + EA_Less_than_high_school_graduate + EA_High_school_graduate + EA_college_or_associates_degree + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + total_population + `CT_<10` + `CT_10-14` + `CT_15-19` + `CT_20-24` + `CT_25-29` + `CT_30-34` + `CT_35-44` + `CT_45-59` + `CT_>60` + ES_Total_labor_force + ES_Civilian_labor_force + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed + ES_Armed_Forces + ES_Not_in_labor_force + land + urban + poverty + no.ins + disab + no.comp + `broad&comp` + no.eng + sing.mom + live.alone + pub.assist + no.phone + no.plumb + married.kid + hhd.no.comp + hhd.only.phone + hhd.no.int + hhd.broad + index_apr20, data = new_num_df, control = rpart.control(maxdepth = ))
+
 
 fancyRpartPlot(mhlth.tree.2, main = "Poor Mental Health Rate Tree")
 
