@@ -9,23 +9,17 @@
 # We will be using this final dataset for their analysis.
 
 #-------------------------------------------------------------------------------------
-
-# clean environment
 rm(list = ls())
-
-# import libraries
 library(readr)
 library(tidyr)
 library(dplyr)
 library(googledrive)
-# install.packages("tidycensus")
 library(tidycensus)
 library(tidyverse)
 library(tigris)
 library(purrr)
 library(censusapi)
 library(readxl)
-
 #-------------------------------------------------------------------------------------
 # Data set # 1: CDC
 
