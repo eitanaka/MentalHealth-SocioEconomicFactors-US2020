@@ -104,8 +104,8 @@ colSums(num_df == 0.0)
 for (col_name in colnames(num_df)) {
   # remove outliers
   new_num_df <- outlierKD2(num_df, num_df[[col_name]], rm=TRUE)
-  new_num_df <- na.omit(new_master_df)
-  new_num_df <- new_master_df[,1:(ncol(new_master_df)-2)]
+  new_num_df <- na.omit(new_num_df)
+  new_num_df <- new_num_df[,1:(ncol(new_num_df)-2)]
 }
 new_num_df <- new_num_df[,1:(ncol(new_num_df)-1)]
 ```
