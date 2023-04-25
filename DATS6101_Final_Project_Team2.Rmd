@@ -101,6 +101,8 @@ The output will be a numeric vector with the number of missing values in each co
 colSums(num_df == 0.0)
 
 new_num_df <- outlierKD2(num_df, num_df[[1]], rm=TRUE)
+new_num_df <- new_num_df[,1:(ncol(new_num_df)-2)]
+
 # loop through all columns
 for (col_name in colnames(num_df)[2:ncol(num_df)]) {
   # remove outliers
@@ -113,7 +115,14 @@ new_num_df <- new_num_df[,1:(ncol(new_num_df)-1)]
 
 ### Boxplots for checking outliers
 ```{r}
-# Create a boxplot for each column
+# with outliers
+par(mfrow=c(8, 8))
+par(mar=c(1, 1, 1, 1))
+for (i in 1:ncol(num_df)) {
+  boxplot(num_df[[i]], main=names(num_df)[i])
+}
+
+# without outliers
 par(mfrow=c(8, 8))
 par(mar=c(1, 1, 1, 1))
 for (i in 1:ncol(new_num_df)) {
@@ -140,7 +149,7 @@ for (col in names(new_num_df)) {
 ### Scatter plot for checking outliers (MHLTH)
 ```{r}
 # Scatter plots with fit line for mhlth and other dependent variables
-for (col in names(cols_of_interest)) {
+for (col in names(new_num_df)) {
   if (col != "MHLTH") {
     plot_data <- data.frame(x = new_num_df$MHLTH, y = new_num_df[[col]])
     plot <- ggplot(plot_data, aes(x = x, y = y)) + 
@@ -151,12 +160,6 @@ for (col in names(cols_of_interest)) {
     print(plot)
   }
 }
-```
-
-```{r}
-# Create data frames we need afterward
-cols_to_remove <- c("...1", "CountyFIPS", "GEOID", "StateAbbr", "CountyName", "MT_Total", "EA_Total", "total_population", "CT_Total", "ES_Total", "LAND_AREA")
-num_df <- master_df[ , !names(master_df) %in% cols_to_remove]
 ```
 
 ### Data Structure
@@ -173,52 +176,15 @@ It can be useful to get a overview  of summary statistics of the data frame befo
 summary(new_num_df)
 ```
 
-### Box Plot Analysis
-Need edited 
-```{r}
-# Create a function to plot histograms with distribution lines
-plot_histogram <- function(x) {
-  # Calculate mean and standard deviation
-  mean_x <- mean(x, na.rm = TRUE)
-  sd_x <- sd(x, na.rm = TRUE)
-  
-  # Create the plot
-  ggplot(data = data.frame(x), aes(x = x)) +
-    geom_histogram(aes(y = ..density..), binwidth = 1, colour = "black", fill = "white") +
-    geom_density(alpha = .2, fill = "#FF6666") +
-    geom_vline(xintercept = mean_x, color = "blue", size = 1) +
-    geom_vline(xintercept = mean_x - sd_x, color = "red", linetype = "dashed", size = 1) +
-    geom_vline(xintercept = mean_x + sd_x, color = "red", linetype = "dashed", size = 1) +
-    labs(x = names(x), y = "Density") +
-    theme_bw() +
-    theme(plot.title = element_text(size = 12, hjust = 0.5),
-          axis.title.x = element_text(size = 10),
-          axis.title.y = element_text(size = 10),
-          axis.text = element_text(size = 8),
-          axis.line = element_line(colour = "black"),
-          panel.grid.major = element_blank(),
-          panel.grid.minor = element_blank(),
-          legend.position = "none")
-}
-
-# Filter the numeric variables
-numeric_vars <- sapply(new_num_df, is.numeric)
-num_df <- new_num_df[, numeric_vars]
-
-# Create a list of plots for all numeric variables
-plots <- lapply(numeric_df, plot_histogram)
-plots
-```
-
 ### Histogram for dependent variable
 To Check normality of dependent variable
 ```{r}
 # Histograms
 # Two histograms: one for the distribution of tract-level depression rates and one for the distribution of tract-level poor mental health rates.
-dep_hist <- hist(new_num_df$DEPRESSION, main = "Distribution of Tract-level Depression Rates")
-dep_hist
-mhlth_hist <- hist(new_num_df$MHLTH, main = "Distribution of Tract-level Poor Mental Health Rates")
-mhlth_hist
+hist(new_num_df$DEPRESSION, main = "Distribution of Tract-level Depression Rates")
+
+hist(new_num_df$MHLTH, main = "Distribution of Tract-level Poor Mental Health Rates")
+
 ```
 Looking at the histograms, it appears that both variables are approximately normally distributed, although the distribution of tract-level depression rates is skewed to the right, with a larger number of observations in the higher bins. The distribution of tract-level poor mental health rates also appears skewed to the right, but with a more gradual decrease in the number of observations in the higher bins compared to the depression rates histogram.This information is important when selecting statistical methods to analyze these variables, as many methods assume normality. Additionally, the histograms provide a visual representation of the distribution of the variables, which can help in identifying potential outliers or unusual patterns.
 
@@ -227,29 +193,41 @@ To check normality of dependent variable
 ```{r}
 # QQ plots for the distribution of tract-level depression rates and tract-level poor mental health rates.
 
-dep_qq <- qqnorm(new_num_df$DEPRESSION, main = "Distribution of Tract-level Depression Rates")
-dep_qq
-mhlth_qq <- qqnorm(new_num_df$MHLTH, main = "Distribution of Tract-level Poor Mental Health Rates")
-mhlth_qq
+qqnorm(new_num_df$DEPRESSION, main = "Distribution of Tract-level Depression Rates")
+qqline(new_num_df$DEPRESSION)
+
+qqnorm(new_num_df$MHLTH, main = "Distribution of Tract-level Poor Mental Health Rates")
+qqline(new_num_df$MHLTH)
 ```
 A QQ plot compares the quantiles of a dataset to the quantiles of a theoretical distribution (in this case, the normal distribution). If the points on the QQ plot are close to a straight line, it indicates that the data are normally distributed.
 In this case, the QQ plot for the depression rates appears to deviate from a straight line towards the tails, indicating that the distribution is not perfectly normal. The QQ plot for the poor mental health rates appears to deviate from a straight line even more than the depression rates, indicating that the distribution is even less normal.
 
 We will create a new data frame called num_df that only contains the numeric columns of the original master_df, that can be analyzed using various statistical tools.
 
-### Correlations
+### Correlations Test
 ```{r}
 # Create a correlation matrix
-cor_matrix <- cor(numeric_df)
-
+cor_matrix <- cor(new_num_df)
 
 # Create two lists which have the names of variables highly correlated (more then 0.3 or less than -0.3)
-high_dep_cor_list <- names(which(cor_matrix["DEPRESSION",] > 0.3 | cor_matrix["DEPRESSION",] < -0.3))
-high_mhlth_cor_list <- names(which(cor_matrix["MHLTH",] > 0.3 | cor_matrix["MHLTH",] < -0.3))
-  
+high_dep_cor_list <- names(which(cor_matrix["DEPRESSION",] > 0.35 | cor_matrix["DEPRESSION",] < -0.35))
+high_mhlth_cor_list <- names(which(cor_matrix["MHLTH",] > 0.5 | cor_matrix["MHLTH",] < -0.5))
+
+high_dep_cor_list <- high_dep_cor_list[high_dep_cor_list != "MHLTH"]
+high_mhlth_cor_list <- high_mhlth_cor_list[high_mhlth_cor_list != "DEPRESSION"]
+
+length(high_dep_cor_list)  
+length(high_mhlth_cor_list)
+```
+
+### Correlation Heatmap
+```{r}
 # Create two correlation matrixes from new_num_df in the above lists
 high_dep_cor_mat <- cor(new_num_df[high_dep_cor_list])
 high_mhlth_cor_mat <- cor(new_num_df[high_mhlth_cor_list])
+
+high_dep_cor_mat
+high_mhlth_cor_mat
 
 # Plot above correlation matrix
 corrplot(high_dep_cor_mat, type = "lower", outline.color = "white", 
@@ -260,7 +238,6 @@ corrplot(high_mhlth_cor_mat, type = "lower", outline.color = "white",
            colors = c("#6D9EC1", "white", "#E46726"), legend.title = "Correlation", 
            ggtheme = theme_gray, title = "Highly Correlated Variables with mhlth")
 ```
-
 #### VIF Test for Multicollinearity
 ```{r}
 calculate_VIF <- function(data, target_col) {
@@ -272,8 +249,9 @@ calculate_VIF <- function(data, target_col) {
   return(vif)
 }
 
-depression_VIF <- calculate_VIF(depression_cor_df, "DEPRESSION")
-mhlth_VIF <- calculate_VIF(mhlth_cor_df, "MHLTH")
+depression_VIF <- calculate_VIF(new_num_df[high_dep_cor_list], "DEPRESSION")
+
+mhlth_VIF <- calculate_VIF(new_num_df[high_mhlth_cor_list], "MHLTH")
 
 depression_VIF
 mhlth_VIF
@@ -282,62 +260,103 @@ mhlth_VIF
 ### Feature Selection
 Need edited
 ```{r}
-dep_features_list <-
+dep_features_list <- high_dep_cor_list[high_dep_cor_list != "DEPRESSION"]
+mhlth_features_list <- high_mhlth_cor_list[high_mhlth_cor_list != "MHLTH"]
 
-mhlth_features_list <-
+dep_features_list
+mhlth_features_list
 ```
 
 ## Model Building
 Need edited
 
-### Multiple Linear regression vs. Regression Tree (we must delete this part in the summary paper)
-Multiple linear regression and regression tree are two different types of models used for predicting the value of a dependent variable based on one or more independent variables. The main differences between the two models are:
-
-- Model complexity: Multiple linear regression models assume a linear relationship between the dependent and independent variables, and involve estimating a set of coefficients that describe the relationship. In contrast, regression trees involve recursively partitioning the data into subsets based on the independent variables, and fitting a separate model to each subset. This makes regression trees more flexible than linear regression models, but also more complex and harder to interpret.
-
-- Variable selection: Multiple linear regression models typically involve selecting a subset of independent variables that are most predictive of the dependent variable. This is often done using methods such as stepwise regression or regularization. In contrast, regression trees can use all available independent variables in the model, and automatically select the most important variables based on the tree structure.
-
-- Interpretability: Multiple linear regression models provide interpretable coefficients that describe the relationship between the dependent and independent variables. In contrast, regression trees can be harder to interpret, as they involve recursively partitioning the data into subsets based on the independent variables. However, decision trees can be visualized and interpreted to gain insights into the relationships between the independent variables and the dependent variable.
-
-- Performance: The performance of multiple linear regression models depends on the linearity and homoscedasticity assumptions, and may suffer from overfitting or underfitting if the model is too simple or too complex. In contrast, regression trees are more flexible and can capture nonlinear relationships between the dependent and independent variables. However, they may also suffer from overfitting if the tree is too deep or complex.
-
-Overall, multiple linear regression and regression tree are both useful models for predicting the value of a dependent variable based on one or more independent variables. The choice between the two models depends on the specific problem and the data available.
-
 ### Multiple Linear Regression
 
-#### Model 1: With Highly correlated variables
+#### Model 1: With Highly correlated variables (Health Factors + Socioeconomic Factors)
 ```{r}
 # multiple linear regression model for depression
-depression_model <- lm(DEPRESSION ~ LPA + EA_High_school_graduate + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + URBANIZED_AREA_POP_CEN_2010 + pct_URBANIZED_AREA_POP_CEN_2010, data = depression_cor_df)
+depression_model_1 <- lm(DEPRESSION ~ OBESITY + PHLTH + EA_High_school_graduate + EA_Graduate_or_professional_degree + MI_Estimate + `CT_>60` + hhd.broad, data = new_num_df)
 
 # multiple linear regression model for poor mental health
-mhlth_model <- lm(MHLTH ~ LPA + SLEEP + MT_never_married + MT_now_married + MT_Separated + EA_Less_than_high_school_graduate + EA_High_school_graduate + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed, data = mhlth_cor_df)
+mhlth_model_1 <- lm(MHLTH ~ LPA + OBESITY + PHLTH + SLEEP + EA_High_school_graduate + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + poverty, data = new_num_df)
+
+summary(depression_model_1)
+summary(mhlth_model_1)
+
+plot(depression_model_1)
+plot(mhlth_model_1)
 ```
 
 #### Model 2: With Highly correlated health related variables
 ```{r}
+# multiple linear regression model for depression
+depression_model_2 <- lm(DEPRESSION ~ OBESITY + PHLTH, data = new_num_df)
+
+# multiple linear regression model for poor mental health
+mhlth_model_2 <- lm(MHLTH ~ LPA + OBESITY + PHLTH + SLEEP, data = new_num_df)
+
+summary(depression_model_2)
+summary(mhlth_model_2)
+
+plot(depression_model_2)
+plot(mhlth_model_2)
 ```
 
 #### Model 3: With Highly correlated socioeconomic related variables
 ```{r}
+# multiple linear regression model for depression
+depression_model_3 <- lm(DEPRESSION ~ EA_High_school_graduate + EA_Graduate_or_professional_degree + MI_Estimate + `CT_>60` + hhd.broad, data = new_num_df)
+
+# multiple linear regression model for poor mental health
+mhlth_model_3 <- lm(MHLTH ~ EA_High_school_graduate + EA_Bachelors_degree + EA_Graduate_or_professional_degree + MI_Estimate + poverty, data = new_num_df)
+
+summary(depression_model_3)
+summary(mhlth_model_3)
+
+plot(depression_model_3)
+plot(mhlth_model_3)
 ```
 
 #### Model Comparison (ANOVA)
 ```{r}
+# Perform two-way ANOVA test
+depression_anova_model <- anova(depression_model_1, depression_model_2, depression_model_3)
+mhlth_anova_model <- anova(mhlth_model_1, mhlth_model_2, mhlth_model_3)
+
+xkabledply(depression_anova_model)
+xkabledply(mhlth_anova_model)
+```
+#### Model Evaluation
+<Depression>
+Model 1: R^2, Significance of coefficient
+Model 2: R^2, Significance of coefficient
+Model 3: R^2, Significance of coefficient
+
+<MHLTH>
+Model 1: R^2, Significance of coefficient
+Model 2: R^2, Significance of coefficient
+Model 3: R^2, Significance of coefficient
+
+#### Stepwise Selection
+```{r}
+# Perform stepwise selection using AIC as the selection criterion
+depression_stepwise_model <- step(depression_model_1, direction = "both", trace = 0, k = log(nrow(new_num_df)), criterion = "AIC")
+
+mhlth_stepwise_model <- step(mhlth_model_1, direction = "both", trace = 0, k = log(nrow(new_num_df)), criterion = "AIC")
+
+# Print the final selected model
+summary(depression_stepwise_model)
+summary(mhlth_stepwise_model)
 ```
 
 #### Assessment for best model
 - Independence 
 - Homoscedasticity
 - No influential outliers
-```{r}
-
-```
 
 #### Multiple linear regression model Evaluation
 (From Textbook)
 5. Model Evaluation 
-- R-squared: R-squared is a measure of the proportion of variation in the dependent variable that is explained by the independent variables in the model. Higher R-squared values indicate a better fit of the model to the data. However, R-squared alone may not provide a complete picture of the model's performance.
 - Significance of coefficient
 - Residual analysis: Residual analysis involves examining the residuals (the differences between the observed and predicted values of the dependent variable) to assess the fit of the model. A good model should have residuals that are normally distributed with a mean of 0 and constant variance (homoscedasticity). Residual plots can help identify outliers and non-linear relationships in the data.
 - F-test: The F-test is a statistical test that compares the fit of the full model (with all independent variables) to a reduced model (with fewer independent variables). A significant F-test indicates that the full model provides a better fit to the data than the reduced model.
@@ -346,10 +365,6 @@ mhlth_model <- lm(MHLTH ~ LPA + SLEEP + MT_never_married + MT_now_married + MT_S
 - Cross-validation: Cross-validation involves splitting the data into training and testing sets to evaluate the performance of the model on new data. Cross-validation can help assess the generalizability of the model to new data and identify potential issues with overfitting.
 6 .Model selection: feature selection, interaction terms, etc. 
 Steps 5 and 6 might repeat to many times in search of a good model. Other times might need to restart from 2 to try out different model structures. 
-```{r}
-summary(depression_model)
-summary(mhlth_model)
-```
 
 ##### No Auto-colinearity (independence)
 The Durbin-Watson test is a statistical test that evaluates whether the residuals (errors) in a regression model are independent of each other.
@@ -357,8 +372,8 @@ This will output the Durbin-Watson test statistic, the degrees of freedom, and t
 ```{r}
 # The Durbin-Watson test
 library(lmtest)
-depression_dwtest <- dwtest(depression_model)
-mhlth_dwtest <- dwtest(mhlth_model)
+depression_dwtest <- dwtest(depression_model_1)
+mhlth_dwtest <- dwtest(mhlth_model_1)
 
 depression_dwtest
 mhlth_dwtest
@@ -368,8 +383,8 @@ mhlth_dwtest
 Breusch-Pagan test: The Breusch-Pagan test is a statistical test for homoscedasticity that tests whether the variance of the residuals is constant across all levels of the independent variables. This will output the test statistic and the p-value for the Breusch-Pagan test. The null hypothesis of the test is that the variance of the residuals is constant (homoscedasticity). A p-value less than 0.05 suggests evidence of heteroscedasticity.
 ```{r}
 # Breusch-Pagan test
-bptest(depression_model)
-bptest(mhlth_model)
+bptest(depression_model_1)
+bptest(mhlth_model_1)
 ```
 
 ##### No influential outliers
@@ -380,13 +395,13 @@ Leverage values: Leverage values are another measure of the influence of each ob
 # Cook's distance and Leverage
 
 # depression
-depression_influential <- influence.measures(depression_model)
+depression_influential <- influence.measures(depression_model_1)
 depression_infmat <- depression_influential$infmat
 sum(depression_infmat[, 'cook.d'] > 1)
 sum(depression_infmat[, 'hat'] > 2 * 7 / length(depression_infmat[, 'hat']))
 
 # mhlth
-mhlth_influential <- influence.measures(mhlth_model)
+mhlth_influential <- influence.measures(mhlth_model_1)
 mhlth_infmat <- mhlth_influential$infmat
 sum(mhlth_infmat[, 'cook.d'] > 1)
 sum(mhlth_infmat[, 'hat'] > 2 * 7 / length(depression_infmat[, 'hat']))
