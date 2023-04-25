@@ -234,7 +234,7 @@ cor_matrix <- cor(numeric_df)
 
 # Create two lists which have the names of variables highly correlated (more then 0.3 or less than -0.3)
 high_dep_cor_list <- names(which(cor_matrix["DEPRESSION",] > 0.3 | cor_matrix["DEPRESSION",] < -0.3))
-high_mhlth_cor_list <- names(which(cor_matrix["mhlth",] > 0.3 | cor_matrix["mhlth",] < -0.3))
+high_mhlth_cor_list <- names(which(cor_matrix["MHLTH",] > 0.3 | cor_matrix["MHLTH",] < -0.3))
   
 # Create two correlation matrixes from new_master_df in the above lists
 high_dep_cor_mat <- cor(new_master_df[high_dep_cor_list])
