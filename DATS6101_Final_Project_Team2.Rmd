@@ -100,10 +100,11 @@ The output will be a numeric vector with the number of missing values in each co
 ```{r}
 colSums(num_df == 0.0)
 
+new_num_df <- outlierKD2(num_df, num_df[[1]], rm=TRUE)
 # loop through all columns
-for (col_name in colnames(num_df)) {
+for (col_name in colnames(num_df)[2:ncol(num_df)]) {
   # remove outliers
-  new_num_df <- outlierKD2(num_df, num_df[[col_name]], rm=TRUE)
+  new_num_df <- outlierKD2(new_num_df, new_num_df[[col_name]], rm=TRUE)
   new_num_df <- na.omit(new_num_df)
   new_num_df <- new_num_df[,1:(ncol(new_num_df)-2)]
 }
@@ -113,9 +114,9 @@ new_num_df <- new_num_df[,1:(ncol(new_num_df)-1)]
 ### Boxplots for checking outliers
 ```{r}
 # Create a boxplot for each column
-par(mfrow=c(6, 9))
+par(mfrow=c(8, 8))
 par(mar=c(1, 1, 1, 1))
-for (i in 6:ncol(new_num_df)) {
+for (i in 1:ncol(new_num_df)) {
   boxplot(new_num_df[[i]], main=names(new_num_df)[i])
 }
 ```
@@ -123,7 +124,7 @@ for (i in 6:ncol(new_num_df)) {
 ### Scatter plot for checking outliers (Depression)
 ```{r}
 # Scatter plots with fit line for Depression and other dependent variables
-for (col in names(cols_of_interest)) {
+for (col in names(new_num_df)) {
   if (col != "DEPRESSION") {
     plot_data <- data.frame(x = new_num_df$DEPRESSION, y = new_num_df[[col]])
     plot <- ggplot(plot_data, aes(x = x, y = y)) + 
