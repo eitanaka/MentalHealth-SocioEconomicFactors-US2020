@@ -104,8 +104,8 @@ colSums(num_df == 0.0)
 for (col_name in colnames(num_df)) {
   # remove outliers
   new_num_df <- outlierKD2(num_df, num_df[[col_name]], rm=TRUE)
-  new_num_df <- na.omit(new_master_df)
-  new_num_df <- new_master_df[,1:(ncol(new_master_df)-2)]
+  new_num_df <- na.omit(new_num_df)
+  new_num_df <- new_num_df[,1:(ncol(new_num_df)-2)]
 }
 new_num_df <- new_num_df[,1:(ncol(new_num_df)-1)]
 ```
@@ -115,8 +115,8 @@ new_num_df <- new_num_df[,1:(ncol(new_num_df)-1)]
 # Create a boxplot for each column
 par(mfrow=c(6, 9))
 par(mar=c(1, 1, 1, 1))
-for (i in 6:ncol(new_master_df)) {
-  boxplot(new_master_df[[i]], main=names(new_master_df)[i])
+for (i in 6:ncol(new_num_df)) {
+  boxplot(new_num_df[[i]], main=names(new_num_df)[i])
 }
 ```
 
@@ -125,7 +125,7 @@ for (i in 6:ncol(new_master_df)) {
 # Scatter plots with fit line for Depression and other dependent variables
 for (col in names(cols_of_interest)) {
   if (col != "DEPRESSION") {
-    plot_data <- data.frame(x = new_master_df$DEPRESSION, y = new_master_df[[col]])
+    plot_data <- data.frame(x = new_num_df$DEPRESSION, y = new_num_df[[col]])
     plot <- ggplot(plot_data, aes(x = x, y = y)) + 
       geom_point() +
       geom_smooth(method = "lm", se = FALSE) +
@@ -141,7 +141,7 @@ for (col in names(cols_of_interest)) {
 # Scatter plots with fit line for mhlth and other dependent variables
 for (col in names(cols_of_interest)) {
   if (col != "MHLTH") {
-    plot_data <- data.frame(x = new_master_df$MHLTH, y = new_master_df[[col]])
+    plot_data <- data.frame(x = new_num_df$MHLTH, y = new_num_df[[col]])
     plot <- ggplot(plot_data, aes(x = x, y = y)) + 
       geom_point() +
       geom_smooth(method = "lm", se = FALSE) +
@@ -162,14 +162,14 @@ num_df <- master_df[ , !names(master_df) %in% cols_to_remove]
 Need edited
 It can be useful to get a quick overall structure of the data frame before performing further analyses.
 ```{r}
-str(new_master_df)
+str(new_num_df)
 ```
 
 ### Descriptive Statistics
 Need edited
 It can be useful to get a overview  of summary statistics of the data frame before performing further analyses.
 ```{r}
-summary(new_master_df)
+summary(new_num_df)
 ```
 
 ### Box Plot Analysis
@@ -201,8 +201,8 @@ plot_histogram <- function(x) {
 }
 
 # Filter the numeric variables
-numeric_vars <- sapply(new_master_df, is.numeric)
-num_df <- new_master_df[, numeric_vars]
+numeric_vars <- sapply(new_num_df, is.numeric)
+num_df <- new_num_df[, numeric_vars]
 
 # Create a list of plots for all numeric variables
 plots <- lapply(numeric_df, plot_histogram)
@@ -214,9 +214,9 @@ To Check normality of dependent variable
 ```{r}
 # Histograms
 # Two histograms: one for the distribution of tract-level depression rates and one for the distribution of tract-level poor mental health rates.
-dep_hist <- hist(new_master_df$DEPRESSION, main = "Distribution of Tract-level Depression Rates")
+dep_hist <- hist(new_num_df$DEPRESSION, main = "Distribution of Tract-level Depression Rates")
 dep_hist
-mhlth_hist <- hist(new_master_df$MHLTH, main = "Distribution of Tract-level Poor Mental Health Rates")
+mhlth_hist <- hist(new_num_df$MHLTH, main = "Distribution of Tract-level Poor Mental Health Rates")
 mhlth_hist
 ```
 Looking at the histograms, it appears that both variables are approximately normally distributed, although the distribution of tract-level depression rates is skewed to the right, with a larger number of observations in the higher bins. The distribution of tract-level poor mental health rates also appears skewed to the right, but with a more gradual decrease in the number of observations in the higher bins compared to the depression rates histogram.This information is important when selecting statistical methods to analyze these variables, as many methods assume normality. Additionally, the histograms provide a visual representation of the distribution of the variables, which can help in identifying potential outliers or unusual patterns.
@@ -226,9 +226,9 @@ To check normality of dependent variable
 ```{r}
 # QQ plots for the distribution of tract-level depression rates and tract-level poor mental health rates.
 
-dep_qq <- qqnorm(new_master_df$DEPRESSION, main = "Distribution of Tract-level Depression Rates")
+dep_qq <- qqnorm(new_num_df$DEPRESSION, main = "Distribution of Tract-level Depression Rates")
 dep_qq
-mhlth_qq <- qqnorm(new_master_df$MHLTH, main = "Distribution of Tract-level Poor Mental Health Rates")
+mhlth_qq <- qqnorm(new_num_df$MHLTH, main = "Distribution of Tract-level Poor Mental Health Rates")
 mhlth_qq
 ```
 A QQ plot compares the quantiles of a dataset to the quantiles of a theoretical distribution (in this case, the normal distribution). If the points on the QQ plot are close to a straight line, it indicates that the data are normally distributed.
@@ -246,9 +246,9 @@ cor_matrix <- cor(numeric_df)
 high_dep_cor_list <- names(which(cor_matrix["DEPRESSION",] > 0.3 | cor_matrix["DEPRESSION",] < -0.3))
 high_mhlth_cor_list <- names(which(cor_matrix["MHLTH",] > 0.3 | cor_matrix["MHLTH",] < -0.3))
   
-# Create two correlation matrixes from new_master_df in the above lists
-high_dep_cor_mat <- cor(new_master_df[high_dep_cor_list])
-high_mhlth_cor_mat <- cor(new_master_df[high_mhlth_cor_list])
+# Create two correlation matrixes from new_num_df in the above lists
+high_dep_cor_mat <- cor(new_num_df[high_dep_cor_list])
+high_mhlth_cor_mat <- cor(new_num_df[high_mhlth_cor_list])
 
 # Plot above correlation matrix
 corrplot(high_dep_cor_mat, type = "lower", outline.color = "white", 
