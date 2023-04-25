@@ -39,7 +39,6 @@ drive_download(as_id(file_id), overwrite = TRUE)
 #Rename the name of the dataset and copy the name of the dataset from the google drive and paste it here 
 chronic_df <- read_csv("PLACES_Census_Tract_Data_2022_release.csv")
 
-# Keep only some variables #
 chronic_df <- chronic_df[(chronic_df$Year == 2020),]
 chronic_df <- chronic_df[,c("Year","StateAbbr","StateDesc","CountyName","CountyFIPS","LocationName","Data_Value","TotalPopulation","MeasureId")]
 # Keep only rows with health measures of interest #
@@ -48,10 +47,8 @@ chronic_df <- chronic_df[(chronic_df$MeasureId=="DEPRESSION" | chronic_df$Measur
 CDC_df <- spread(chronic_df, key = MeasureId, value = Data_Value)
 # Rename LocationName and into GEOID
 colnames(CDC_df)[6] <- "GEOID"
-
 #--------------------------------------------------------------------------------------
 # Data set # 2: ACS
-
 # Get ACS data
 # Variables from ACS (Marital Status, Total Population, Education Attainment, Median Income, Commute Time, Employment Status)
 # Function to get ACS data which geography is tract
@@ -148,10 +145,11 @@ drive_ls(shared_drive_id)
 
 file_id <- "12_ZB6QSB2RlX8f6kQ1VB0ECaBmh34R1R"
 drive_download(as_id(file_id), overwrite = TRUE)
+
 ceii_df <- read_excel("CEII Data 20220919.xlsx",  sheet = "econ index")
 ceii_df <- ceii_df %>% select(-matches("2[12]")) # Deleting columns including 21 and 22 year data
 
-# Adding columns: va_mean, pcEmpAct_mean, and index_mean which are calculated ftom jan20 to dec20
+# Adding columns: va_mean, pcEmpAct_mean, and index_mean which are calculated ftom jan20 to dec20 
 ceii_df <- ceii_df %>%
   select(-va_base) %>% # Drop va_base column
   mutate(va_mean = rowMeans(across(starts_with("va"))))
@@ -198,9 +196,6 @@ colnames(planning_df)[colnames(planning_df) == "pct_HHD_NoCompDevic_ACS_14_18"] 
 colnames(planning_df)[colnames(planning_df) == "pct_HHD_w_OnlySPhne_ACS_14_18"] <- "hhd.only.phone"
 colnames(planning_df)[colnames(planning_df) == "pct_HHD_No_Internet_ACS_14_18"] <- "hhd.no.int"
 colnames(planning_df)[colnames(planning_df) == "pct_HHD_w_Broadband_ACS_14_18"] <- "hhd.broad"
-
-
-
 #----------------------------------------------------------------------------------------------------
 
 # Merge ACS, Census Relationship, and CEII into CDC dataset
@@ -263,6 +258,13 @@ new_final_df <- convert_percent_pop(new_final_df, "CT")
 # remove columns and calculate population density in new_final_df
 new_final_df <- subset(new_final_df, select = -Tot_Population_CEN_2010)
 new_final_df$pop.den <- new_final_df$`Total Population`/new_final_df$LAND_AREA
+
+# Delete unnecessary columns
+new_final_df <- select(new_final_df, -c("MT_Total", "EA_Total", "CT_Total", "ES_Total"))
+new_final_df <- select(new_final_df, -c("pop.tot"))
+  
+View(new_final_df)
+
 
 # export new_final_df as csv file
 write.csv(new_final_df, "geo_socio_health_df.csv")
