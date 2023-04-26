@@ -345,6 +345,13 @@ mhlth_anova_model <- anova(mhlth_model_1, mhlth_model_2, mhlth_model_3)
 
 xkabledply(depression_anova_model)
 xkabledply(mhlth_anova_model)
+
+health.socioecon.dep.anova <- anova(depression_model_2, depression_model_3)
+health.socioecon.mhlth.anova <- anova(mhlth_model_2, mhlth_model_3)
+
+xkabledply(health.socioecon.dep.anova)
+xkabledply(health.socioecon.mhlth.anova)
+
 ```
 
 #### Stepwise Selection (Tuning Multiple Linear Regression Model)
