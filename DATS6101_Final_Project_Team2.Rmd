@@ -281,7 +281,7 @@ Need edited
 ### Training and Test Sets
 ```{r}
 library(caret)
-
+set.seed(123)
 fold <- floor(runif(nrow(new_num_df),1,11)) 
   new_num_df$fold <- fold
   
@@ -295,10 +295,10 @@ train.set <- new_num_df[new_num_df$fold != 1,]
 #### Model 1: With Highly correlated variables (Health Factors + Socioeconomic Factors)
 ```{r}
 # multiple linear regression model for depression
-depression_model_1 <- lm(DEPRESSION ~ OBESITY + PHLTH + ea.hs.deg + ea.grad.prof.deg + MI_Estimate + `CT_>60` + hhd.broad, data = test.set)
+depression_model_1 <- lm(DEPRESSION ~ OBESITY + PHLTH + ea.hs.deg + ea.grad.prof.deg + MI_Estimate + `CT_>60` + hhd.broad, data = train.set)
 
 # multiple linear regression model for poor mental health
-mhlth_model_1 <- lm(MHLTH ~ LPA + OBESITY + PHLTH + SLEEP + ea.hs.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + poverty, data = test.set)
+mhlth_model_1 <- lm(MHLTH ~ LPA + OBESITY + PHLTH + SLEEP + ea.hs.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + poverty, data = train.set)
 
 summary(depression_model_1)
 summary(mhlth_model_1)
@@ -310,10 +310,10 @@ plot(mhlth_model_1)
 #### Model 2: With Highly correlated health related variables
 ```{r}
 # multiple linear regression model for depression
-depression_model_2 <- lm(DEPRESSION ~ OBESITY + PHLTH, data = test.set)
+depression_model_2 <- lm(DEPRESSION ~ OBESITY + PHLTH, data = train.set)
 
 # multiple linear regression model for poor mental health
-mhlth_model_2 <- lm(MHLTH ~ LPA + OBESITY + PHLTH + SLEEP, data = test.set)
+mhlth_model_2 <- lm(MHLTH ~ LPA + OBESITY + PHLTH + SLEEP, data = train.set)
 
 summary(depression_model_2)
 summary(mhlth_model_2)
@@ -325,10 +325,10 @@ plot(mhlth_model_2)
 #### Model 3: With Highly correlated socioeconomic related variables
 ```{r}
 # multiple linear regression model for depression
-depression_model_3 <- lm(DEPRESSION ~ ea.hs.deg + ea.grad.prof.deg + MI_Estimate + `CT_>60` + hhd.broad, data = test.set)
+depression_model_3 <- lm(DEPRESSION ~ ea.hs.deg + ea.grad.prof.deg + MI_Estimate + `CT_>60` + hhd.broad, data = train.set)
 
 # multiple linear regression model for poor mental health
-mhlth_model_3 <- lm(MHLTH ~ ea.hs.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + poverty, data = test.set)
+mhlth_model_3 <- lm(MHLTH ~ ea.hs.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + poverty, data = train.set)
 
 summary(depression_model_3)
 summary(mhlth_model_3)
@@ -343,6 +343,7 @@ plot(mhlth_model_3)
 depression_anova_model <- anova(depression_model_1, depression_model_2, depression_model_3)
 mhlth_anova_model <- anova(mhlth_model_1, mhlth_model_2, mhlth_model_3)
 
+
 xkabledply(depression_anova_model)
 xkabledply(mhlth_anova_model)
 ```
@@ -350,9 +351,9 @@ xkabledply(mhlth_anova_model)
 #### Stepwise Selection (Tuning Multiple Linear Regression Model)
 ```{r}
 # Perform stepwise selection using AIC as the selection criterion
-depression_stepwise_model <- step(depression_model_1, direction = "both", trace = 0, k = log(nrow(test.set)), criterion = "AIC")
+depression_stepwise_model <- step(depression_model_1, direction = "both", trace = 0, k = log(nrow(train.set)), criterion = "AIC")
 
-mhlth_stepwise_model <- step(mhlth_model_1, direction = "both", trace = 0, k = log(nrow(test.set)), criterion = "AIC")
+mhlth_stepwise_model <- step(mhlth_model_1, direction = "both", trace = 0, k = log(nrow(train.set)), criterion = "AIC")
 
 # Print the final selected model
 summary(depression_stepwise_model)
@@ -467,7 +468,7 @@ train.dep.tree <- rpart(DEPRESSION ~  ACCESS2 + BINGE + CHECKUP + DIABETES + LPA
 fancyRpartPlot(train.dep.tree, main = "Training Depression Rate Tree")
 summary(train.dep.tree)
 
-train.mhlth.tree <- rpart(MHLTH ~ ACCESS2 + BINGE + CHECKUP + DIABETES + LPA + OBESITY + PHLTH + SLEEP + STROKE + mt.nev.mar + mt.now.mar + MT_Divorces + MT_Separated + MT_Widowed + ea.less.hs.deg + ea.hs.deg + ea.col.ass.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + tot.pop + `CT_<10` + `CT_10-14` + `CT_15-19` + `CT_20-24` + `CT_25-29` + `CT_30-34` + `CT_35-44` + `CT_45-59` + `CT_>60` + ES_Total_labor_force + ES_Civilian_labor_force + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed + ES_Armed_Forces + ES_Not_in_labor_force + land + urban + poverty + no.ins + disab + no.comp + `broad&comp` + no.eng + sing.mom + live.alone + pub.assist + no.phone + no.plumb + married.kid + hhd.no.comp + hhd.only.phone + hhd.no.int + hhd.broad + index_apr20, data = test.set, control = rpart.control(maxdepth=4))
+train.mhlth.tree <- rpart(MHLTH ~ ACCESS2 + BINGE + CHECKUP + DIABETES + LPA + OBESITY + PHLTH + SLEEP + STROKE + mt.nev.mar + mt.now.mar + MT_Divorces + MT_Separated + MT_Widowed + ea.less.hs.deg + ea.hs.deg + ea.col.ass.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + tot.pop + `CT_<10` + `CT_10-14` + `CT_15-19` + `CT_20-24` + `CT_25-29` + `CT_30-34` + `CT_35-44` + `CT_45-59` + `CT_>60` + ES_Total_labor_force + ES_Civilian_labor_force + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed + ES_Armed_Forces + ES_Not_in_labor_force + land + urban + poverty + no.ins + disab + no.comp + `broad&comp` + no.eng + sing.mom + live.alone + pub.assist + no.phone + no.plumb + married.kid + hhd.no.comp + hhd.only.phone + hhd.no.int + hhd.broad + index_apr20, data = train.set, control = rpart.control(maxdepth=4))
 
 fancyRpartPlot(train.mhlth.tree, main = "Poor Mental Health Rate Tree")
 
