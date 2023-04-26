@@ -35,6 +35,7 @@ library(car)
 library(rpart)
 library(rpart.plot)
 library(rattle)
+library(tree)
 ```
 
 ```{r init}
@@ -424,7 +425,7 @@ xkabledply(mhlth_anova_model_2)
 
 ```{r}
 
-depression.tree <- rpart(DEPRESSION ~  ACCESS2 + BINGE + CHECKUP + DIABETES + LPA + OBESITY + PHLTH + SLEEP + STROKE + mt.nev.mar + mt.now.mar + MT_Divorces + MT_Separated + MT_Widowed + ea.less.high.deg + ea.hs.deg + ea.col.ass.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + tot.pop + `CT_<10` + `CT_10-14` + `CT_15-19` + `CT_20-24` + `CT_25-29` + `CT_30-34` + `CT_35-44` + `CT_45-59` + `CT_>60` + ES_Total_labor_force + ES_Civilian_labor_force + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed + ES_Armed_Forces + ES_Not_in_labor_force + land + urban + poverty + no.ins + disab + no.comp + `broad&comp` + no.eng + sing.mom + live.alone + pub.assist + no.phone + no.plumb + married.kid + hhd.no.comp + hhd.only.phone + hhd.no.int + hhd.broad + index_apr20, data = new_num_df, control = rpart.control(maxdepth = ))
+depression.tree <- rpart(DEPRESSION ~  ACCESS2 + BINGE + CHECKUP + DIABETES + LPA + OBESITY + PHLTH + SLEEP + STROKE + mt.nev.mar + mt.now.mar + MT_Divorces + MT_Separated + MT_Widowed + ea.less.hs.deg + ea.hs.deg + ea.col.ass.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + tot.pop + `CT_<10` + `CT_10-14` + `CT_15-19` + `CT_20-24` + `CT_25-29` + `CT_30-34` + `CT_35-44` + `CT_45-59` + `CT_>60` + ES_Total_labor_force + ES_Civilian_labor_force + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed + ES_Armed_Forces + ES_Not_in_labor_force + land + urban + poverty + no.ins + disab + no.comp + `broad&comp` + no.eng + sing.mom + live.alone + pub.assist + no.phone + no.plumb + married.kid + hhd.no.comp + hhd.only.phone + hhd.no.int + hhd.broad + index_apr20, data = new_num_df, control = rpart.control(maxdepth = ))
 
 fancyRpartPlot(depression.tree, main = "Depression Rate Tree")
 
@@ -449,19 +450,6 @@ summary(mhlth.tree)
 
 ```
 
-```{r}
-# creating trees using testing and training data
-train.dep.tree <- rpart(DEPRESSION ~  ACCESS2 + BINGE + CHECKUP + DIABETES + LPA + OBESITY + PHLTH + SLEEP + STROKE + mt.nev.mar + mt.now.mar + MT_Divorces + MT_Separated + MT_Widowed + ea.less.hs.deg + ea.hs.deg + ea.col.ass.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + tot.pop + `CT_<10` + `CT_10-14` + `CT_15-19` + `CT_20-24` + `CT_25-29` + `CT_30-34` + `CT_35-44` + `CT_45-59` + `CT_>60` + ES_Total_labor_force + ES_Civilian_labor_force + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed + ES_Armed_Forces + ES_Not_in_labor_force + land + urban + poverty + no.ins + disab + no.comp + `broad&comp` + no.eng + sing.mom + live.alone + pub.assist + no.phone + no.plumb + married.kid + hhd.no.comp + hhd.only.phone + hhd.no.int + hhd.broad + index_apr20, data = train.set, control = rpart.control(maxdepth = ))
-
-fancyRpartPlot(train.dep.tree, main = "Training Depression Rate Tree")
-summary(train.dep.tree)
-
-train.mhlth.tree <- rpart(MHLTH ~ ACCESS2 + BINGE + CHECKUP + DIABETES + LPA + OBESITY + PHLTH + SLEEP + STROKE + mt.nev.mar + mt.now.mar + MT_Divorces + MT_Separated + MT_Widowed + ea.less.hs.deg + ea.hs.deg + ea.col.ass.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + tot.pop + `CT_<10` + `CT_10-14` + `CT_15-19` + `CT_20-24` + `CT_25-29` + `CT_30-34` + `CT_35-44` + `CT_45-59` + `CT_>60` + ES_Total_labor_force + ES_Civilian_labor_force + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed + ES_Armed_Forces + ES_Not_in_labor_force + land + urban + poverty + no.ins + disab + no.comp + `broad&comp` + no.eng + sing.mom + live.alone + pub.assist + no.phone + no.plumb + married.kid + hhd.no.comp + hhd.only.phone + hhd.no.int + hhd.broad + index_apr20, data = test.set, control = rpart.control(maxdepth = ))
-
-fancyRpartPlot(train.mhlth.tree, main = "Poor Mental Health Rate Tree")
-
-summary(train.mhlth.tree.tree)
-```
 
 #### Regression Tree Evaluation
 - Evaluating the model: The model is evaluated using various metrics such as mean squared error (MSE), root mean squared error (RMSE), and R-squared.
