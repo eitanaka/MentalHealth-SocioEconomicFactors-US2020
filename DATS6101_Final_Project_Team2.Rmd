@@ -129,7 +129,6 @@ for (i in 1:ncol(new_num_df)) {
   boxplot(new_num_df[[i]], main=names(new_num_df)[i])
 }
 ```
-
 ### Scatter plot for checking outliers (Depression)
 ```{r}
 # Scatter plots with fit line for Depression and other dependent variables
@@ -219,6 +218,7 @@ high_mhlth_cor_list <- high_mhlth_cor_list[high_mhlth_cor_list != "DEPRESSION"]
 length(high_dep_cor_list)  
 length(high_mhlth_cor_list)
 ```
+
 ### Correlation Heatmap
 ```{r}
 # Create two correlation matrixes from new_num_df in the above lists
@@ -244,6 +244,7 @@ corrplot(high_dep_cor_mat, method = "number", type = "lower", order = "hclust", 
 corrplot(high_mhlth_cor_mat, method = "number", type = "lower", order = "hclust", diag = FALSE, tl.col = "black", tl.cex = 0.8, cl.cex = 0.8, addCoef.col = "black", col = my_col, main = "", mar = c(0,0,0,0))
 
 ```
+
 #### VIF Test for Multicollinearity
 ```{r}
 calculate_VIF <- function(data, target_col) {
@@ -376,61 +377,12 @@ xkabledply(dep_anova_model_2)
 xkabledply(mhlth_anova_model_2)
 ```
 
-#### Assessment for best model
-- Independence 
-- Homoscedasticity
-- No influential outliers
-
-#### Multiple linear regression model Evaluation
-(From Textbook)
-5. Model Evaluation 
-- Significance of coefficient
-- Residual analysis: Residual analysis involves examining the residuals (the differences between the observed and predicted values of the dependent variable) to assess the fit of the model. A good model should have residuals that are normally distributed with a mean of 0 and constant variance (homoscedasticity). Residual plots can help identify outliers and non-linear relationships in the data.
-- F-test: The F-test is a statistical test that compares the fit of the full model (with all independent variables) to a reduced model (with fewer independent variables). A significant F-test indicates that the full model provides a better fit to the data than the reduced model.
-- if comparing models: anova
-- if comparing models of different # of variables: use other criteria such as Adj R2, BIC, AIC, Marlow's Cp.
-- Cross-validation: Cross-validation involves splitting the data into training and testing sets to evaluate the performance of the model on new data. Cross-validation can help assess the generalizability of the model to new data and identify potential issues with overfitting.
-6 .Model selection: feature selection, interaction terms, etc. 
-Steps 5 and 6 might repeat to many times in search of a good model. Other times might need to restart from 2 to try out different model structures. 
-
-##### No Auto-colinearity (independence)
-The Durbin-Watson test is a statistical test that evaluates whether the residuals (errors) in a regression model are independent of each other.
-This will output the Durbin-Watson test statistic, the degrees of freedom, and the p-value. The null hypothesis of the Durbin-Watson test is that there is no autocorrelation (independence) in the residuals. A p-value less than 0.05 suggests evidence of autocorrelation, while a p-value greater than 0.05 suggests no evidence of autocorrelation.
+#### Best Model Evaluation
 ```{r}
-# The Durbin-Watson test
-library(lmtest)
-depression_dwtest <- dwtest(depression_stepwise_model)
-mhlth_dwtest <- dwtest(mhlth_stepwise_model)
-
-depression_dwtest
-mhlth_dwtest
-```
-##### Homoscedasticity
-Breusch-Pagan test: The Breusch-Pagan test is a statistical test for homoscedasticity that tests whether the variance of the residuals is constant across all levels of the independent variables. This will output the test statistic and the p-value for the Breusch-Pagan test. The null hypothesis of the test is that the variance of the residuals is constant (homoscedasticity). A p-value less than 0.05 suggests evidence of heteroscedasticity.
-```{r}
-# Breusch-Pagan test
-bptest(depression_stepwise_model)
-bptest(mhlth_stepwise_model)
-```
-
-##### No influential outliers
-Cook's distance: Cook's distance is a statistical measure of the influence of each observation on the regression coefficients. An observation with a Cook's distance greater than 1 is often considered to be influential.
-
-Leverage values: Leverage values are another measure of the influence of each observation on the regression coefficients. An observation with a leverage value greater than 2p/n, where p is the number of independent variables and n is the sample size, is often considered to be influential.
-```{r}
-# Cook's distance and Leverage
-
-# depression
-depression_influential <- influence.measures(depression_stepwise_model)
-depression_infmat <- depression_influential$infmat
-sum(depression_infmat[, 'cook.d'] > 1)
-sum(depression_infmat[, 'hat'] > 2 * 7 / length(depression_infmat[, 'hat']))
-
-# mhlth
-mhlth_influential <- influence.measures(mhlth_stepwise_model)
-mhlth_infmat <- mhlth_influential$infmat
-sum(mhlth_infmat[, 'cook.d'] > 1)
-sum(mhlth_infmat[, 'hat'] > 2 * 7 / length(mhlth_infmat[, 'hat']))
+# R-square
+# MSE
+# RMSE
+# Cross-Validation
 ```
 
 ### Regression Tree Model
@@ -468,20 +420,24 @@ sum(mhlth_infmat[, 'hat'] > 2 * 7 / length(mhlth_infmat[, 'hat']))
 
 # fancy tree plots
 # fancy depression tree
+```
 
-depression.tree.2 <- rpart(DEPRESSION ~  ACCESS2 + BINGE + CHECKUP + DIABETES + LPA + OBESITY + PHLTH + SLEEP + STROKE + mt.nev.mar + mt.now.mar + MT_Divorces + MT_Separated + MT_Widowed + ea.less.high.deg + ea.hs.deg + ea.col.ass.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + tot.pop + `CT_<10` + `CT_10-14` + `CT_15-19` + `CT_20-24` + `CT_25-29` + `CT_30-34` + `CT_35-44` + `CT_45-59` + `CT_>60` + ES_Total_labor_force + ES_Civilian_labor_force + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed + ES_Armed_Forces + ES_Not_in_labor_force + land + urban + poverty + no.ins + disab + no.comp + `broad&comp` + no.eng + sing.mom + live.alone + pub.assist + no.phone + no.plumb + married.kid + hhd.no.comp + hhd.only.phone + hhd.no.int + hhd.broad + index_apr20, data = new_num_df, control = rpart.control(maxdepth = ))
+```{r}
 
-fancyRpartPlot(depression.tree.2, main = "Depression Rate Tree")
+depression.tree <- rpart(DEPRESSION ~  ACCESS2 + BINGE + CHECKUP + DIABETES + LPA + OBESITY + PHLTH + SLEEP + STROKE + mt.nev.mar + mt.now.mar + MT_Divorces + MT_Separated + MT_Widowed + ea.less.high.deg + ea.hs.deg + ea.col.ass.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + tot.pop + `CT_<10` + `CT_10-14` + `CT_15-19` + `CT_20-24` + `CT_25-29` + `CT_30-34` + `CT_35-44` + `CT_45-59` + `CT_>60` + ES_Total_labor_force + ES_Civilian_labor_force + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed + ES_Armed_Forces + ES_Not_in_labor_force + land + urban + poverty + no.ins + disab + no.comp + `broad&comp` + no.eng + sing.mom + live.alone + pub.assist + no.phone + no.plumb + married.kid + hhd.no.comp + hhd.only.phone + hhd.no.int + hhd.broad + index_apr20, data = new_num_df, control = rpart.control(maxdepth = ))
 
-summary(depression.tree.2)
+fancyRpartPlot(depression.tree, main = "Depression Rate Tree")
+
+summary(depression.tree)
 
 # fancy mental health tree
-mhlth.tree.2 <- rpart(MHLTH ~ ACCESS2 + BINGE + CHECKUP + DIABETES + LPA + OBESITY + PHLTH + SLEEP + STROKE + mt.nev.mar + mt.now.mar + MT_Divorces + MT_Separated + MT_Widowed + ea.less.hs.deg + ea.hs.deg + ea.col.ass.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + tot.pop + `CT_<10` + `CT_10-14` + `CT_15-19` + `CT_20-24` + `CT_25-29` + `CT_30-34` + `CT_35-44` + `CT_45-59` + `CT_>60` + ES_Total_labor_force + ES_Civilian_labor_force + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed + ES_Armed_Forces + ES_Not_in_labor_force + land + urban + poverty + no.ins + disab + no.comp + `broad&comp` + no.eng + sing.mom + live.alone + pub.assist + no.phone + no.plumb + married.kid + hhd.no.comp + hhd.only.phone + hhd.no.int + hhd.broad + index_apr20, data = new_num_df, control = rpart.control(maxdepth = ))
+mhlth.tree <- rpart(MHLTH ~ ACCESS2 + BINGE + CHECKUP + DIABETES + LPA + OBESITY + PHLTH + SLEEP + STROKE + mt.nev.mar + mt.now.mar + MT_Divorces + MT_Separated + MT_Widowed + ea.less.hs.deg + ea.hs.deg + ea.col.ass.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + tot.pop + `CT_<10` + `CT_10-14` + `CT_15-19` + `CT_20-24` + `CT_25-29` + `CT_30-34` + `CT_35-44` + `CT_45-59` + `CT_>60` + ES_Total_labor_force + ES_Civilian_labor_force + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed + ES_Armed_Forces + ES_Not_in_labor_force + land + urban + poverty + no.ins + disab + no.comp + `broad&comp` + no.eng + sing.mom + live.alone + pub.assist + no.phone + no.plumb + married.kid + hhd.no.comp + hhd.only.phone + hhd.no.int + hhd.broad + index_apr20, data = new_num_df, control = rpart.control(maxdepth = ))
 
 
-fancyRpartPlot(mhlth.tree.2, main = "Poor Mental Health Rate Tree")
+fancyRpartPlot(mhlth.tree, main = "Poor Mental Health Rate Tree")
 
-summary(mhlth.tree.2)
+summary(mhlth.tree)
+
 # pruning trees
 # pruned depression tree
 # pruned.depression.tree.2 <- prune(depression.tree.2, cp = 0.01)
@@ -491,29 +447,49 @@ summary(mhlth.tree.2)
 # pruned.mhlth.tree.2 <- prune(mhlth.tree.2, cp = 0.01)
 # fancyRpartPlot(pruned.mhlth.tree.2)
 
+```
 
+```{r}
 # creating trees using testing and training data
 train.dep.tree <- rpart(DEPRESSION ~  ACCESS2 + BINGE + CHECKUP + DIABETES + LPA + OBESITY + PHLTH + SLEEP + STROKE + mt.nev.mar + mt.now.mar + MT_Divorces + MT_Separated + MT_Widowed + ea.less.hs.deg + ea.hs.deg + ea.col.ass.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + tot.pop + `CT_<10` + `CT_10-14` + `CT_15-19` + `CT_20-24` + `CT_25-29` + `CT_30-34` + `CT_35-44` + `CT_45-59` + `CT_>60` + ES_Total_labor_force + ES_Civilian_labor_force + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed + ES_Armed_Forces + ES_Not_in_labor_force + land + urban + poverty + no.ins + disab + no.comp + `broad&comp` + no.eng + sing.mom + live.alone + pub.assist + no.phone + no.plumb + married.kid + hhd.no.comp + hhd.only.phone + hhd.no.int + hhd.broad + index_apr20, data = train.set, control = rpart.control(maxdepth = ))
 
 fancyRpartPlot(train.dep.tree, main = "Training Depression Rate Tree")
+summary(train.dep.tree)
 
-test.dep.tree <- rpart(DEPRESSION ~  ACCESS2 + BINGE + CHECKUP + DIABETES + LPA + OBESITY + PHLTH + SLEEP + STROKE + mt.nev.mar + mt.now.mar + MT_Divorces + MT_Separated + MT_Widowed + ea.less.hs.deg + ea.hs.deg + ea.col.ass.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + tot.pop + `CT_<10` + `CT_10-14` + `CT_15-19` + `CT_20-24` + `CT_25-29` + `CT_30-34` + `CT_35-44` + `CT_45-59` + `CT_>60` + ES_Total_labor_force + ES_Civilian_labor_force + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed + ES_Armed_Forces + ES_Not_in_labor_force + land + urban + poverty + no.ins + disab + no.comp + `broad&comp` + no.eng + sing.mom + live.alone + pub.assist + no.phone + no.plumb + married.kid + hhd.no.comp + hhd.only.phone + hhd.no.int + hhd.broad + index_apr20, data = test.set, control = rpart.control(maxdepth = ))
+train.mhlth.tree <- rpart(MHLTH ~ ACCESS2 + BINGE + CHECKUP + DIABETES + LPA + OBESITY + PHLTH + SLEEP + STROKE + mt.nev.mar + mt.now.mar + MT_Divorces + MT_Separated + MT_Widowed + ea.less.hs.deg + ea.hs.deg + ea.col.ass.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + tot.pop + `CT_<10` + `CT_10-14` + `CT_15-19` + `CT_20-24` + `CT_25-29` + `CT_30-34` + `CT_35-44` + `CT_45-59` + `CT_>60` + ES_Total_labor_force + ES_Civilian_labor_force + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed + ES_Armed_Forces + ES_Not_in_labor_force + land + urban + poverty + no.ins + disab + no.comp + `broad&comp` + no.eng + sing.mom + live.alone + pub.assist + no.phone + no.plumb + married.kid + hhd.no.comp + hhd.only.phone + hhd.no.int + hhd.broad + index_apr20, data = test.set, control = rpart.control(maxdepth = ))
 
-fancyRpartPlot(test.dep.tree, main = "Testing Depression Rate Tree")
+fancyRpartPlot(train.mhlth.tree, main = "Poor Mental Health Rate Tree")
+
+summary(train.mhlth.tree.tree)
 ```
-
-#### Regression Tree Model Assumptions
-- Regression tree assumptions:
-- Independence of observations: Each observation must be independent of all other observations.
-- Linearity: There must be a linear relationship between the dependent variable and the independent variables.
-- Homoscedasticity: The variance of the residuals should be constant across all levels of the dependent variable.
-- Normality: The residuals should be normally distributed.
 
 #### Regression Tree Evaluation
 - Evaluating the model: The model is evaluated using various metrics such as mean squared error (MSE), root mean squared error (RMSE), and R-squared.
 - Validating the model: The model is validated using the testing set to assess its ability to generalize to new data.
 - Tuning the model: The model is tuned by adjusting the hyperparameters to improve its performance.
 - Interpreting the model: The regression tree is interpreted to gain insights into the relationships between the independent variables and the dependent variable.
+```{r}
+# R-square
+# MSE
+# RMSE
+# Cross Validation
+```
+
+#### Tuning Model (Hyperparameter Tuning)
+```{r}
+
+```
+
+#### Tuned Model Evaluation
+Hyperparameter tuning: Most algorithms have hyperparameters that need to be tuned to obtain the best performance. You can use techniques such as grid search, random search, or Bayesian optimization to find the optimal hyperparameters for your model.
+```{r}
+# R-square
+# MSE
+# RMSE
+# Cross-Validation
+```
+
+#### Multiple Linear Regression Model vs. Regression Tree model
 ```{r}
 
 ```
