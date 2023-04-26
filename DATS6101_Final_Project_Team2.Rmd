@@ -357,7 +357,7 @@ Model 1: R^2, Significance of coefficient
 Model 2: R^2, Significance of coefficient
 Model 3: R^2, Significance of coefficient
 
-#### Stepwise Selection
+#### Stepwise Selection (Tuning Multiple Linear Regression Model)
 ```{r}
 # Perform stepwise selection using AIC as the selection criterion
 depression_stepwise_model <- step(depression_model_1, direction = "both", trace = 0, k = log(nrow(new_num_df)), criterion = "AIC")
@@ -380,6 +380,7 @@ xkabledply(mhlth_anova_model_2)
 
 #### Best Model Evaluation
 ```{r}
+# Evaluate model with cross-validation and calculate metrics
 # R-square
 # MSE
 # RMSE
@@ -451,21 +452,62 @@ summary(mhlth.tree)
 ```
 
 
+```{r}
+# creating trees using testing and training data
+train.dep.tree <- rpart(DEPRESSION ~  ACCESS2 + BINGE + CHECKUP + DIABETES + LPA + OBESITY + PHLTH + SLEEP + STROKE + mt.nev.mar + mt.now.mar + MT_Divorces + MT_Separated + MT_Widowed + ea.less.hs.deg + ea.hs.deg + ea.col.ass.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + tot.pop + `CT_<10` + `CT_10-14` + `CT_15-19` + `CT_20-24` + `CT_25-29` + `CT_30-34` + `CT_35-44` + `CT_45-59` + `CT_>60` + ES_Total_labor_force + ES_Civilian_labor_force + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed + ES_Armed_Forces + ES_Not_in_labor_force + land + urban + poverty + no.ins + disab + no.comp + `broad&comp` + no.eng + sing.mom + live.alone + pub.assist + no.phone + no.plumb + married.kid + hhd.no.comp + hhd.only.phone + hhd.no.int + hhd.broad + index_apr20, data = train.set, control = rpart.control(maxdepth = ))
+
+fancyRpartPlot(train.dep.tree, main = "Training Depression Rate Tree")
+summary(train.dep.tree)
+
+train.mhlth.tree <- rpart(MHLTH ~ ACCESS2 + BINGE + CHECKUP + DIABETES + LPA + OBESITY + PHLTH + SLEEP + STROKE + mt.nev.mar + mt.now.mar + MT_Divorces + MT_Separated + MT_Widowed + ea.less.hs.deg + ea.hs.deg + ea.col.ass.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + tot.pop + `CT_<10` + `CT_10-14` + `CT_15-19` + `CT_20-24` + `CT_25-29` + `CT_30-34` + `CT_35-44` + `CT_45-59` + `CT_>60` + ES_Total_labor_force + ES_Civilian_labor_force + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed + ES_Armed_Forces + ES_Not_in_labor_force + land + urban + poverty + no.ins + disab + no.comp + `broad&comp` + no.eng + sing.mom + live.alone + pub.assist + no.phone + no.plumb + married.kid + hhd.no.comp + hhd.only.phone + hhd.no.int + hhd.broad + index_apr20, data = test.set, control = rpart.control(maxdepth = ))
+
+fancyRpartPlot(train.mhlth.tree, main = "Poor Mental Health Rate Tree")
+
+summary(train.mhlth.tree)
+```
+
 #### Regression Tree Evaluation
 - Evaluating the model: The model is evaluated using various metrics such as mean squared error (MSE), root mean squared error (RMSE), and R-squared.
 - Validating the model: The model is validated using the testing set to assess its ability to generalize to new data.
 - Tuning the model: The model is tuned by adjusting the hyperparameters to improve its performance.
 - Interpreting the model: The regression tree is interpreted to gain insights into the relationships between the independent variables and the dependent variable.
 ```{r}
-# R-square
-# MSE
-# RMSE
-# Cross Validation
+# Generate predicted values for test set
+test.set$pred.depression <- predict(train.dep.tree, newdata = test.set)
+
+# Calculate evaluation metrics
+MSE <- mean((test.set$DEPRESSION - test.set$pred.depression)^2)
+RMSE <- sqrt(MSE)
+R2 <- 1 - sum((test.set$DEPRESSION - test.set$pred.depression)^2) / sum((test.set$DEPRESSION - mean(test.set$DEPRESSION))^2)
+
+# Print evaluation metrics
+cat("MSE:", MSE, "\n")
+cat("RMSE:", RMSE, "\n")
+cat("R-squared:", R2, "\n")
+
+# The R-squared value of 0.399 suggests that the regression tree model explains 39.9% of the variation in the data, which is a moderate level of explanation.
+# The MSE (Mean Squared Error) of 6.05 represents the average squared difference between the predicted values and the actual values, with a higher value indicating worse performance.
+# The RMSE (Root Mean Squared Error) of 2.46 is the square root of the MSE, and it represents the average deviation of the predicted values from the actual values, with a lower value indicating better performance. Overall, the values suggest that the regression tree model has some predictive power, but there is still room for improvement.
+
+test.set$pred.mhlth <- predict(train.mhlth.tree, newdata = test.set)
+# Calculate evaluation metrics
+MSE <- mean((test.set$MHLTH - test.set$pred.mhlth)^2)
+RMSE <- sqrt(MSE)
+R2 <- 1 - sum((test.set$MHLTH - test.set$pred.mhlth)^2) / sum((test.set$MHLTH - mean(test.set$MHLTH))^2)
+
+# Print evaluation metrics
+cat("MSE:", MSE, "\n")
+cat("RMSE:", RMSE, "\n")
+cat("R-squared:", R2, "\n")
+
+# The regression tree model with MHLTH as the target variable has an R-squared value of 0.685, indicating that 68.5% of the variability in the MHLTH variable can be explained by the model. 
+# The mean squared error (MSE) is 1.07, which means that on average, the model's predictions are off by 1.07 units from the actual values. 
+# The root mean squared error (RMSE) is 1.04, which is the same as the standard deviation of the residuals.
+# This indicates that the model's predictions have a standard deviation of 1.04 around the actual values. Overall, these metrics suggest that the model has a moderate level of predictive power for the MHLTH variable.
 ```
 
 #### Tuning Model (Hyperparameter Tuning)
 ```{r}
-
 ```
 
 #### Tuned Model Evaluation
