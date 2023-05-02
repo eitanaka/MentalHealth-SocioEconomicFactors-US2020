@@ -86,7 +86,17 @@ Overall, this research project builds upon our previous work and adds to the gro
 
 ### Data sets
 Need edited (Describe about 4 data set and how we create)
-We have used of 10 different datasets and the one which we are going to use from the previous Data Science project1. 
+
+Our research project utilizes 10 different datasets to investigate the influence of lifestyle, socio-economic factors, and COVID-19 on mental health outcomes in the United States. One of these datasets is carried over from our previous Data Science project (Project 1), while the other were collected specifically for this study.
+
+1) CDC_PLACE dataset, which measures health outcomes, prevention, health risk behaviors, and health status. This dataset contains 13 health outcomes, 9 prevention measures, 4 health risk behaviors, and 3 health status measures.The original dataset was launched by the Centers for Disease Control and Prevention (CDC)- In 2020, the dataset provided small area estimates  for counties, places, census tracts, and ZIP Code Tabulation Areas across the entire United States.  Each measure has a comprehensive definition that includes the background, significance, limitations of the indicator, data source, and limitations of the data resources.
+
+2) The American Community Survey 2020 is another dataset used in our study. This ongoing survey provides detailed information on population and housing in the US on a yearly basis.The ACS  helps local officials, community leaders, and businesses understand the changes taking place in their communities.    Through the ACS, we know more about jobs and occupations, educational attainment, veterans, whether people own or rent their homes, and other topics. 
+
+
+3)Planning Database 2020, which contains operational, demographic, and socio-economic statistics from the 2010 Census at both the tract and block group levels.CEII data also includes annualized monthly estimates of county-level value added for more than 100 industries. Counties with economic activities dominated by industries experiencing rising unemployment can expect larger direct impacts to their local economies, particularly if the industries account for a large portion of the economic output of that county.
+
+4) County Economic Impact Index 2020, which estimates the change in overall county-level economic activity during the COVID-19 pandemic relative to 2020. These four datasets, along with the six others, were analyzed to investigate the relationship between mental health outcomes and various socio-economic and lifestyle factors, as well as the impact of COVID-19.
 
 ### Initial SMART Question
 Need edited
