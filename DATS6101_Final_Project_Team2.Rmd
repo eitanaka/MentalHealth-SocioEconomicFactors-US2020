@@ -116,7 +116,14 @@ Once we completed these cleaning steps, we had a data frame with 12,444 observat
 
 ## EDA
 Need edited
-Let us work on some data manipulation and visualization tasks by renaming some columns in the dataframe and the second part of your code creates two histograms. The first histogram (dep_hist) shows the distribution of tract-level depression rates, and the second histogram (mhlth_hist) shows the distribution of tract-level poor mental health rates.
+
+Exploratory Data Analysis (EDA) is a crucial step in any data analysis project, and in this project, we performed EDA to gain insights into the relationships between various socio-economic, lifestyle, and health factors and mental health outcomes in the United States.
+
+After cleaning the data, we started by manipulating and visualizing the data. We renamed some columns in the dataframe to make them more readable and easier to work with. We also created two histograms using the ggplot2 library to visualize the distributions of two key variables. The first histogram, dep_hist, shows the distribution of tract-level depression rates, and the second histogram, mhlth_hist, shows the distribution of tract-level poor mental health rates.
+
+Additionally, we performed various other visualization tasks such as scatter plots, box plots, and correlation matrices to explore the relationships between different variables. We also calculated descriptive statistics such as mean, median, and standard deviation to summarize the data and gain further insights.
+
+Overall, EDA helped us understand the data and identify patterns and relationships that could be explored further through statistical analysis and modeling.
 ```{r}
 # To rename some columns in a data frame to make them more readable and easier to work with.This is done by using the "colnames" function to first select the column names that match the original names, and then assigning new names.
 colnames(master_df)[colnames(master_df) == "MT_Never Married"] <- "mt.nev.mar"
