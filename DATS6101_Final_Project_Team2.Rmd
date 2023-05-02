@@ -104,6 +104,16 @@ SQ1: What factors do we observed highly associated with depression and poor ment
 
 SQ 2: Using those factors, how accurately can we infer depression and poor mental health rates in a given tract?
 
+### Data Cleaning and preparing
+Data cleaning and preparation is a crucial step in any data analysis project. In this step, we make sure that the data is in a format that is suitable for analysis, and that any inconsistencies, errors, or missing values are corrected or removed.
+
+In our project, we started by merging the four data sources by countyFIPs and Tract level Geographical ID. This allowed us to combine information from different sources based on their common identifiers. We also renamed variables to make them more meaningful and easier to understand.
+
+After merging and renaming variables, we removed all rows including null values. This was important because null values can interfere with our analysis and lead to inaccurate conclusions. We also got rid of all outliers to reduce the influence of extreme values on our analysis.
+
+Once we completed these cleaning steps, we had a data frame with 12,444 observations of 57 variables. This data frame was ready for further analysis and exploration.
+
+
 ## EDA
 Need edited
 Let us work on some data manipulation and visualization tasks by renaming some columns in the dataframe and the second part of your code creates two histograms. The first histogram (dep_hist) shows the distribution of tract-level depression rates, and the second histogram (mhlth_hist) shows the distribution of tract-level poor mental health rates.
