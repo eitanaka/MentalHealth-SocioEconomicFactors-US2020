@@ -22,7 +22,7 @@ knitr::opts_chunk$set(warning = F, results = "hide", message = F)
 options(scientific=T, digits = 3) 
 # options(scipen=9, digits = 3) 
 ```
-Loading all the necessary libraries which are needed fro this project.
+Loading all the necessary libraries which are needed for this project.
 A brief explanation of each of the libraries used in this R Markdown script:
 
 readr: This is a package used for reading and writing structured data files, such as CSV files. It provides fast and efficient functions for reading in data, including read_csv.
@@ -42,6 +42,8 @@ rpart: This is a package used for creating decision trees. It provides functions
 rpart.plot: This is a package used for visualizing decision trees created using rpart. It provides several options for customizing the appearance of tree plots.
 
 rattle: This is a package used for data mining and machine learning. It provides a graphical interface for building and evaluating models, as well as several functions for data preprocessing and visualization.
+
+tree: used for creating classification and regression trees. It provides functions for building decision trees using various algorithms, including the Classification And Regression Tree (CART) algorithm.
  
 ```{r}
 # Import Libraries
@@ -67,10 +69,20 @@ master_df <- master_df[,-1]
 ## Abstract
 Need edited
 
-An abstract is an overview of a research project that seeks to explore the relationship between mental health and various socio-economic and lifestyle factors, as well as the impact of COVID-19 in the United States.The aim is to answer the question of whether there is a significant influence on mental health due to these factors in the US, and data will be analyzed at the census tract level using 11 different datasets. The abstract highlights the main objectives, methods, results, and conclusions of the research, while the introduction sets the stage by discussing the relevance of the research question and the data sets used.This question is relevant to the project's aim and can guide the data analysis and interpretation.
+This research project aims to investigate the relationship between mental health and various socio-economic and lifestyle factors, as well as the impact of COVID-19, in the United States. The primary objective is to determine whether these factors significantly influence mental health in the US, using 11 different datasets analyzed at the census tract level. The introduction provides a background and rationale for the research question and the datasets used.
+
+The project uses various statistical techniques, including correlation analysis, regression analysis, and decision tree analysis, to identify the most significant predictors of mental health outcomes. In addition, the study contributes to the literature on the impact of socio-economic and lifestyle factors on mental health.
+
+Overall, this research project offers a comprehensive analysis of the relationship between mental health and various factors, providing insights into potential interventions to improve mental health outcomes.
 
 ## Introduction
-In project 1, we investigated how health risk behaviors are associated with health outcomes and health status.We have 11 different datasets that we have made used of. We have tried importing all the datasets from the google drive where all datasets has been uploaded.Now, we are trying to examine whether there is any significant influence on mental health due to lifestyle, socio-economic factors, and covid-19 in the United States. Census tracts will be used in calculating and analyzing all the different datasets. This research which is going to be very interesting to look at identifying what factors have significantly impacted mental health and well-being in the United States in 2020. 
+Our previous project 1 focused on the relationship between health risk behaviors and health outcomes and status, using a range of datasets. In this research project, we shift our focus to investigating the influence of lifestyle, socio-economic factors, and COVID-19 on mental health in the United States.
+
+We aim to determine which factors have the most significant impact on mental health and well-being in the US during 2020. To do so, we will analyze 11 different datasets at the census tract level, utilizing various statistical techniques such as correlation analysis, regression analysis, and decision tree analysis.
+
+The results of this study have important implications for improving mental health outcomes and shaping public health policies and interventions. By identifying the factors that most significantly impact mental health, we can develop targeted interventions and programs to address these issues.
+
+Overall, this research project builds upon our previous work and adds to the growing body of research on mental health and well-being in the United States. By exploring the relationships between lifestyle, socio-economic factors, and COVID-19 with mental health outcomes, we hope to contribute to a greater understanding of these issues and help improve mental health outcomes in the US.
 
 ### Data sets
 Need edited (Describe about 4 data set and how we create)
