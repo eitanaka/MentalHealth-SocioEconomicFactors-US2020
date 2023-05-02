@@ -100,9 +100,9 @@ Our research project utilizes 10 different datasets to investigate the influence
 
 ### Initial SMART Question
 Need edited
-1) Why does the United States have a large number of people with depression and mental health issues? Is the lifestyle, socio-economic factors, and covid-19 in the States leading people towards poor mental health?
+SQ1: What factors do we observed highly associated with depression and poor mental health rates?
 
-2) How can we expect predictors to contribute to increased depression and poor mental health?
+SQ 2: Using those factors, how accurately can we infer depression and poor mental health rates in a given tract?
 
 ## EDA
 Need edited
