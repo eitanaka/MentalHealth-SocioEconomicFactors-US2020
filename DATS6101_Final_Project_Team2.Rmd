@@ -22,7 +22,27 @@ knitr::opts_chunk$set(warning = F, results = "hide", message = F)
 options(scientific=T, digits = 3) 
 # options(scipen=9, digits = 3) 
 ```
+Loading all the necessary libraries which are needed fro this project.
+A brief explanation of each of the libraries used in this R Markdown script:
 
+readr: This is a package used for reading and writing structured data files, such as CSV files. It provides fast and efficient functions for reading in data, including read_csv.
+
+ggplot2: This is a package used for creating data visualizations. It provides a highly customizable grammar of graphics for creating plots with a wide range of styles and features.
+
+tidyr: This is a package used for data wrangling, specifically for reshaping and tidying data. It provides functions like gather and spread for transforming data between "wide" and "long" formats.
+
+corrplot: This is a package used for creating correlation matrices and visualizing correlations between variables. It provides several options for customizing the appearance of correlation plots.
+
+ezids: This is a package used for generating and manipulating EZID identifiers, which are persistent, globally unique identifiers for digital objects. It provides functions for minting, modifying, and resolving EZID identifiers.
+
+car: This is a package used for conducting regression analyses and other statistical tests. It provides several functions for model diagnostics, including outlierTest and leveragePlots.
+
+rpart: This is a package used for creating decision trees. It provides functions for building and evaluating decision tree models.
+
+rpart.plot: This is a package used for visualizing decision trees created using rpart. It provides several options for customizing the appearance of tree plots.
+
+rattle: This is a package used for data mining and machine learning. It provides a graphical interface for building and evaluating models, as well as several functions for data preprocessing and visualization.
+ 
 ```{r}
 # Import Libraries
 rm(list=ls())
@@ -37,7 +57,7 @@ library(rpart.plot)
 library(rattle)
 library(tree)
 ```
-
+As for the dataset, the script reads in a CSV file from a URL using read_csv from the readr package. The URL points to a CSV file containing socio-economic and health data for various geographic regions. After reading in the data, the first column of the data frame is removed using [-1], presumably because it contains redundant or unnecessary information.
 ```{r init}
 url <- 'https://raw.githubusercontent.com/eitanaka/DATS6101_Final_Project_Team2/main/data_set/geo_socio_health_df.csv'
 master_df<- read_csv(url)
