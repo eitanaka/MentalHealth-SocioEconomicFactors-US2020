@@ -587,8 +587,17 @@ We can infer depression and poor mental health rates in a given tract based on t
 ## Discussion
 Need edited
 
+
 ### Limitations
 Need edited
+Based on the information you provided earlier, there are several limitations to this project:
+The measure of poor mental state over the last two weeks may not be precise because the data was combined from different datasets that were gathered more than two weeks apart. This could introduce measurement bias and affect the accuracy of the results.
+The project did not perform pruning or training of regression trees, which could have resulted in less accurate models.
+The feature selection process used in the analysis was not optimal, which could result in irrelevant or redundant variables being included in the model, reducing its predictive power.
+The data used in the analysis may not be representative of the entire population, as it was collected from a specific geographic region or sample size.
+The project was limited to certain geographical areas, which may not be representative of the broader population or may have limited the ability to identify additional factors associated with depression and poor mental health.
+The project did not account for potential confounding variables like the impact of cultural or social factors that could influence the relationship between the identified factors and depression or poor mental health, leading to the possibility of overestimating or underestimating the true effect of these factors, which may be an important factor to consider in future research.
+
 
 ### Further Research
 Need edited
