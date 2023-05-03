@@ -154,7 +154,7 @@ colSums(is.na(num_df))
 num_df <- na.omit(num_df)
 colSums(is.na(num_df))
 ```
-The output will be a numeric vector with the number of missing values in each column. If all values are 0, then there are no missing values in the selected columns.
+The output will be a numeric vector with the number of missing values in each column. If all values are 0, then there are no missing values in the selected columns.This helps to ensure that the remaining data is as complete and accurate as possible.
 
 #### Handle Outlier
 ```{r}
@@ -578,6 +578,11 @@ cat("MSE:", MSE, "\n")
 
 ## Result
 Need edited
+Based on the tests and modeling performed previously, the factors that are highly associated with depression and poor mental health rates are:
+
+Depression: Obesity, poor physical health, high school degree as highest level educational attainment, commute time >= 60 min, household without high-speed wireless internet, binge drinking, economic effect of COVID-19, and no-English.
+Poor Mental Health: Lack of physical activity, obesity, poor physical health, lack of sleep, BA as highest level educational attainment, graduate or professional degree as highest level of educational attainment, never married, married with kid, recent checkup, median income, poverty rate, and binge drinking.
+We can infer depression and poor mental health rates in a given tract based on the above factors with some accuracy. For depression, the variation of these factors is slightly associated (r-square: 0.37) with the variation of depression rate. For poor mental health, the variation of these factors is highly associated (r-square: 0.69) with the variation of poor mental health rate.
 
 ## Discussion
 Need edited
