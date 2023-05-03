@@ -577,7 +577,6 @@ cat("MSE:", MSE, "\n")
 ```
 
 ## Result
-Need edited
 Based on the tests and modeling performed previously, the factors that are highly associated with depression and poor mental health rates are:
 
 Depression: Obesity, poor physical health, high school degree as highest level educational attainment, commute time >= 60 min, household without high-speed wireless internet, binge drinking, economic effect of COVID-19, and no-English.
@@ -589,7 +588,6 @@ Need edited
 
 
 ### Limitations
-Need edited
 Based on the information you provided earlier, there are several limitations to this project:
 The measure of poor mental state over the last two weeks may not be precise because the data was combined from different datasets that were gathered more than two weeks apart. This could introduce measurement bias and affect the accuracy of the results.
 The project did not perform pruning or training of regression trees, which could have resulted in less accurate models.
@@ -598,9 +596,17 @@ The data used in the analysis may not be representative of the entire population
 The project was limited to certain geographical areas, which may not be representative of the broader population or may have limited the ability to identify additional factors associated with depression and poor mental health.
 The project did not account for potential confounding variables like the impact of cultural or social factors that could influence the relationship between the identified factors and depression or poor mental health, leading to the possibility of overestimating or underestimating the true effect of these factors, which may be an important factor to consider in future research.
 
-
 ### Further Research
-Need edited
+Some potential future research directions:
+
+Conduct micro-level analysis: Further research could focus on exploring the social systems and relationships that contribute to depression. This could involve examining individual-level factors, such as social support, family dynamics, and work stress, and how they impact mental health.
+Integrate genetic information and other biological measures, such as hormonal imbalances and brain imaging. There is evidence that genetics play a role in the development of depression. Further research could examine genetic information and other biological factors that may be related to depression.
+Conduct more feature selection methods, to identify the most important predictors of depression and poor mental health. As mentioned earlier, the feature selection process used in this project was not extensive. Further research could involve more sophisticated methods for selecting features, such as principal component analysis or regularized regression techniques.
+Explore additional factors: The current analysis focused on a limited set of factors that were available in the dataset. Future research could explore additional factors that may be related to depression, such as regular diet and lifestyle choices, and investigate their relationship to depression and poor mental health rates.
+Time-series analysis: The current analysis did not take into account the temporal aspect of depression and mental health rates. Future research could incorporate time-series analysis to examine how depression and mental health rates change over time, and identify any seasonal or cyclical trends that may shed light on the environmental or societal changes.
+Conduct qualitative research, such as interviews and focus groups, to better understand the subjective experiences of individuals living with depression and gain insights into potential risk factors that may not be captured by quantitative measures.
+Explore the potential role of social support networks, such as family and friends, in mitigating or exacerbating depression and poor mental health, and develop interventions that aim to strengthen social support
+
 
 ## Conclusion
 Need edited
