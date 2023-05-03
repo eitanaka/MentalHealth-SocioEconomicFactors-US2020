@@ -614,6 +614,7 @@ Need edited
 ## References
 Need edited
 # Reference links to datasets:
+
 https://chronicdata.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh
 https://gisgeography.com/us-county-map/
 https://www.ers.usda.gov/data-products/county-level-data-sets/county-level-data-sets-download-data/
@@ -621,3 +622,7 @@ https://data.census.gov/
 https://www.anl.gov/dis/county-economic-impact-index
 https://www.census.gov/programs-surveys/community-resilience-estimates/data/datasets.html
 https://github.com/NREL/hsds-examples
+
+## Github Link
+
+GitHub Repo: https://github.com/eitanaka/DATS6101_Final_Project_Team2 
