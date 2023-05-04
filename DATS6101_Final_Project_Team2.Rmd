@@ -13,7 +13,6 @@ output:
     toc: yes
     toc_depth: '3'
 ---
-
 ```{r setup, include=FALSE}
 # Some of common RMD options (and the defaults) are: 
 # include=T, eval=T, echo=T, results='hide'/'asis'/'markup',..., collapse=F, warning=T, message=T, error=T, cache=T, fig.width=6, fig.height=4, fig.dim=c(6,4) #inches, fig.align='left'/'center','right', 
@@ -22,12 +21,42 @@ knitr::opts_chunk$set(warning = F, results = "hide", message = F)
 options(scientific=T, digits = 3) 
 # options(scipen=9, digits = 3) 
 ```
+Loading all the necessary libraries which are needed for this project.
+A brief explanation of each of the libraries used in this R Markdown script:
 
+<<<<<<< HEAD
+## Abstract
+This research project aimed to identify the factors associated with depression and poor mental health rates in the United States. The study analyzed data from multiple sources, including the Behavioral Risk Factor Surveillance System, American Community Survey, and COVID-19 Community Profile Report. The data were used to build multiple linear regression models and regression trees and conduct stepwise selection to identify the optimal combination of features. The study found that demographic, socioeconomic, and health-related variables significantly predict depression and poor mental health rates. The models can serve as a basis for further research on this topic and assist policymakers in identifying high-risk populations and designing targeted interventions. However, the study has limitations such as the possibility of measurement bias, limited geographical areas, and not accounting for potential confounding variables. Further research could explore additional factors related to depression and conduct qualitative research to understand better the subjective experiences of individuals living with depression. Overall, this study provides insights into the factors associated with depression and poor mental health rates in the United States and can inform future research and policy decisions.
+
+```{r include=F}
+=======
+readr: This is a package used for reading and writing structured data files, such as CSV files. It provides fast and efficient functions for reading in data, including read_csv.
+
+ggplot2: This is a package used for creating data visualizations. It provides a highly customizable grammar of graphics for creating plots with a wide range of styles and features.
+
+tidyr: This is a package used for data wrangling, specifically for reshaping and tidying data. It provides functions like gather and spread for transforming data between "wide" and "long" formats.
+
+corrplot: This is a package used for creating correlation matrices and visualizing correlations between variables. It provides several options for customizing the appearance of correlation plots.
+
+ezids: This is a package used for generating and manipulating EZID identifiers, which are persistent, globally unique identifiers for digital objects. It provides functions for minting, modifying, and resolving EZID identifiers.
+
+car: This is a package used for conducting regression analyses and other statistical tests. It provides several functions for model diagnostics, including outlierTest and leveragePlots.
+
+rpart: This is a package used for creating decision trees. It provides functions for building and evaluating decision tree models.
+
+rpart.plot: This is a package used for visualizing decision trees created using rpart. It provides several options for customizing the appearance of tree plots.
+
+rattle: This is a package used for data mining and machine learning. It provides a graphical interface for building and evaluating models, as well as several functions for data preprocessing and visualization.
+
+tree: used for creating classification and regression trees. It provides functions for building decision trees using various algorithms, including the Classification And Regression Tree (CART) algorithm.
+ 
 ```{r}
+>>>>>>> 41946f7b97a87938d4c917586a3e96cce869284c
 # Import Libraries
 rm(list=ls())
 library(readr)
 library(ggplot2)
+library(ggpubr)
 library(tidyr)
 library(corrplot)
 library(ezids)
@@ -37,35 +66,76 @@ library(rpart.plot)
 library(rattle)
 library(tree)
 ```
-
+As for the dataset, the script reads in a CSV file from a URL using read_csv from the readr package. The URL points to a CSV file containing socio-economic and health data for various geographic regions. After reading in the data, the first column of the data frame is removed using [-1], presumably because it contains redundant or unnecessary information.
 ```{r init}
 url <- 'https://raw.githubusercontent.com/eitanaka/DATS6101_Final_Project_Team2/main/data_set/geo_socio_health_df.csv'
 master_df<- read_csv(url)
 master_df <- master_df[,-1]
 ```
 
+<<<<<<< HEAD
+```{r rename}
+=======
 ## Abstract
 Need edited
 
-An abstract is an overview of a research project that seeks to explore the relationship between mental health and various socio-economic and lifestyle factors, as well as the impact of COVID-19 in the United States.The aim is to answer the question of whether there is a significant influence on mental health due to these factors in the US, and data will be analyzed at the census tract level using 11 different datasets. The abstract highlights the main objectives, methods, results, and conclusions of the research, while the introduction sets the stage by discussing the relevance of the research question and the data sets used.This question is relevant to the project's aim and can guide the data analysis and interpretation.
+This research project aims to investigate the relationship between mental health and various socio-economic and lifestyle factors, as well as the impact of COVID-19, in the United States. The primary objective is to determine whether these factors significantly influence mental health in the US, using 11 different datasets analyzed at the census tract level. The introduction provides a background and rationale for the research question and the datasets used.
+
+The project uses various statistical techniques, including correlation analysis, regression analysis, and decision tree analysis, to identify the most significant predictors of mental health outcomes. In addition, the study contributes to the literature on the impact of socio-economic and lifestyle factors on mental health.
+
+Overall, this research project offers a comprehensive analysis of the relationship between mental health and various factors, providing insights into potential interventions to improve mental health outcomes.
 
 ## Introduction
-In project 1, we investigated how health risk behaviors are associated with health outcomes and health status.We have 11 different datasets that we have made used of. We have tried importing all the datasets from the google drive where all datasets has been uploaded.Now, we are trying to examine whether there is any significant influence on mental health due to lifestyle, socio-economic factors, and covid-19 in the United States. Census tracts will be used in calculating and analyzing all the different datasets. This research which is going to be very interesting to look at identifying what factors have significantly impacted mental health and well-being in the United States in 2020. 
+Our previous project 1 focused on the relationship between health risk behaviors and health outcomes and status, using a range of datasets. In this research project, we shift our focus to investigating the influence of lifestyle, socio-economic factors, and COVID-19 on mental health in the United States.
+
+We aim to determine which factors have the most significant impact on mental health and well-being in the US during 2020. To do so, we will analyze 11 different datasets at the census tract level, utilizing various statistical techniques such as correlation analysis, regression analysis, and decision tree analysis.
+
+The results of this study have important implications for improving mental health outcomes and shaping public health policies and interventions. By identifying the factors that most significantly impact mental health, we can develop targeted interventions and programs to address these issues.
+
+Overall, this research project builds upon our previous work and adds to the growing body of research on mental health and well-being in the United States. By exploring the relationships between lifestyle, socio-economic factors, and COVID-19 with mental health outcomes, we hope to contribute to a greater understanding of these issues and help improve mental health outcomes in the US.
 
 ### Data sets
 Need edited (Describe about 4 data set and how we create)
-We have used of 10 different datasets and the one which we are going to use from the previous Data Science project1. 
+
+Our research project utilizes 10 different datasets to investigate the influence of lifestyle, socio-economic factors, and COVID-19 on mental health outcomes in the United States. One of these datasets is carried over from our previous Data Science project (Project 1), while the other were collected specifically for this study.
+
+1) CDC_PLACE dataset, which measures health outcomes, prevention, health risk behaviors, and health status. This dataset contains 13 health outcomes, 9 prevention measures, 4 health risk behaviors, and 3 health status measures.The original dataset was launched by the Centers for Disease Control and Prevention (CDC)- In 2020, the dataset provided small area estimates  for counties, places, census tracts, and ZIP Code Tabulation Areas across the entire United States.  Each measure has a comprehensive definition that includes the background, significance, limitations of the indicator, data source, and limitations of the data resources.
+
+2) The American Community Survey 2020 is another dataset used in our study. This ongoing survey provides detailed information on population and housing in the US on a yearly basis.The ACS  helps local officials, community leaders, and businesses understand the changes taking place in their communities.    Through the ACS, we know more about jobs and occupations, educational attainment, veterans, whether people own or rent their homes, and other topics. 
+
+
+3)Planning Database 2020, which contains operational, demographic, and socio-economic statistics from the 2010 Census at both the tract and block group levels.CEII data also includes annualized monthly estimates of county-level value added for more than 100 industries. Counties with economic activities dominated by industries experiencing rising unemployment can expect larger direct impacts to their local economies, particularly if the industries account for a large portion of the economic output of that county.
+
+4) County Economic Impact Index 2020, which estimates the change in overall county-level economic activity during the COVID-19 pandemic relative to 2020. These four datasets, along with the six others, were analyzed to investigate the relationship between mental health outcomes and various socio-economic and lifestyle factors, as well as the impact of COVID-19.
 
 ### Initial SMART Question
 Need edited
-1) Why does the United States have a large number of people with depression and mental health issues? Is the lifestyle, socio-economic factors, and covid-19 in the States leading people towards poor mental health?
+SQ1: What factors do we observed highly associated with depression and poor mental health rates?
 
-2) How can we expect predictors to contribute to increased depression and poor mental health?
+SQ 2: Using those factors, how accurately can we infer depression and poor mental health rates in a given tract?
+
+### Data Cleaning and preparing
+Data cleaning and preparation is a crucial step in any data analysis project. In this step, we make sure that the data is in a format that is suitable for analysis, and that any inconsistencies, errors, or missing values are corrected or removed.
+
+In our project, we started by merging the four data sources by countyFIPs and Tract level Geographical ID. This allowed us to combine information from different sources based on their common identifiers. We also renamed variables to make them more meaningful and easier to understand.
+
+After merging and renaming variables, we removed all rows including null values. This was important because null values can interfere with our analysis and lead to inaccurate conclusions. We also got rid of all outliers to reduce the influence of extreme values on our analysis.
+
+Once we completed these cleaning steps, we had a data frame with 12,444 observations of 57 variables. This data frame was ready for further analysis and exploration.
+
 
 ## EDA
 Need edited
-Let us work on some data manipulation and visualization tasks by renaming some columns in the dataframe and the second part of your code creates two histograms. The first histogram (dep_hist) shows the distribution of tract-level depression rates, and the second histogram (mhlth_hist) shows the distribution of tract-level poor mental health rates.
+
+Exploratory Data Analysis (EDA) is a crucial step in any data analysis project, and in this project, we performed EDA to gain insights into the relationships between various socio-economic, lifestyle, and health factors and mental health outcomes in the United States.
+
+After cleaning the data, we started by manipulating and visualizing the data. We renamed some columns in the dataframe to make them more readable and easier to work with. We also created two histograms using the ggplot2 library to visualize the distributions of two key variables. The first histogram, dep_hist, shows the distribution of tract-level depression rates, and the second histogram, mhlth_hist, shows the distribution of tract-level poor mental health rates.
+
+Additionally, we performed various other visualization tasks such as scatter plots, box plots, and correlation matrices to explore the relationships between different variables. We also calculated descriptive statistics such as mean, median, and standard deviation to summarize the data and gain further insights.
+
+Overall, EDA helped us understand the data and identify patterns and relationships that could be explored further through statistical analysis and modeling.
 ```{r}
+>>>>>>> 41946f7b97a87938d4c917586a3e96cce869284c
 # To rename some columns in a data frame to make them more readable and easier to work with.This is done by using the "colnames" function to first select the column names that match the original names, and then assigning new names.
 colnames(master_df)[colnames(master_df) == "MT_Never Married"] <- "mt.nev.mar"
 colnames(master_df)[colnames(master_df) == "MT_Now married"] <- "mt.now.mar"
@@ -83,114 +153,154 @@ numeric_vars <- sapply(master_df, is.numeric)
 num_df <- master_df[, numeric_vars]
 ```
 
-#### Basic Information
-```{r}
-head(num_df)
+## 1. Introduction
+Using a range of datasets, our previous project focused on the relationship between health risk behaviors: lack of physical activity and sleep, and health outcomes (depression) and status (poor mental health). In this research project, we investigate the influence of other health conditions, socioeconomic factors, and the economic impact of covid-19 on mental health in the United States. We aim to determine which factors significantly impact mental health and well-being in the US during 2020. To do so, we will analyze four different datasets at the census tract level, utilizing various statistical techniques such as correlation, linear regression, and decision tree analysis. The results of this study have important implications for improving mental health outcomes and shaping public health policies and interventions. We can develop targeted interventions and programs to address these issues by identifying the factors that most significantly impact mental health. 
+
+### 1.1. Data Sets Descritption
+Our research project utilizes four different datasets to investigate the influence of health conditions, socioeconomic factors, and the economic impact of COVID-19 on mental health outcomes in the United States. One of these datasets is from our previous project (Project 1), while the other is collected specifically for this study.
+
+1. CDC_PLACE dataset measures health outcomes, prevention, health risk behaviors, and health status. This dataset contains 13 health outcomes, nine prevention measures, four health risk behaviors, and three health status measures. The original dataset was launched by the Centers for Disease Control and Prevention (CDC)- In 2020, the dataset provided small area estimates for counties, places, census tracts, and ZIP Code Tabulation Areas across the United States. Each measure has a comprehensive definition that includes the background, significance, limitations of the indicator, data source, and limitations of the data resources.
+
+2. The American Community Survey 2020 is another dataset used in our study. This ongoing survey provides detailed information on the population and housing in the US yearly. The ACS  helps local officials, community leaders, and businesses understand the changes in their communities.    Through the ACS, we know more about jobs and occupations, educational attainment, veterans, whether people own or rent their homes, and other topics. 
+
+
+3. Planning Database 2020 contains operational, demographic, and socioeconomic statistics from the 2010 Census at both the tract and block group levels.CEII data also includes annualized monthly estimates of county-level value added for over 100 industries. Counties with economic activities dominated by industries experiencing rising unemployment can expect more enormous direct impacts on their local economies, notably if the industries account for a large portion of the economic output of that county.
+
+4. County Economic Impact Index 2020 estimates the overall county-level economic activity change during the COVID-19 pandemic relative to 2020. These four datasets and the six others were analyzed to investigate the relationship between mental health outcomes and various socioeconomic and lifestyle factors, as well as the impact of COVID-19.
+
+### 1.2. Research / SMART Questions
+
+Our guiding questions for this project are the following:
+
+**SQ1: What factors do we observed highly associated with depression and poor mental health rates?**
+
+**SQ 2: Using those factors, how accurately can we infer depression and poor mental health rates in a given tract?**
+
+### 1.3. Data Preparation
+Data cleaning and preparation is a crucial step in any data analysis project. In this step, we ensure that the data is in a format suitable for analysis and that any inconsistencies, errors, or missing values are corrected or removed. Our project merged the four data sources by countyFIPs and Tract level Geographical ID. This allowed us to combine information from different sources based on their standard identifiers. We also renamed variables to make them more meaningful and easier to understand. After merging and renaming variables, we removed all rows, including null values. This was important because null values could interfere with our analysis and lead to inaccurate conclusions. We also eliminated all outliers to reduce the influence of extreme values on our analysis. Once we completed these cleaning steps, we had a data frame with 12,444 observations of 57 variables. This data frame was ready for further analysis and exploration.
+
+## 2. EDA
+In this section, we perform EDA on a dataset containing health and socioeconomic factors for different tracts in the United States. The purpose of the analysis is to investigate the relationship between these factors and two health outcomes: depression rate and poor mental health rate. We check the data quality, including missing values, outliers, and inconsistencies. We then examine the distributions of the variables and their relationships using visualizations such as histograms, scatterplots, and correlation matrices. The EDA reveals that some variables are highly correlated with depression rates and poor mental health rates. Overall, the EDA helps us to understand the data, identify potential issues, and guide our subsequent analysis. The insights gained from this analysis have important implications for public health policy and model building.
+
+### 2.1. Data Structure & Data Types
+    The data structure of the dataset is a table with 60,682 rows and 57 columns. The columns represent various variables, including health indicators, demographic characteristics, and economic indicators. The data types of the variables are numeric, except for CountyFIPS, GEOID, StateAbbr, and CountyName. The dataset has also omitted some rows due to missing data, as indicated by the "na. action" attribute. The dataset is a comprehensive health and demographic information collection for a large population.
+```{r echo=T, eval=T, include=T, results='markup', colapse=T}
 str(num_df)
 ```
 
-#### Handle Null Values
-```{r}
+### 2.2. Summary Statistics  
+
+The table displays the summary statistics of various health and socioeconomic indicators in 2020. The mean values for several health indicators, such as depression and obesity, are high, indicating potential health concerns in the population. Education levels vary, with 12.2% having less than a high school degree and 28.8% having some college or associate's degree. The poverty rate is 15.3%, and 9.1% of the population does not have health insurance. Additionally, 13.3% of households do not have a computer, and 28.1% of individuals live alone.
+
+```{r echo=T, eval=T, include=T, results='markup', colapse=T}
+summary(num_df)
+```
+
+### 2.3. Handle Null Values
+
+When we check for null values, we confirm that there are null values in the data set in the following table. We then confirmed that they were a small number relative to the overall data, so we removed them all. To remove rows with null values in the columns listed below, we use the "na.omit" function. This function removes rows with any missing values in the specified columns. After removing the rows with null values, the resulting dataset only contains rows with complete data in the specified columns.
+
+```{r echo=T, eval=T, results='markup'}
 colSums(is.na(num_df))
 num_df <- na.omit(num_df)
-colSums(is.na(num_df))
 ```
-The output will be a numeric vector with the number of missing values in each column. If all values are 0, then there are no missing values in the selected columns.
+<<<<<<< HEAD
+=======
+The output will be a numeric vector with the number of missing values in each column. If all values are 0, then there are no missing values in the selected columns.This helps to ensure that the remaining data is as complete and accurate as possible.
+>>>>>>> 41946f7b97a87938d4c917586a3e96cce869284c
 
-#### Handle Outlier
+### 2.4. Check for and remove outliers
+
+Next, we are handling outliers in the numerical data. We apply the outlierKD2 function from the "ezids" package to detect and remove the outliers in the dataset. We loop through all columns and remove outliers in each column by calling the outlierKD2 function. We remove any resulting NAs and update the data frame after each column. Finally, we remove the last two columns, which are added by outlierKD2. Handling outliers is essential in creating an accurate model because outliers can significantly impact the results, especially in regression models, and can lead to poor performance and inaccurate predictions.
+     
 ```{r}
-colSums(num_df == 0.0)
-
-new_num_df <- outlierKD2(num_df, num_df[[1]], rm=TRUE)
+new_num_df <- outlierKD2(num_df, num_df[[1]], rm=TRUE, boxplt=F, histogram=F,qqplt=F)
 new_num_df <- new_num_df[,1:(ncol(new_num_df)-2)]
 
 # loop through all columns
 for (col_name in colnames(num_df)[2:ncol(num_df)]) {
   # remove outliers
-  new_num_df <- outlierKD2(new_num_df, new_num_df[[col_name]], rm=TRUE)
+  new_num_df <- outlierKD2(new_num_df, new_num_df[[col_name]], rm=T, boxplt=F, histogram=F,qqplt=F)
   new_num_df <- na.omit(new_num_df)
   new_num_df <- new_num_df[,1:(ncol(new_num_df)-2)]
 }
 new_num_df <- new_num_df[,1:(ncol(new_num_df)-1)]
 ```
 
-### Boxplots for checking outliers
-```{r}
-# with outliers
-par(mfrow=c(8, 8))
-par(mar=c(1, 1, 1, 1))
-for (i in 1:ncol(num_df)) {
-  boxplot(num_df[[i]], main=names(num_df)[i])
-}
+### 2.5. Boxplot Analysis
 
-# without outliers
+The box plots show the distribution of various health, demographic, and socioeconomic factors. The plots suggest that obesity, diabetes, and depression rates are relatively high, while education levels and median household income are moderate. Looking at the distribution of all variables, it was confirmed that the distribution was relatively normal, thanks to removing outliers.
+  
+```{r include=T, echo=T, eval=T, results='markup'}
 par(mfrow=c(8, 8))
 par(mar=c(1, 1, 1, 1))
 for (i in 1:ncol(new_num_df)) {
   boxplot(new_num_df[[i]], main=names(new_num_df)[i])
 }
 ```
-### Scatter plot for checking outliers (Depression)
-```{r}
-# Scatter plots with fit line for Depression and other dependent variables
+
+### 2.6. Scatter plot
+
+We create scatter plots to visualize the relationship between depression and other variables, poor mental health, and other variables. The scatter plots show the distribution of each variable and the trend of the relationship between the variables. The data used in the plots come from a survey that collected information on various demographic, socioeconomic, and health-related factors. 
+
+#### 2.6.1. Scatter plot for depression
+
+Based on the scatter plot analysis of depression, it appears that depression is positively associated with "OBESITY," "PHLTH," and "ea.hs.deg." On the other hand, there seems to be a negative association between depression and "MI_Estimate," "ea.grad.prof.deg," "CT_>60," and "had.broad," indicating that as these variables increase, the level of depression decreases. The strength of these associations varies, with "OBESITY," "PHLTH," and "MI_Estimate" having relatively stronger positive correlations with depression, while "ea.hs.deg" and "ea.grad.prof.deg" have weaker negative correlations.
+  
+```{r include=T, echo=T, eval=T, results='markup'}
+theme_set(theme_pubr(base_size = 3.5))
+plot_list <- list()
 for (col in names(new_num_df)) {
   if (col != "DEPRESSION") {
-    plot_data <- data.frame(x = new_num_df$DEPRESSION, y = new_num_df[[col]])
+    plot_data <- data.frame(x = new_num_df[[col]], y = new_num_df$DEPRESSION)
     plot <- ggplot(plot_data, aes(x = x, y = y)) + 
-      geom_point() +
+      geom_point(size=0.3) +
       geom_smooth(method = "lm", se = FALSE) +
-      xlab("Depression") +
-      ylab(col)
-    print(plot)
+      xlab(col) +
+      theme(legend.position = "none")
+    plot_list[[col]] <- plot
   }
 }
+ggarrange(plotlist = plot_list, ncol = 7, nrow = 8)
 ```
 
-### Scatter plot for checking outliers (MHLTH)
-```{r}
+#### 2.6.2. Scatter plot for poor mental heealht
+
+The scatter plots with a fitted line for poor mental health (MHLTH) and the above highly correlated variables show that MHLTH positively correlates with PHLTH, OBESITY, and poverty. The scatter plot for PHLTH and MHLTH shows a clear positive linear relationship.
+
+```{r include=T, echo=T, eval=T, results='markup'}
 # Scatter plots with fit line for mhlth and other dependent variables
+theme_set(theme_pubr(base_size = 3.5))
+plot_list <- list()
 for (col in names(new_num_df)) {
   if (col != "MHLTH") {
-    plot_data <- data.frame(x = new_num_df$MHLTH, y = new_num_df[[col]])
+    plot_data <- data.frame(x = new_num_df[[col]], y = new_num_df$MHLTH)
     plot <- ggplot(plot_data, aes(x = x, y = y)) + 
-      geom_point() +
+      geom_point(size=0.3) +
       geom_smooth(method = "lm", se = FALSE) +
-      xlab("mhlth") +
-      ylab(col)
-    print(plot)
+      xlab(col) +
+      theme(legend.position = "none")
+    plot_list[[col]] <- plot
   }
 }
+ggarrange(plotlist = plot_list, ncol = 7, nrow = 8)
 ```
 
-### Data Structure
-Need edited
-It can be useful to get a quick overall structure of the data frame before performing further analyses.
-```{r}
-str(new_num_df)
-```
+### 2.7. Distribution of dependent variable
 
-### Descriptive Statistics
-Need edited
-It can be useful to get a overview  of summary statistics of the data frame before performing further analyses.
-```{r}
-summary(new_num_df)
-```
+Next, we aim to determine the distribution of the dependent variables, depression rate, and poor mental health rate, to confirm which model would be appropriate for further analysis. The results showed that both depression and poor mental health rates were bell-shaped, indicating a normal distribution. This was confirmed through histograms and Q-Q plots, with both variables showing a close-to-straight-line pattern.
+The normal distribution of the dependent variables meets the assumption of linear regression, indicating that a linear regression model can be used for further analysis. This finding is significant as it allows for the exploration of the relationship between the dependent variables and the independent variables.
+Using linear regression can provide valuable insight into potential risk factors for depression and poor mental health, allowing for the development of targeted interventions to improve mental health outcomes. 
 
-### Histogram for dependent variable
-To Check normality of dependent variable
-```{r}
+```{r include=T, echo=T, eval=T, results='markup'}
 # Histograms
-# Two histograms: one for the distribution of tract-level depression rates and one for the distribution of tract-level poor mental health rates.
 hist(new_num_df$DEPRESSION, main = "Distribution of Tract-level Depression Rates")
 
 hist(new_num_df$MHLTH, main = "Distribution of Tract-level Poor Mental Health Rates")
 
 ```
-Looking at the histograms, it appears that both variables are approximately normally distributed, although the distribution of tract-level depression rates is skewed to the right, with a larger number of observations in the higher bins. The distribution of tract-level poor mental health rates also appears skewed to the right, but with a more gradual decrease in the number of observations in the higher bins compared to the depression rates histogram.This information is important when selecting statistical methods to analyze these variables, as many methods assume normality. Additionally, the histograms provide a visual representation of the distribution of the variables, which can help in identifying potential outliers or unusual patterns.
 
-### QQ-Plot for dependent variable
-To check normality of dependent variable
-```{r}
+```{r include=T, echo=T, eval=T, results='markup'}
 # QQ plots for the distribution of tract-level depression rates and tract-level poor mental health rates.
 
 qqnorm(new_num_df$DEPRESSION, main = "Distribution of Tract-level Depression Rates")
@@ -199,13 +309,12 @@ qqline(new_num_df$DEPRESSION)
 qqnorm(new_num_df$MHLTH, main = "Distribution of Tract-level Poor Mental Health Rates")
 qqline(new_num_df$MHLTH)
 ```
-A QQ plot compares the quantiles of a dataset to the quantiles of a theoretical distribution (in this case, the normal distribution). If the points on the QQ plot are close to a straight line, it indicates that the data are normally distributed.
-In this case, the QQ plot for the depression rates appears to deviate from a straight line towards the tails, indicating that the distribution is not perfectly normal. The QQ plot for the poor mental health rates appears to deviate from a straight line even more than the depression rates, indicating that the distribution is even less normal.
 
-We will create a new data frame called num_df that only contains the numeric columns of the original master_df, that can be analyzed using various statistical tools.
+### 2.8. Correlations Test
 
-### Correlations Test
-```{r}
+We begin the process of selecting variables for our multiple linear regressions by generating correlation matrices for all of our health and socioeconomic variables. Doing this enables us to select only variables significantly associated with depression or poor mental health rates. We use a 0.35 Pearson's correlation coefficient to generate both correlation matrices. Numerous moderate associations are revealed by doing this. However, it is notable that the associations with poor mental health are more robust than the associations with depression. The variables associated with depression all have correlation coefficients of |+- 0.35| or greater, while those associated with poor mental health all have correlation coefficients of |+- 0.55| or greater. Both health conditions are associated with some combination of health and socioeconomic variables. 
+
+```{r include=T, echo=T, eval=T, results='markup'}
 # Create a correlation matrix
 cor_matrix <- cor(new_num_df)
 
@@ -216,18 +325,9 @@ high_mhlth_cor_list <- names(which(cor_matrix["MHLTH",] > 0.5 | cor_matrix["MHLT
 high_dep_cor_list <- high_dep_cor_list[high_dep_cor_list != "MHLTH"]
 high_mhlth_cor_list <- high_mhlth_cor_list[high_mhlth_cor_list != "DEPRESSION"]
 
-length(high_dep_cor_list)  
-length(high_mhlth_cor_list)
-```
-
-### Correlation Heatmap
-```{r}
 # Create two correlation matrixes from new_num_df in the above lists
 high_dep_cor_mat <- cor(new_num_df[high_dep_cor_list])
 high_mhlth_cor_mat <- cor(new_num_df[high_mhlth_cor_list])
-
-high_dep_cor_mat
-high_mhlth_cor_mat
 
 # Plot above correlation matrix
 corrplot(high_dep_cor_mat, type = "lower", outline.color = "white", 
@@ -243,11 +343,12 @@ my_col <- colorRampPalette(c("red", "white", "blue"))(30)
 corrplot(high_dep_cor_mat, method = "number", type = "lower", order = "hclust", diag = FALSE, tl.col = "black", tl.cex = 0.8, cl.cex = 0.8, addCoef.col = "black", col = my_col, main = "", mar = c(0,0,0,0))
 
 corrplot(high_mhlth_cor_mat, method = "number", type = "lower", order = "hclust", diag = FALSE, tl.col = "black", tl.cex = 0.8, cl.cex = 0.8, addCoef.col = "black", col = my_col, main = "", mar = c(0,0,0,0))
-
 ```
 
-#### VIF Test for Multicollinearity
-```{r}
+### 2.9. VIF Test for Multicollinearity
+Next, we check the selected variables for multicollinearity by using a Variance Inflation Factor (VIF) test. If multiple independent variables have a multicollinear relationship, we cannot use them for our multiple regressions. Fortunately, all of our selected independent variables have VIF values below 5 (except for LPA with MHLTH, VIF value of 5.02). This means that there is little multicollinearity between our independent variables, and we can use them all in our subsequent multiple regressions. 
+
+```{r include=T, echo=T, eval=T, results='markup'}
 calculate_VIF <- function(data, target_col) {
   X <- data[, !colnames(data) %in% target_col]
   vif <- data.frame(
@@ -265,9 +366,11 @@ depression_VIF
 mhlth_VIF
 ```
 
-### Feature Selection
-Need edited
-```{r}
+### 2.10. Feature Selection
+
+After going through this initial testing, we are left with seven variables for our depression regression [Obesity (%), Poor Physical health >= 14 days(%), (Last Academic Record) High School Graduate (%), (Academic Record) Graduate or professional degree (%), Median Income (US dollar), Commute Time >= 60 mins (%), and Broadband access (%] and eight variables for our poor mental health regression [Lack of Physical Activity (%), Obesity (%), Poor Physical health >= 14 days(%), Poor Sleep >= 14 days (%), (Last Academic Record) High School Graduate (%), (Academic Record) Graduate or professional degree (%), Median Income (US$), and Below Poverty Level (%)]. 
+
+```{r include=T, echo=T, eval=T, results='markup'}
 dep_features_list <- high_dep_cor_list[high_dep_cor_list != "DEPRESSION"]
 mhlth_features_list <- high_mhlth_cor_list[high_mhlth_cor_list != "MHLTH"]
 
@@ -275,10 +378,11 @@ dep_features_list
 mhlth_features_list
 ```
 
-## Model Building
-Need edited
+## 3. Model Building
 
-### Training and Test Sets
+### 3.1. Training and Test Sets
+At this point, we split our initial data set into training and testing data sets. We "train" our multiple linear regressions and regression trees on this training set. We then test whether our models are over or underfit by feeding the testing data set into them and comparing the results to the output we got from feeding the initial training data into them.
+
 ```{r}
 library(caret)
 set.seed(123)
@@ -287,10 +391,9 @@ fold <- floor(runif(nrow(new_num_df),1,11))
   
 test.set <- new_num_df[new_num_df$fold == 1,] 
 train.set <- new_num_df[new_num_df$fold != 1,] 
-
 ```
 
-### Multiple Linear Regression
+### 3.2. Multiple Linear Regressio
 
 #### Model 1: With Highly correlated variables (Health Factors + Socioeconomic Factors)
 ```{r}
@@ -337,8 +440,14 @@ plot(depression_model_3)
 plot(mhlth_model_3)
 ```
 
-#### Model Comparison (ANOVA)
-```{r}
+#### 3.2.1. Model Comparison (ANOVA)
+We experiment with three different multiple linear regressions and compare their performance using Analysis of Variance (ANOVA) testing. The first of these regressions (Model 1) predicts depression and poor mental health rates by incorporating all of the highly correlated Barbies (for each condition) into the regressions. The second regression (Model 2) only uses a cluster of highly correlated health variables to predict depression and poor mental health rates. Furthermore, finally, the third regression (Model 3) uses a cluster of highly correlated socioeconomic variables to predict depression and poor mental health rates. 
+
+Naturally, Model 1 performs the best overall, incorporating the most significant number of highly correlated variables. In addition, it has a lower residual sum of squares (RSS) than the other models, indicating that it fits the data best and that there is the least amount of unexplained error in the dependent variable variation when using Model 1. In other words, Model 1 can explain more of the variation in depression and mental health rates than the other two models. 
+
+Nevertheless, we are more interested in comparing the performance of Model 2 to Model 3. This comparison shows that Model 2 (the health variables model) performs slightly better than Model 3 (the socioeconomic variables model). While they have RSS values close to one another, Model 2 has a lower degree of freedom (it uses fewer variables in the regression). This is good. Achieving similar predictive accuracy with fewer variables means you have likely isolated some key predictive variables. The ANOVA test shows that the difference between Model 2 and the other models is statistically significant at the 1% level (p-value less than 0.01). In sum, although it is better to incorporate both the highly correlated health variables and the highly correlated socioeconomic variables, the health variables seem more predictive than the socioeconomic variables.
+
+```{r include=T, echo=T, eval=T, results='markup'}
 # Perform two-way ANOVA test
 depression_anova_model <- anova(depression_model_1, depression_model_2, depression_model_3)
 mhlth_anova_model <- anova(mhlth_model_1, mhlth_model_2, mhlth_model_3)
@@ -347,28 +456,29 @@ mhlth_anova_model <- anova(mhlth_model_1, mhlth_model_2, mhlth_model_3)
 xkabledply(depression_anova_model)
 xkabledply(mhlth_anova_model)
 
-health.socioecon.dep.anova <- anova(depression_model_2, depression_model_3)
-health.socioecon.mhlth.anova <- anova(mhlth_model_2, mhlth_model_3)
-
-xkabledply(health.socioecon.dep.anova)
-xkabledply(health.socioecon.mhlth.anova)
-
+# health.socioecon.dep.anova <- anova(depression_model_2, depression_model_3)
+# health.socioecon.mhlth.anova <- anova(mhlth_model_2, mhlth_model_3)
+# 
+# xkabledply(health.socioecon.dep.anova)
+# xkabledply(health.socioecon.mhlth.anova)
 ```
 
-#### Stepwise Selection (Tuning Multiple Linear Regression Model)
+#### 3.2.2 Stepwise Selection (Tuning Multiple Linear Regression Model)
+
+In the initial model, we included all variables with high correlation coefficients. However, the stepwise model identified a smaller set of predictor variables that are highly significant in predicting depression and poor mental health rates. We performed a stepwise model using the AIC criterion to identify the optimal combination of features. AIC accounts for the number of parameters in the model, which helps to prevent overfitting and avoid overly complex models. 
+  
 ```{r}
 # Perform stepwise selection using AIC as the selection criterion
 depression_stepwise_model <- step(depression_model_1, direction = "both", trace = 0, k = log(nrow(train.set)), criterion = "AIC")
 
 mhlth_stepwise_model <- step(mhlth_model_1, direction = "both", trace = 0, k = log(nrow(train.set)), criterion = "AIC")
-
-# Print the final selected model
-summary(depression_stepwise_model)
-summary(mhlth_stepwise_model)
 ```
 
-#### Best Model vs. Stepwise Model
-```{r}
+#### 3.2.3. Best Model vs. Stepwise Model
+
+The stepwise model had fewer variables and demonstrated similar performance as the initial model when compared using an ANOVA test. The residual sum of squares (RSS) for the depression and poor mental health models were almost identical. Therefore, we chose the stepwise model over the initial model as it was more parsimony.
+ 
+```{r include=T, echo=T, eval=T, results='markup'}
 dep_anova_model_2 <- anova(depression_model_1, depression_stepwise_model)
 mhlth_anova_model_2 <- anova(mhlth_model_1, mhlth_stepwise_model)
 
@@ -376,7 +486,16 @@ xkabledply(dep_anova_model_2)
 xkabledply(mhlth_anova_model_2)
 ```
 
-#### Best Model Performance
+#### 3.2.4. Best Model Performance
+
+This section summarizes a summary of the models we considered to be the best performing based on the model selection to date.
+
+For depression rates, our model identified five significant predictor variables: "OBESITY Rate", "Poor physical health", "high school graduate as highest level educational attainment", "CT_>60", and "percent of households interacting with the internet". The model explained 37.6% of the variability in depression levels, which is a moderate amount.
+  
+For poor mental health rates, our model identified seven significant predictor variables: "LPA", "Obesity", "PHLTH", "Sleep", "ea.graduate", "MI_income", and "poverty". The model explained 67.6% of the variability in poor mental health levels, indicating a strong relationship between the predictor variables and poor mental health.
+
+Overall, our findings suggest that demographic, socio-economic, and health-related variables play a significant role in predicting depression and poor mental health rates in the United States. Our models can serve as a basis for further research on this topic and can assist policymakers in identifying high-risk populations and designing targeted interventions.
+
 ```{r}
 dep_predictions <- predict(depression_model_1, newdata = test.set)
 
@@ -404,81 +523,23 @@ cat("MSE:", mse, "\n")
 ```
 
 
-### Regression Tree Model
-- Splitting the data: The dataset is split into training and testing sets to evaluate the model's performance.
-- Building the tree: The regression tree is built using a recursive partitioning algorithm, which splits the data into subsets based on the independent variables that best predict the dependent variable.
-- Pruning the tree: The tree is pruned to reduce overfitting and improve generalization to new data.
+### 3.3. Regression Tree Model
+Add comment here
 ```{r}
-#regression tree model for depression
-# control_params1 <- rpart.control(minsplit = 20, cp = 0.0005, maxdepth = 10)
-# 
-# depression.tree <- rpart(DEPRESSION ~ LPA + ea.hs.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + URBANIZED_AREA_POP_CEN_2010 + pct_URBANIZED_AREA_POP_CEN_2010, data = depression_cor_df, method="class", control = control_params1)
-# 
-# plot(depression.tree, uniform=TRUE, main="Depression Rate Tree")
-# text(depression.tree, use.n=TRUE, all=TRUE, cex=.8)
-# 
-# p <- prp(depression.tree)
-# p$nodepar$lab.cex <- 0.8
-# p$nodepar$cex <- 0.8
-# p$nodepar$lab.col <- "black"
-# 
-# 
-# # regression tree model for poor mental health
-# control_params2 <- rpart.control(minsplit = 20, cp = 0.0005, maxdepth = 10)
-# 
-# mhlth.tree <- rpart(MHLTH ~ LPA + SLEEP + mt.nev.mar + mt.now.mar + MT_Separated + ea.less.hs.deg + ea.hs.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed, data = mhlth_cor_df, method = "class", control = control_params2)
-# 
-# plot(mhlth.tree, uniform=TRUE, main="Poor Mental Health Rate Tree")
-# text(mhlth.tree, use.n=TRUE, all=TRUE, cex=.8)
-# 
-# p <- prp(mhlth.tree)
-# p$nodepar$lab.cex <- 0.8
-# p$nodepar$cex <- 0.8
-# p$nodepar$lab.col <- "black"
-  
+# Building a Regression Tree
 
-# fancy tree plots
-# fancy depression tree
-```
+# Step 1. Use recursive binary splitting to grow a large tree of depression on the training data
+train.dep.tree <- rpart(DEPRESSION ~  ACCESS2 + BINGE + CHECKUP + DIABETES + LPA + OBESITY + PHLTH + SLEEP + STROKE + mt.nev.mar + mt.now.mar + MT_Divorces + MT_Separated + MT_Widowed + ea.less.hs.deg + ea.hs.deg + ea.col.ass.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + tot.pop + `CT_<10` + `CT_10-14` + `CT_15-19` + `CT_20-24` + `CT_25-29` + `CT_30-34` + `CT_35-44` + `CT_45-59` + `CT_>60` + ES_Total_labor_force + ES_Civilian_labor_force + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed + ES_Armed_Forces + ES_Not_in_labor_force + land + urban + poverty + no.ins + disab + no.comp + `broad&comp` + no.eng + sing.mom + live.alone + pub.assist + no.phone + no.plumb + married.kid + hhd.no.comp + hhd.only.phone + hhd.no.int + hhd.broad + index_apr20, data = train.set, method = "anova")
 
-```{r}
+# Grow large tree of mhlth on the training data 
+train.mhlth.tree <- rpart(MHLTH ~ ACCESS2 + BINGE + CHECKUP + DIABETES + LPA + OBESITY + PHLTH + SLEEP + STROKE + mt.nev.mar + mt.now.mar + MT_Divorces + MT_Separated + MT_Widowed + ea.less.hs.deg + ea.hs.deg + ea.col.ass.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + tot.pop + `CT_<10` + `CT_10-14` + `CT_15-19` + `CT_20-24` + `CT_25-29` + `CT_30-34` + `CT_35-44` + `CT_45-59` + `CT_>60` + ES_Total_labor_force + ES_Civilian_labor_force + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed + ES_Armed_Forces + ES_Not_in_labor_force + land + urban + poverty + no.ins + disab + no.comp + `broad&comp` + no.eng + sing.mom + live.alone + pub.assist + no.phone + no.plumb + married.kid + hhd.no.comp + hhd.only.phone + hhd.no.int + hhd.broad + index_apr20, data = train.set)
 
-depression.tree <- rpart(DEPRESSION ~  ACCESS2 + BINGE + CHECKUP + DIABETES + LPA + OBESITY + PHLTH + SLEEP + STROKE + mt.nev.mar + mt.now.mar + MT_Divorces + MT_Separated + MT_Widowed + ea.less.hs.deg + ea.hs.deg + ea.col.ass.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + tot.pop + `CT_<10` + `CT_10-14` + `CT_15-19` + `CT_20-24` + `CT_25-29` + `CT_30-34` + `CT_35-44` + `CT_45-59` + `CT_>60` + ES_Total_labor_force + ES_Civilian_labor_force + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed + ES_Armed_Forces + ES_Not_in_labor_force + land + urban + poverty + no.ins + disab + no.comp + `broad&comp` + no.eng + sing.mom + live.alone + pub.assist + no.phone + no.plumb + married.kid + hhd.no.comp + hhd.only.phone + hhd.no.int + hhd.broad + index_apr20, data = new_num_df, control = rpart.control(maxdepth = ))
-
-fancyRpartPlot(depression.tree, main = "Depression Rate Tree")
-
-summary(depression.tree)
-
-# fancy mental health tree
-mhlth.tree <- rpart(MHLTH ~ ACCESS2 + BINGE + CHECKUP + DIABETES + LPA + OBESITY + PHLTH + SLEEP + STROKE + mt.nev.mar + mt.now.mar + MT_Divorces + MT_Separated + MT_Widowed + ea.less.hs.deg + ea.hs.deg + ea.col.ass.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + tot.pop + `CT_<10` + `CT_10-14` + `CT_15-19` + `CT_20-24` + `CT_25-29` + `CT_30-34` + `CT_35-44` + `CT_45-59` + `CT_>60` + ES_Total_labor_force + ES_Civilian_labor_force + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed + ES_Armed_Forces + ES_Not_in_labor_force + land + urban + poverty + no.ins + disab + no.comp + `broad&comp` + no.eng + sing.mom + live.alone + pub.assist + no.phone + no.plumb + married.kid + hhd.no.comp + hhd.only.phone + hhd.no.int + hhd.broad + index_apr20, data = new_num_df, control = rpart.control(maxdepth = ))
-
-
-fancyRpartPlot(mhlth.tree, main = "Poor Mental Health Rate Tree")
-
-summary(mhlth.tree)
-
-# pruning trees
-# pruned depression tree
-# pruned.depression.tree.2 <- prune(depression.tree.2, cp = 0.01)
-# fancyRpartPlot(pruned.depression.tree.2)
-# 
-# # pruned mental health tree
-# pruned.mhlth.tree.2 <- prune(mhlth.tree.2, cp = 0.01)
-# fancyRpartPlot(pruned.mhlth.tree.2)
-
-```
-
-```{r}
-# creating trees using testing and training data
-train.dep.tree <- rpart(DEPRESSION ~  ACCESS2 + BINGE + CHECKUP + DIABETES + LPA + OBESITY + PHLTH + SLEEP + STROKE + mt.nev.mar + mt.now.mar + MT_Divorces + MT_Separated + MT_Widowed + ea.less.hs.deg + ea.hs.deg + ea.col.ass.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + tot.pop + `CT_<10` + `CT_10-14` + `CT_15-19` + `CT_20-24` + `CT_25-29` + `CT_30-34` + `CT_35-44` + `CT_45-59` + `CT_>60` + ES_Total_labor_force + ES_Civilian_labor_force + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed + ES_Armed_Forces + ES_Not_in_labor_force + land + urban + poverty + no.ins + disab + no.comp + `broad&comp` + no.eng + sing.mom + live.alone + pub.assist + no.phone + no.plumb + married.kid + hhd.no.comp + hhd.only.phone + hhd.no.int + hhd.broad + index_apr20, data = train.set, control = rpart.control(maxdepth = ))
-
-fancyRpartPlot(train.dep.tree, main = "Training Depression Rate Tree")
-summary(train.dep.tree)
-
-train.mhlth.tree <- rpart(MHLTH ~ ACCESS2 + BINGE + CHECKUP + DIABETES + LPA + OBESITY + PHLTH + SLEEP + STROKE + mt.nev.mar + mt.now.mar + MT_Divorces + MT_Separated + MT_Widowed + ea.less.hs.deg + ea.hs.deg + ea.col.ass.deg + ea.ba.deg + ea.grad.prof.deg + MI_Estimate + tot.pop + `CT_<10` + `CT_10-14` + `CT_15-19` + `CT_20-24` + `CT_25-29` + `CT_30-34` + `CT_35-44` + `CT_45-59` + `CT_>60` + ES_Total_labor_force + ES_Civilian_labor_force + ES_Civilian_labor_force_employed + ES_Civilian_labor_force_unemployed + ES_Armed_Forces + ES_Not_in_labor_force + land + urban + poverty + no.ins + disab + no.comp + `broad&comp` + no.eng + sing.mom + live.alone + pub.assist + no.phone + no.plumb + married.kid + hhd.no.comp + hhd.only.phone + hhd.no.int + hhd.broad + index_apr20, data = train.set, control = rpart.control(maxdepth=4))
-
+# Plot tree model
+fancyRpartPlot(train.dep.tree, main = "Depression Rate Tree")
 fancyRpartPlot(train.mhlth.tree, main = "Poor Mental Health Rate Tree")
 
+# Print summary
+summary(train.dep.tree)
 summary(train.mhlth.tree)
 ```
 
@@ -517,24 +578,81 @@ cat("MSE:", MSE, "\n")
 # This indicates that the model's predictions have a standard deviation of 1.04 around the actual values. Overall, these metrics suggest that the model has a moderate level of predictive power for the MHLTH variable.
 ```
 
+<<<<<<< HEAD
+## 4. Result
+Based on the tests and modeling performed previously, the factors that are highly associated with depression and poor mental health rates are:
+=======
 ## Result
-Need edited
+Based on the tests and modeling performed previously, the factors that are highly associated with depression and poor mental health rates are:
 
-## Discussion
-Need edited
+Depression: Obesity, poor physical health, high school degree as highest level educational attainment, commute time >= 60 min, household without high-speed wireless internet, binge drinking, economic effect of COVID-19, and no-English.
+Poor Mental Health: Lack of physical activity, obesity, poor physical health, lack of sleep, BA as highest level educational attainment, graduate or professional degree as highest level of educational attainment, never married, married with kid, recent checkup, median income, poverty rate, and binge drinking.
+We can infer depression and poor mental health rates in a given tract based on the above factors with some accuracy. For depression, the variation of these factors is slightly associated (r-square: 0.37) with the variation of depression rate. For poor mental health, the variation of these factors is highly associated (r-square: 0.69) with the variation of poor mental health rate.
+>>>>>>> 41946f7b97a87938d4c917586a3e96cce869284c
+
+Depression: Obesity, poor physical health, high school degree as the highest level of educational attainment, commute time >= 60 min, households without high-speed wireless internet, binge drinking, the economic effect of COVID-19, and no English.
+Poor Mental Health: Lack of physical activity, obesity, poor physical health, lack of sleep, BA as highest level educational attainment, graduate or professional degree as the highest level of educational attainment, never married, married with a kid, recent checkup, median income, poverty rate, and binge drinking.
+We can infer depression and poor mental health rates in a given tract based on the above factors with some accuracy. For depression, the variation of these factors is slightly associated (r-square: 0.37) with the variation in depression rate. For poor mental health, the variation of these factors is highly associated (r-square: 0.69) with the variation of poor mental health rate.
+
+<<<<<<< HEAD
+## 5. Discussion
+In this section, we discuss the limitations of our research project and propose potential areas for further research.
+
+### 5.1. Limitations
+Based on the information we provided earlier, there are several limitations to this project:
+- The measure of the poor mental state over the last two weeks may need to be more precise because the data was combined from different datasets that were gathered more than two weeks apart. This could introduce measurement bias and affect the accuracy of the results.
+- The project should have performed pruning or training regression trees, which could have resulted in less accurate models.
+- The feature selection process used in the analysis could have been more optimal, which could result in irrelevant or redundant variables being included in the model, reducing its predictive power.
+The data used in the analysis may be representative of only some of the population, as it was collected from a specific geographic region or sample size.
+- The project was limited to some geographical regions, which may not be representative of the broader population or may have limited the ability to identify additional factors associated with depression and poor mental health.
+- The project did not account for potential confounding variables like the impact of cultural or social factors that could influence the relationship between the identified factors and depression or poor mental health, leading to the possibility of overestimating or underestimating the actual effect of these factors, which may be an essential factor to consider in future research. 
+
+
+### 5.2. Further Research
+Some potential further research directions includes:
+- Conduct micro-level analysis: Further research could explore the social systems and relationships contributing to depression. This could involve examining individual-level factors, such as social support, family dynamics, and work stress, and how they impact mental health.
+- Integrate genetic information and other biological measures, such as hormonal imbalances and brain imaging. There is evidence that genetics play a role in the development of depression. Further research could examine genetic information and other biological factors related to depression.
+- Conduct more feature selection methods to identify the most important predictors of depression and poor mental health. As mentioned earlier, the feature selection process used in this project was limited. Further research could involve more sophisticated feature selection methods, such as principal component analysis or regularized regression techniques.
+- Explore additional factors: The current analysis focused on a limited set of factors in the dataset. Future research could explore additional factors related to depression, such as regular diet and lifestyle choices, and investigate their relationship to depression and poor mental health rates.
+- Time-series analysis: The current analysis did not consider the temporal aspect of depression and mental health rates. Future research could incorporate time-series analysis to examine how depression and mental health rates change and identify seasonal or cyclical trends that may shed light on environmental or societal changes.
+- Conduct qualitative research, such as interviews and focus groups, to better understand the subjective experiences of individuals living with depression and gain insights into potential risk factors that quantitative measures may not capture.
+- Explore the potential role of social support networks, such as family and friends, in mitigating or exacerbating depression and poor mental health, and develop interventions to strengthen social support.
+
+=======
 
 ### Limitations
-Need edited
+Based on the information you provided earlier, there are several limitations to this project:
+The measure of poor mental state over the last two weeks may not be precise because the data was combined from different datasets that were gathered more than two weeks apart. This could introduce measurement bias and affect the accuracy of the results.
+The project did not perform pruning or training of regression trees, which could have resulted in less accurate models.
+The feature selection process used in the analysis was not optimal, which could result in irrelevant or redundant variables being included in the model, reducing its predictive power.
+The data used in the analysis may not be representative of the entire population, as it was collected from a specific geographic region or sample size.
+The project was limited to certain geographical areas, which may not be representative of the broader population or may have limited the ability to identify additional factors associated with depression and poor mental health.
+The project did not account for potential confounding variables like the impact of cultural or social factors that could influence the relationship between the identified factors and depression or poor mental health, leading to the possibility of overestimating or underestimating the true effect of these factors, which may be an important factor to consider in future research.
 
 ### Further Research
-Need edited
+Some potential future research directions:
+
+Conduct micro-level analysis: Further research could focus on exploring the social systems and relationships that contribute to depression. This could involve examining individual-level factors, such as social support, family dynamics, and work stress, and how they impact mental health.
+Integrate genetic information and other biological measures, such as hormonal imbalances and brain imaging. There is evidence that genetics play a role in the development of depression. Further research could examine genetic information and other biological factors that may be related to depression.
+Conduct more feature selection methods, to identify the most important predictors of depression and poor mental health. As mentioned earlier, the feature selection process used in this project was not extensive. Further research could involve more sophisticated methods for selecting features, such as principal component analysis or regularized regression techniques.
+Explore additional factors: The current analysis focused on a limited set of factors that were available in the dataset. Future research could explore additional factors that may be related to depression, such as regular diet and lifestyle choices, and investigate their relationship to depression and poor mental health rates.
+Time-series analysis: The current analysis did not take into account the temporal aspect of depression and mental health rates. Future research could incorporate time-series analysis to examine how depression and mental health rates change over time, and identify any seasonal or cyclical trends that may shed light on the environmental or societal changes.
+Conduct qualitative research, such as interviews and focus groups, to better understand the subjective experiences of individuals living with depression and gain insights into potential risk factors that may not be captured by quantitative measures.
+Explore the potential role of social support networks, such as family and friends, in mitigating or exacerbating depression and poor mental health, and develop interventions that aim to strengthen social support
+
+>>>>>>> 41946f7b97a87938d4c917586a3e96cce869284c
 
 ## Conclusion
-Need edited
+In conclusion, this research project aimed to identify the factors associated with depression and poor mental health rates in the United States. The study utilized multiple linear regression models, regression trees, and ANOVA testing to analyze demographic, socioeconomic, and health-related variables. The results indicated that factors such as obesity, poor physical health, high school degree as the highest educational attainment, lack of physical activity, lack of sleep, and binge drinking were significantly associated with depression and poor mental health rates. Additionally, the project identified several limitations, including potential measurement bias, incomplete feature selection, and geographical restrictions, which may impact the accuracy of the results.
+The study contributes to the growing body of literature on the social determinants of mental health and provides a basis for further research and policy interventions. The findings can assist policymakers in identifying high-risk populations and designing targeted interventions. Future research directions include exploring the role of social support networks in mitigating or exacerbating depression, conducting qualitative research to understand better the subjective experiences of individuals living with depression, and integrating genetic and biological measures into the analysis. By identifying the critical factors associated with depression and poor mental health rates, this study provides valuable insights into the underlying mechanisms of mental health disparities. It offers potential solutions for addressing this pressing public health issue.
 
 ## References
+<<<<<<< HEAD
+=======
 Need edited
 # Reference links to datasets:
+
+>>>>>>> 41946f7b97a87938d4c917586a3e96cce869284c
 https://chronicdata.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh
 https://gisgeography.com/us-county-map/
 https://www.ers.usda.gov/data-products/county-level-data-sets/county-level-data-sets-download-data/
@@ -542,3 +660,11 @@ https://data.census.gov/
 https://www.anl.gov/dis/county-economic-impact-index
 https://www.census.gov/programs-surveys/community-resilience-estimates/data/datasets.html
 https://github.com/NREL/hsds-examples
+
+<<<<<<< HEAD
+GitHub Repo: https://github.com/eitanaka/DATS6101_Final_Project_Team2 (50)
+=======
+## Github Link
+
+GitHub Repo: https://github.com/eitanaka/DATS6101_Final_Project_Team2 
+>>>>>>> 41946f7b97a87938d4c917586a3e96cce869284c
