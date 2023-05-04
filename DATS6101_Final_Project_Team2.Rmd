@@ -454,9 +454,11 @@ summary(train.mhlth.tree)
 ```
 
 #### Regression Tree Performance
-Our depression rate regression tree has an R-squared value of 0.348 and a mean squared error (MSE) of 6.12 (indicating the difference between the actual and predicted values for the dependent variable). This indicates that approximately 35 percent of the variation in the depression rate dependent variable is associated with variation in the independent variables. On the other hand, our mental health rate tree has an R-squared value of 0.584 and an MSE of 1.35. So in comparison to one another, the mental health regression tree performs better. 
+Our depression rate regression tree has an R-squared value of 0.348 and a mean squared error (MSE) of 6.12 (representing the average squared difference between the predicted values and the actual values, with a higher value indicating worse performance). This indicates that approximately 35 percent of the variation in the depression rate dependent variable is associated with variation in the independent variables. On the other hand, our mental health rate tree has an R-squared value of 0.584 and an MSE of 1.35. So in comparison to one another, the mental health regression tree performs better. 
 
 However, by these metrics, the performance of both regression trees is inferior to that of their corresponding multiple linear regressions. For example, the depression multiple linear regression has an R-squared value of 0.376 and an MSE of 5.78. The poor mental health multiple linear regression has an R-squared value of 0.584 and an MSE of 1.35. According to these metrics, both regressions are superior to their corresponding regression trees. 
+
+After running the testing data through both our regression trees (created from the training data) we get a more accurate sense of the utility of our models. For our depression tree, we have an R-squared value of 0.399, suggesting that the regression tree model explains 39.9% of the variation in the data, which is a moderate level of explanation. It also has a MSE of 6.05. For our poor mental health tree, we have an R-squared value of 0.685, indicating that 68.5% of the variability in the MHLTH variable can be explained by the model. The MSE is 1.07, which means that on average, the model's predictions are off by 1.07 units from the actual values. The root mean squared error (RMSE) is 1.04, which is the same as the standard deviation of the residuals. This indicates that the model's predictions have a standard deviation of 1.04 around the actual values. Overall, these metrics suggest that the model has a moderate level of predictive power for the MHLTH variable.
 
 ```{r}
 # Generate predicted values for test set
@@ -470,9 +472,6 @@ R2 <- 1 - sum((test.set$DEPRESSION - test.set$pred.depression)^2) / sum((test.se
 cat("R-squared:", R2, "\n")
 cat("MSE:", MSE, "\n")
 
-# The R-squared value of 0.399 suggests that the regression tree model explains 39.9% of the variation in the data, which is a moderate level of explanation.
-# The MSE (Mean Squared Error) of 6.05 represents the average squared difference between the predicted values and the actual values, with a higher value indicating worse performance.
-
 test.set$pred.mhlth <- predict(train.mhlth.tree, newdata = test.set)
 # Calculate evaluation metrics
 MSE <- mean((test.set$MHLTH - test.set$pred.mhlth)^2)
@@ -481,11 +480,6 @@ R2 <- 1 - sum((test.set$MHLTH - test.set$pred.mhlth)^2) / sum((test.set$MHLTH - 
 # Print evaluation metrics
 cat("R-squared:", R2, "\n")
 cat("MSE:", MSE, "\n")
-
-# The regression tree model with MHLTH as the target variable has an R-squared value of 0.685, indicating that 68.5% of the variability in the MHLTH variable can be explained by the model. 
-# The mean squared error (MSE) is 1.07, which means that on average, the model's predictions are off by 1.07 units from the actual values. .
-# The root mean squared error (RMSE) is 1.04, which is the same as the standard deviation of the residuals.
-# This indicates that the model's predictions have a standard deviation of 1.04 around the actual values. Overall, these metrics suggest that the model has a moderate level of predictive power for the MHLTH variable.
 ```
 
 ## 4. Result
