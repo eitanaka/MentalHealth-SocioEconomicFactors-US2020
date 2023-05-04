@@ -302,7 +302,7 @@ test.set <- new_num_df[new_num_df$fold == 1,]
 train.set <- new_num_df[new_num_df$fold != 1,] 
 ```
 
-### 3.2. Multiple Linear Regressio
+### 3.2. Multiple Linear Regression
 
 #### Model 1: With Highly correlated variables (Health Factors + Socioeconomic Factors)
 ```{r}
@@ -432,8 +432,9 @@ cat("MSE:", mse, "\n")
 ```
 
 
-### 3.3. Regression Tree Model
-Add comment here
+#### 3.3. Regression Tree Model
+We then generate our regression trees using our training data set. Because we do not preemptively select highly correlated variables (as we did when building the multiple regression models), we see a greater variety of predictive independent variables emerge. These include the economic index showing the effect of COVID, binge drinking (%), no proficient English speakers in households (%), never married (%), married with kid (%), attainment of graduate or professional degree (%), and having gotten a recent health checkup (%). 
+
 ```{r}
 # Building a Regression Tree
 
@@ -453,10 +454,10 @@ summary(train.mhlth.tree)
 ```
 
 #### Regression Tree Performance
-- Evaluating the model: The model is evaluated using various metrics such as mean squared error (MSE), root mean squared error (RMSE), and R-squared.
-- Validating the model: The model is validated using the testing set to assess its ability to generalize to new data.
-- Tuning the model: The model is tuned by adjusting the hyperparameters to improve its performance.
-- Interpreting the model: The regression tree is interpreted to gain insights into the relationships between the independent variables and the dependent variable.
+Our depression rate regression tree has an R-squared value of 0.348 and a mean squared error (MSE) of 6.12 (indicating the difference between the actual and predicted values for the dependent variable). This indicates that approximately 35 percent of the variation in the depression rate dependent variable is associated with variation in the independent variables. On the other hand, our mental health rate tree has an R-squared value of 0.584 and an MSE of 1.35. So in comparison to one another, the mental health regression tree performs better. 
+
+However, by these metrics, the performance of both regression trees is inferior to that of their corresponding multiple linear regressions. For example, the depression multiple linear regression has an R-squared value of 0.376 and an MSE of 5.78. The poor mental health multiple linear regression has an R-squared value of 0.584 and an MSE of 1.35. According to these metrics, both regressions are superior to their corresponding regression trees. 
+
 ```{r}
 # Generate predicted values for test set
 test.set$pred.depression <- predict(train.dep.tree, newdata = test.set)
