@@ -3,15 +3,14 @@
 In our preceding research (project 1), we delved deep into the correlation between health risk behaviors and health outcomes/status. Pivoting from that foundation, this project aims to explore the significant influences on mental health arising from lifestyle choices, socio-economic factors, and the unprecedented events of COVID-19, focusing specifically on the United States. Utilizing census tracts, we intend to compute and analyze multifarious datasets to unearth the determinants that might have critically impacted mental well-being in the year 2020.
 
 ## Researchers
-Ishani Makwana
-Ei Tanaka
-Henry Hirsch
+- Ishani Makwana
+- Ei Tanaka
+- Henry Hirsch
 
 ## Datasets
-Health Risk Behaviors Dataset: Link / Source here
-Socio-Economic Factors Dataset: Link / Source here
-COVID-19 Impact Dataset: Link / Source here
-(Replace "Link / Source here" with actual links or sources of your datasets)
+- Health Risk Behaviors Dataset: Link / Source here
+- Socio-Economic Factors Dataset: Link / Source here
+- COVID-19 Impact Dataset: Link / Source here
 
 ## Objectives
 To understand the correlation between socio-economic factors and mental health in 2020.
